@@ -22,15 +22,15 @@ TODO List _(For v1.0 Release)_:
 
 Main Window:
 
-![screenshot1](https://github.com/yungsamd17/Twitch-Live/assets/64147848/85ad5b18-9a17-45c0-b3d8-0cc11f5ecc48)
+![screenshot1](https://i.imgur.com/dqpNDsp.png)
 
-Setup screen (Login):
+Login screen:
 
-![screensho3](https://github.com/yungsamd17/Twitch-Live/assets/64147848/acd6b84d-46f0-4444-b4b4-49e3b2fce0ca)
+![screensho3](https://i.imgur.com/56Dc0uL.png)
 
 Settings:
 
-![screenshot2](https://github.com/yungsamd17/Twitch-Live/assets/64147848/52f1caea-61ef-4707-bbaa-f3f229648373)
+![screenshot2](https://i.imgur.com/uvLcuzS.png)
 
 ## Credits
 
