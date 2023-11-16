@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Sam's Twitch Live</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="src/main.css" />
+    <link rel="stylesheet" href="src/scrollbar/simple-scrollbar.css">
+    <script src="src/scrollbar/simple-scrollbar.js"></script>
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="search-container">
+            <input type="text" id="searchStreams" placeholder="Search..." autocomplete="off" spellcheck="false" autofocus />
+            <a id="refreshButton" class="navbar-link navbar-icon-link refresh-button"  aria-label-refreshbtn="Refresh Tab">
+                <i class="fa-solid fa-rotate-left"></i></a>
+        </div>
+        <div class="link-container">
+            <a class="navbar-link navbar-icon-link" aria-label-2="Twitch Live Following" 
+                href="https://www.twitch.tv/directory/following/live" target="_blank">
+                <i class="fa-brands fa-twitch"></i></a>
+            <a class="navbar-link navbar-icon-link" href="settings.html" aria-label="Settings"><i class="fa-solid fa-gear"></i></a>
+        </div>
+    </div>
+    <div class="streams" ss-container>
+        <div id="content" class="content"></div>
+    </div>
+    <script src="src/js/main.js"></script>
+</body>
+
+</html>
