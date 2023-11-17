@@ -2,14 +2,14 @@
     "manifest_version": 2,
     "name": "Sam's Twitch Live",
     "description": "Sam's Twitch Live, shows all followed live channels on twitch.tv.",
-    "version": "0.1.2",
+    "version": "0.1.3",
     "author": "yungsamd17",
     "homepage_url": "https://github.com/yungsamd17/Twitch-Live",
     "icons":
     {
-        "16": "src/icons/icon-16.png",
-        "48": "src/icons/icon-48.png",
-        "128": "src/icons/icon-128.png"
+        "16": "src/assets/icons/icon-16.png",
+        "48": "src/assets/icons/icon-48.png",
+        "128": "src/assets/icons/icon-128.png"
     },
     "permissions": [
         "storage",
@@ -17,9 +17,9 @@
     ],
     "background": {
       "scripts": [
-        "scripts/auth.js",
-        "scripts/streams.js",
-        "scripts/util.js"
+        "src/js/auth.js",
+        "src/js/streams.js",
+        "src/js/util.js"
       ]
     },
     "browser_action":
