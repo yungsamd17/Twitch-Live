@@ -1,4 +1,4 @@
-# Sam's Twitch Live
+# <img src="src/assets/icons/icon-48.png" width="38" align="left" /> Sam's Twitch Live
 
 Sam's Twitch Live, shows all followed live channels on [Twitch.tv](https://twitch.tv)
 
