@@ -116,7 +116,7 @@ const loadTwitchContent = () => {
             } else {
                 // Display a message when no matching results are found
                 const noResultsMessage = document.createElement("div");
-                noResultsMessage.setAttribute("class", "no-results-message");
+                noResultsMessage.setAttribute("class", "no-search-results");
                 noResultsMessage.innerHTML = "No matching Search results found.";
                 contentSection.replaceChildren(noResultsMessage);
             }
