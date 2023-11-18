@@ -46,19 +46,32 @@ const formatViewerCount = (count) => {
     return count.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 };
 
-const loadTwitchContent = () => {
-    if (authScreenPresent()) {
-        return; // Skip refreshing streams when authScreen is present
-    }
+// Define a variable to store the number of live channels
+let liveChannelsCount = 0;
 
+// Function to update the badge text and color on the extension icon
+const updateBadge = () => {
+    const badgeText = liveChannelsCount > 0 ? liveChannelsCount.toString() : "";
+    chrome.browserAction.setBadgeText({ text: badgeText });
+    chrome.browserAction.setBadgeBackgroundColor({ color: "#67676b" });
+};
+
+const loadTwitchContent = () => {
     const storageItems = ["twitchIsValidated", "twitchAccessToken", "twitchStreams"];
     chrome.storage.local.get(storageItems, (res) => {
+        // Always refresh Twitch streams when the popup is opened
+        refreshTwitchStreams();
+
+        if (authScreenPresent()) {
+            return; // Skip refreshing streams when authScreen is present
+        }
+
         if (res.twitchStreams) {
             const query = filterInput.value.toLowerCase();
             const filteredStreams = res.twitchStreams.filter(
                 (stream) =>
-                stream.channelName.toLowerCase().includes(query) ||
-                stream.title.toLowerCase().includes(query)
+                    stream.channelName.toLowerCase().includes(query) ||
+                    stream.title.toLowerCase().includes(query)
             );
 
             if (filteredStreams.length > 0) {
@@ -113,6 +126,12 @@ const loadTwitchContent = () => {
                 });
 
                 contentSection.replaceChildren(...streamList);
+
+                // Update the badge count based on the latest data
+                liveChannelsCount = res.twitchStreams.length;
+
+                // Directly call the updateBadge function from main.js
+                updateBadge();
             } else {
                 // Display a message when no matching results are found
                 const noResultsMessage = document.createElement("div");
@@ -146,9 +165,9 @@ refreshButton.addEventListener("click", handleRefreshButtonClick);
 // Initial load
 loadTwitchContent();
 
-// Automatically refresh streams every 10 minutes
+// Automatically refresh streams every minute (when popup is "open")
 setInterval(() => {
     refreshTwitchStreams();
     loadTwitchContent();
-}, 10000);
-/*10000 = Normal (10 sec), 1000 * 600 for Dev (10 min)*/
+}, 1000 * 60);
+/*}, 100000 * 60);*/

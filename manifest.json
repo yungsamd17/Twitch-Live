@@ -12,15 +12,18 @@
         "128": "src/assets/icons/icon-128.png"
     },
     "permissions": [
+        "alarms",
         "storage",
         "identity"
     ],
     "background": {
       "scripts": [
+        "src/js/background.js",
         "src/js/auth.js",
         "src/js/streams.js",
         "src/js/util.js"
-      ]
+      ],
+      "persistent": false
     },
     "browser_action":
     {
