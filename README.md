@@ -22,7 +22,7 @@ TODO List _(For v1.0 Release)_:
 
 Main Window:
 
-![screenshot1](https://i.imgur.com/dqpNDsp.png)
+![screenshot1](https://i.imgur.com/gPxSIsQ.png)
 
 Login screen:
 
@@ -30,7 +30,7 @@ Login screen:
 
 Settings:
 
-![screenshot2](https://i.imgur.com/uvLcuzS.png)
+![screenshot2](https://i.imgur.com/k76eGKd.png)
 
 ## Credits
 
