@@ -1,0 +1,111 @@
+/*  NORMAL LINK TOOLTIP  */
+
+[aria-label] {
+    position: relative;
+}
+
+[aria-label] {
+    position: relative;
+}
+
+[aria-label]:after {
+    content: attr(aria-label);
+    display: none;
+    position: absolute;
+    top: 150%;
+    right: 0%;
+    z-index: 500;
+    pointer-events: none;
+    padding: 8px 10px;
+    line-height: 15px;
+    white-space: nowrap;
+    text-decoration: none;
+    text-indent: 0;
+    overflow: visible;
+    font-size: .9em;
+    font-weight: normal;
+    color: #fff;
+    background-color: #000;
+    border-radius: 5px;
+    box-shadow: 1px 2px 6px rgba(0,0,0,0.3);
+}
+
+[aria-label]:hover:after, [aria-label]:focus:after {
+    display: block;
+}
+
+
+
+/*  TWITCH LIVE FOLLOWING TOOLTIP  */
+
+[aria-label-2] {
+    position: relative;
+}
+
+[aria-label-2] {
+    position: relative;
+}
+
+[aria-label-2]:after {
+    content: attr(aria-label-2);
+    display: none;
+    position: absolute;
+    top: 150%;
+    right: -132%;
+    z-index: 500;
+    pointer-events: none;
+    padding: 8px 10px;
+    line-height: 15px;
+    white-space: nowrap;
+    text-decoration: none;
+    text-indent: 0;
+    overflow: visible;
+    font-size: .9em;
+    font-weight: normal;
+    color: #fff;
+    background-color: #000;
+    border-radius: 5px;
+    box-shadow: 1px 2px 6px rgba(0,0,0,0.3);
+}
+
+[aria-label-2]:hover:after, [aria-label-2]:focus:after {
+    display: block;
+}
+
+
+
+/*  REFRESH BUTTON TOOLTIP  */
+
+[aria-label-3] {
+    position: relative;
+}
+
+[aria-label-3] {
+    position: relative;
+}
+
+[aria-label-3]:after {
+    content: attr(aria-label-3);
+    display: none;
+    position: absolute;
+    top: 150%;
+    left: -110%;
+    z-index: 500;
+    pointer-events: none;
+    padding: 8px 10px;
+    line-height: 15px;
+    white-space: nowrap;
+    text-decoration: none;
+    text-indent: 0;
+    overflow: visible;
+    font-size: .9em;
+    font-weight: normal;
+    color: #fff;
+    background-color: #000;
+    border-radius: 5px;
+    box-shadow: 1px 2px 6px rgba(0,0,0,0.3);
+}
+
+[aria-label-3]:hover:after, [aria-label-3]:focus:after {
+    display: block;
+}

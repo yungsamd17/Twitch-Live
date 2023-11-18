@@ -1,0 +1,47 @@
+/*  AUTH (LOGIN) VIEW  */
+
+.auth-header {
+    font-size: 2.2rem;
+    font-weight: 900;
+    text-align: center;
+    color: #fff;
+    margin: 15px 0;
+    margin-top: 150px;
+    padding: 0 10px;
+    user-select: none;
+}
+
+.auth-text {
+    text-align: center;
+    color: #a3a3a3;
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+    padding: 0 40px;
+}
+
+.auth-text-after {
+    color: #484851;
+    margin-top: 5px;
+}
+
+.auth-button {
+    margin: 10px;
+    border-radius: 8px;
+    font-size: 1rem;
+    padding: 10px;
+    background-color: #9146ff;
+    color: #fff;
+    border: 0;
+    font-weight: bold;
+    width: 45%;
+    align-self: center;
+    cursor: pointer;
+}
+
+.auth-button:hover {
+    background-color: #772ce8;
+}
+
+.auth-button:active {
+    background-color: #5c16c5;
+}

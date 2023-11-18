@@ -1,0 +1,29 @@
+/*  SETTINGS TAB (PAGE)  */
+
+.settings-header {
+    height: 40px;
+    border-bottom: 1px solid #000;
+    font-weight: bold;
+    font-size: 1rem;
+    text-align: center
+}
+
+.setting-container {
+    height: 40px;
+    border-bottom: 1px solid #000;
+    border-top: 1px solid #242429;
+    color: #fff;
+    font-weight: bold;
+    font-size: 1rem;
+    padding: 0 12px 0 10px;
+}
+
+.setting-container:hover {
+    background-color: #242429;
+}
+
+.text-container {
+    display: inline-flex;
+    align-items: center;
+    height: 100%;
+}
