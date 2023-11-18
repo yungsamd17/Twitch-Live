@@ -13,6 +13,7 @@ TODO List _(For v1.0 Release)_:
 - [x] Fix Navbar position
 - [x] Add Scrollbar
 - [x] Link tooltips
+- [x] Extension Badge - Showing # of channels live
 - [ ] Settings option - Open in New Tab [Make it functional]
 - [ ] Settings option - Open in Player [Make it functional]
 - [ ] Settings option - Log out
