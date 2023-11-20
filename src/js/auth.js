@@ -1,5 +1,5 @@
 const TWITCH_APP_TOKEN = "veho7ytn25l8a9dpgfkk79sqgey43j";
-const redirectURL = chrome.identity.getRedirectURL();
+const redirectURL = "https://yungsamd17.github.io/Twitch-Live/twitch-auth-redirect/";
 
 const handleTwitchUnauthorized = () => {
   chrome.storage.local.set({
