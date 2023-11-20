@@ -23,7 +23,6 @@ body {
 
 
 
-
 /*  NAVBAR  */
 
 .navbar {
@@ -82,7 +81,6 @@ body {
 
 
 
-
 /*  NAVBAR LINKS/BUTTONS  */
 
 .navbar-link {
@@ -97,17 +95,16 @@ body {
     display: inline;
     align-content: center;
     font-size: 0.9rem;
+    cursor: pointer;
     user-select: none;
 }
 
 .navbar-link:hover {
     background-color: #9146ff;
-    box-shadow: 0 0 0 4px rgba(145, 70, 255, .3);
 }
 
 .navbar-link:active {
-    background-color: #9146ff;
-    box-shadow: 0 0 0 5px rgba(145, 70, 255, .5);
+    background-color: #772ce8;
 }
 
 .navbar-icon-link {

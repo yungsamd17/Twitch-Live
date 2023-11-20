@@ -30,7 +30,7 @@
     box-shadow: 1px 2px 6px rgba(0,0,0,0.3);
 }
 
-[aria-label]:hover:after, [aria-label]:focus:after {
+[aria-label]:hover:after {
     display: block;
 }
 
@@ -68,7 +68,7 @@
     box-shadow: 1px 2px 6px rgba(0,0,0,0.3);
 }
 
-[aria-label-2]:hover:after, [aria-label-2]:focus:after {
+[aria-label-2]:hover:after {
     display: block;
 }
 
@@ -106,6 +106,6 @@
     box-shadow: 1px 2px 6px rgba(0,0,0,0.3);
 }
 
-[aria-label-3]:hover:after, [aria-label-3]:focus:after {
+[aria-label-3]:hover:after {
     display: block;
 }

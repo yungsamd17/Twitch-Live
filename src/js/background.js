@@ -1,7 +1,7 @@
 // Define a variable to store the number of live channels
 let liveChannelsCount = 0;
 
-// Function to update the badge text and color on the extension icon
+// Function to update the badge text and color
 const updateBadge = () => {
     const badgeText = liveChannelsCount > 0 ? liveChannelsCount.toString() : "";
     chrome.browserAction.setBadgeText({ text: badgeText });

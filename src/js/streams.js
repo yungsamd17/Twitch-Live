@@ -1,5 +1,3 @@
-chrome.storage.local.set({ selectedPlatform: "TWITCH" });
-
 const getLiveTwitchStreams = async () => {
   const storageItems = [
     "twitchIsValidated",

@@ -36,10 +36,9 @@ const authScreen = () => {
 
     const authLoginText = document.createElement("span");
     authLoginText.setAttribute("class", "auth-text auth-text-after");
-    authLoginText.innerHTML = "After logging in repoen the extension.";
+    authLoginText.innerHTML = "After logging in reopen the extension.";
     contentSection.appendChild(authLoginText);
 };
-
 
 const formatViewerCount = (count) => {
     // Format viewer count with space-separated thousands
@@ -54,6 +53,32 @@ const updateBadge = () => {
     const badgeText = liveChannelsCount > 0 ? liveChannelsCount.toString() : "";
     chrome.browserAction.setBadgeText({ text: badgeText });
     chrome.browserAction.setBadgeBackgroundColor({ color: "#67676b" });
+};
+
+// Open stream in new window and player settings
+const openStream = (stream) => {
+    const openInPlayerToggle = document.getElementById("openInPlayerToggle");
+    const openInNewWindowToggle = document.getElementById("openInNewWindowToggle");
+
+    if (openInPlayerToggle && openInNewWindowToggle) {
+        const openInPlayer = openInPlayerToggle.checked;
+        const openInNewWindow = openInNewWindowToggle.checked;
+
+        const baseStreamUrl = `https://www.twitch.tv/${stream.channelName}`;
+        let url;
+
+        if (openInPlayer) {
+            url = `https://player.twitch.tv/?channel=${stream.channelName}&parent=twitch-live`;
+        } else {
+            url = baseStreamUrl;
+        }
+
+        if (openInNewWindow) {
+            chrome.windows.create({ url, type: 'popup' });
+        } else {
+            chrome.tabs.create({ url });
+        }
+    }
 };
 
 const loadTwitchContent = () => {
@@ -78,14 +103,7 @@ const loadTwitchContent = () => {
                 const streamList = filteredStreams.map((stream) => {
                     const streamContainer = document.createElement("div");
                     streamContainer.setAttribute("class", "stream-container");
-                    streamContainer.onclick = () => {
-                        chrome.tabs.create({
-                            url: `https://player.twitch.tv/?channel=${stream.channelName}&parent=twitch-live`,
-                            // Stream links:
-                            // default - https://www.twitch.tv/${stream.channelName}
-                            // player - https://player.twitch.tv/?channel=${stream.channelName}&parent=twitch-live
-                        });
-                    };
+                    streamContainer.onclick = () => openStream(stream);
 
                     const streamThumbnail = document.createElement("div");
                     streamThumbnail.setAttribute("class", "stream-thumbnail");
@@ -119,7 +137,7 @@ const loadTwitchContent = () => {
                     const title = document.createElement("span");
                     title.setAttribute("class", "stream-title");
                     title.innerHTML = stream.title;
-                    title.setAttribute("title", stream.title); // Stream title tooltip
+                    title.setAttribute("title", stream.title);
                     streamDetails.appendChild(title);
 
                     return streamContainer;
@@ -130,7 +148,6 @@ const loadTwitchContent = () => {
                 // Update the badge count based on the latest data
                 liveChannelsCount = res.twitchStreams.length;
 
-                // Directly call the updateBadge function from main.js
                 updateBadge();
             } else {
                 // Display a message when no matching results are found
@@ -156,10 +173,8 @@ const handleRefreshButtonClick = () => {
     loadTwitchContent();
 };
 
-// Event listener for the search input
+// Event listeners for the search input and refresh button
 filterInput.addEventListener("input", loadTwitchContent);
-
-// Event listener for the refresh button
 refreshButton.addEventListener("click", handleRefreshButtonClick);
 
 // Initial load

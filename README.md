@@ -1,38 +1,26 @@
-# <img src="src/assets/icons/icon-48.png" width="38" align="left" /> Sam's Twitch Live
+<a href="https://github.com/yungsamd17/Twitch-Live">
+	<img width="960" alt="Sam's Twitch Live" src="https://github.com/yungsamd17/Twitch-Live/assets/64147848/949efb02-8478-41f7-b65b-c72188db168f">
+</a>
 
-Sam's Twitch Live, shows all followed live channels on [Twitch.tv](https://twitch.tv)
-
+> Your Following Channels, Constantly in View.
 
 TODO List _(For v1.0 Release)_:
 
 - [x] Search
-- [x] Navbar links
-- [x] Settings page - Base
+- [x] Scrollbar
+- [x] Link tooltips
 - [x] Settings options togles
 - [x] Refresh button - Refresh Streams / Clear Search input
-- [x] Fix Navbar position
-- [x] Add Scrollbar
-- [x] Link tooltips
 - [x] Extension Badge - Showing # of channels live
-- [ ] Settings option - Open in New Tab [Make it functional]
-- [ ] Settings option - Open in Player [Make it functional]
-- [ ] Settings option - Log out
-- [ ] More Settings options
-
-## Screenshots
-
-Main Window:
-
-![screenshot1](https://i.imgur.com/gPxSIsQ.png)
-
-Login screen:
-
-![screensho3](https://i.imgur.com/56Dc0uL.png)
-
-Settings:
-
-![screenshot2](https://i.imgur.com/k76eGKd.png)
+- [x] Settings option - Open in New Tab, Open in Player [Make them functional]
+- [ ] Settings option - Set custom refresh intervar of streams in the background
+- [ ] Settings option - Log out option
+- [ ] Polish, cleanup
 
 ## Credits
 
 Forked from [MatthewMoye/who-is-live](https://github.com/MatthewMoye/who-is-live)
+
+## License
+
+This software is released under the terms of the MIT License. See the [LICENSE](https://github.com/yungsamd17/Twitch-Live/blob/main/LICENSE) file for further information.
