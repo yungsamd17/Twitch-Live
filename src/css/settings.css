@@ -71,7 +71,7 @@
     width: 100%;
 }
 
-/*  Option container  */
+/*  OPTION CONTAINER  */
 .option-container {
     height: 40px;
     font-size: 1rem;
@@ -85,11 +85,80 @@
     font-weight: bold;
 }
 
+/*  TOGGLE SWITCH  */
+.slider-container {
+    float: right;
+    display: inline-flex;
+    align-items: center;
+    height: 100%;
+}
+
+.switch {
+    position: relative;
+    width: 40px;
+    height: 22px;
+    float: right;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #0e0e10;
+    -webkit-transition: .1s;
+    transition: .2s;
+    border-radius: 34px;
+    outline: 2px solid #999999;
+}
+
+.slider:hover {
+    outline: 2px solid #fff;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 4px;
+    bottom: 3px;
+    background-color: #999999;
+    -webkit-transition: .1s;
+    transition: .1s;
+    border-radius: 50%;
+}
+
+.slider:hover::before {
+    background-color: #fff;
+}
+
+input:checked+.slider {
+    outline: 2px solid #9146ff;
+}
+
+input:checked+.slider:before {
+    -webkit-transform: translateX(20px);
+    -ms-transform: translateX(20px);
+    transform: translateX(16px);
+    background-color: #9146ff;
+}
+
+/*  SETTINGS FOOTER  */
 .settings-footer {
     display: flex;
     justify-content: center;
 }
 
+/*  SETTINGS LINK  */
 .settings-link {
     position: absolute;
     bottom: 0;
