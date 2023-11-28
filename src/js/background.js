@@ -23,8 +23,8 @@ const updateStreamsPeriodically = () => {
     });
 };
 
-// Update streams update every 10 minutes
-chrome.alarms.create("updateStreamsAlarm", { periodInMinutes: 10 });
+// Update streams update every 5 minutes
+chrome.alarms.create("updateStreamsAlarm", { periodInMinutes: 5 });
 chrome.alarms.onAlarm.addListener(updateStreamsPeriodically);
 
 // Listen for messages from the popup
