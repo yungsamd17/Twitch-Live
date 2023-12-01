@@ -7,9 +7,9 @@
     "homepage_url": "https://github.com/yungsamd17/Twitch-Live",
     "icons":
     {
-        "16": "src/assets/icons/icon-16.png",
-        "48": "src/assets/icons/icon-48.png",
-        "128": "src/assets/icons/icon-128.png"
+        "16": "src/icons/icon-16.png",
+        "48": "src/icons/icon-48.png",
+        "128": "src/icons/icon-128.png"
     },
     "permissions": [
         "alarms",
