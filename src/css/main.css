@@ -168,6 +168,7 @@ body {
     border-radius: 4px;
     width: 80px;
     height: 45px;
+    background-color: #242429;
 }
 
 .stream-container:hover .stream-thumbnail img {
