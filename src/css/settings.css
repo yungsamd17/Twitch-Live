@@ -116,7 +116,7 @@
     bottom: 0;
     background-color: #0e0e10;
     -webkit-transition: .1s;
-    transition: .2s;
+    transition: .1s;
     border-radius: 34px;
     outline: 2px solid #999999;
 }
