@@ -2,7 +2,7 @@
     "manifest_version": 2,
     "name": "Sam's Twitch Live",
     "description": "Sam's Twitch Live: Your Following Channels, Constantly in View.",
-    "version": "0.1.5",
+    "version": "0.1.6",
     "author": "yungsamd17",
     "homepage_url": "https://github.com/yungsamd17/Twitch-Live",
     "icons":
