@@ -96,7 +96,8 @@ const loadTwitchContent = () => {
             const filteredStreams = res.twitchStreams.filter(
                 (stream) =>
                     stream.channelName.toLowerCase().includes(query) ||
-                    stream.title.toLowerCase().includes(query)
+                    stream.title.toLowerCase().includes(query) ||
+                    stream.gameName.toLowerCase().includes(query)
             );
 
             if (filteredStreams.length > 0) {
