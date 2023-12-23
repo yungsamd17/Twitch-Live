@@ -36,8 +36,12 @@
     display: flex;
 }
 
+.settings-modal-body {
+    color: #fff;
+    width: 100%;
+}
+
 .settings-header {
-    font-weight: bold;
     font-size: 1rem;
     text-align: center;
     border-bottom: 1px solid #242429;
@@ -65,11 +69,6 @@
 .settings-close-btn:active,
 .settings-close-btn:focus {
     color: #fff;
-}
-
-.settings-modal-body {
-    color: #fff;
-    width: 100%;
 }
 
 /*  OPTION CONTAINER  */
@@ -171,7 +170,6 @@ input:checked+.slider:before {
     font-weight: bold;
     text-decoration: none;
     user-select: none;
-
 }
 
 .settings-link:hover {
