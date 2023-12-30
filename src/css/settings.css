@@ -84,6 +84,7 @@
     height: 100%;
     font-weight: bold;
     cursor: default;
+    user-select: none;
 }
 
 /*  TOGGLE SWITCH  */
