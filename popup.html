@@ -24,8 +24,7 @@
 
         <!-- Navbar link/button -->
         <div class="link-container">
-            <a class="navbar-link navbar-icon-link" aria-label-2="Twitch Live Following"
-                href="https://www.twitch.tv/directory/following/live" target="_blank">
+            <a class="navbar-link navbar-icon-link" aria-label-2="Twitch Live Following" href="https://www.twitch.tv/directory/following/live" target="_blank">
                 <i class="fa-brands fa-twitch"></i></a>
             <button class="navbar-link navbar-icon-link" id="settingsBtn" aria-label="Settings">
                 <i class="fa-solid fa-gear"></i></button>
@@ -55,7 +54,18 @@
                 <!-- Settings options -->
                 <div class="option-container">
                     <div class="text-container">
-                        <span>Open stream in a new window</span>
+                        <span>Open in New Tab</span>
+                    </div>
+                    <div class="slider-container">
+                        <label class="switch">
+                            <input type="checkbox" id="openInNewTabToggle">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="option-container">
+                    <div class="text-container">
+                        <span>Open in a New Window</span>
                     </div>
                     <div class="slider-container">
                         <label class="switch">
@@ -66,7 +76,7 @@
                 </div>
                 <div class="option-container">
                     <div class="text-container">
-                        <span>Open stream in Player</span>
+                        <span>Open Stream in Player</span>
                     </div>
                     <div class="slider-container">
                         <label class="switch">
@@ -78,8 +88,13 @@
 
                 <!-- Settings footer link -->
                 <div class="settings-footer">
-                    <a class="settings-link" href="https://github.com/yungsamd17/Twitch-Live" target="_blank">
-                        <i class="fab fa-github"></i> GitHub Repo</a>
+                    <div class="footer-container">
+                        <a class="settings-link" href="https://github.com/yungsamd17/Twitch-Live" target="_blank">
+                            <i class="fab fa-github"></i> GitHub</a>
+                        <a class="settings-link" href="https://ko-fi.com/yungsamd17" target="_blank">
+                            <i class="fa-solid fa-heart"></i> Donate</a>
+                        <button id="logoutBtn" class="logout-button"><i class="fa-solid fa-power-off"></i> Logout</button>
+                    </div>
                 </div>
             </div>
         </div>

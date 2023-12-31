@@ -157,27 +157,60 @@ input:checked+.slider:before {
 /*  SETTINGS FOOTER  */
 .settings-footer {
     display: flex;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    margin-bottom: 18px;
+}
+
+.footer-container {
+    display: flex;
+    height: 30px;
+    width: 100%;
+    font-size: 1rem;
+    padding: 0 18px 0 18px;
     justify-content: center;
 }
 
 /*  SETTINGS LINK  */
 .settings-link {
-    position: absolute;
-    bottom: 0;
-    margin: 10px 0;
+    width: 22%;
     padding: 7px;
     border-radius: 5px;
+    background-color: #38383f;
     color: #fff;
-    font-size: 0.9rem;
-    font-weight: bold;
     text-decoration: none;
     user-select: none;
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+    margin-right: 10px;
 }
 
 .settings-link:hover {
-    background-color: #38383f;
+    background-color: #9146ff;
 }
 
 .settings-link:active {
-    background-color: #484851;
+    background-color: #772ce8;
+}
+
+/* Logout button styles */
+.logout-button {
+    width: 25%;
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.logout-button:hover {
+    background-color: #eb6e60;
+}
+
+.logout-button:active {
+    background-color: #e3301c;
 }
