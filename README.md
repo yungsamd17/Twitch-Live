@@ -11,10 +11,11 @@ TODO List _(For v1.0 Release)_:
 - [x] Link tooltips
 - [x] Settings options togles
 - [x] Refresh button - Refresh Streams / Clear Search input
-- [x] Extension Badge - Showing # of channels live
-- [x] Settings option - Open in New Tab, Open in Player [Make them functional]
-- [ ] Settings option - Set custom refresh intervar of streams in the background
-- [ ] Settings option - Log out option
+- [x] Extension Badge - Showing # number of channels live
+- [x] Settings option - Open in New Tab, Open in New Window and Open in Player
+- [x] Settings option - Log out option
+- [ ] ~~Settings option - Set custom refresh intervar of streams in the background~~
+- [ ] Migrate from manifest V2 to manifest V3
 - [ ] Polish, cleanup
 
 ## Credits
