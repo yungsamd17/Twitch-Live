@@ -169,12 +169,12 @@ input:checked+.slider:before {
     width: 100%;
     font-size: 1rem;
     padding: 0 18px 0 18px;
-    justify-content: center;
+    justify-content: space-between;
 }
 
 /*  SETTINGS LINK  */
 .settings-link {
-    width: 22%;
+    width: 26%;
     padding: 7px;
     border-radius: 5px;
     background-color: #38383f;
@@ -184,7 +184,7 @@ input:checked+.slider:before {
     text-align: center;
     font-size: 14px;
     font-weight: bold;
-    margin-right: 10px;
+    /* margin-right: 10px; */
 }
 
 .settings-link:hover {
@@ -197,7 +197,7 @@ input:checked+.slider:before {
 
 /* Logout button styles */
 .logout-button {
-    width: 25%;
+    width: 30%;
     background-color: #e74c3c;
     color: #fff;
     border: none;
