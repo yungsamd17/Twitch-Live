@@ -59,12 +59,10 @@ const updateBadge = () => {
 const openStream = (stream) => {
     const openInPlayerToggle = document.getElementById("openInPlayerToggle");
     const openInNewWindowToggle = document.getElementById("openInNewWindowToggle");
-    const openInNewTabToggle = document.getElementById("openInNewTabToggle");
 
-    if (openInPlayerToggle && openInNewWindowToggle && openInNewTabToggle) {
+    if (openInPlayerToggle && openInNewWindowToggle) {
         const openInPlayer = openInPlayerToggle.checked;
         const openInNewWindow = openInNewWindowToggle.checked;
-        const openInNewTab = openInNewTabToggle.checked;
 
         const baseStreamUrl = `https://www.twitch.tv/${stream.channelName}`;
         let url;
@@ -77,12 +75,9 @@ const openStream = (stream) => {
 
         if (openInNewWindow) {
             chrome.windows.create({ url, type: 'popup' });
-        } else if (openInNewTab) {
+        } else {
             // Open in a new tab
             chrome.tabs.create({ url });
-        } else {
-            // Open in the current tab
-            chrome.tabs.update({ url });
         }
     }
 };
