@@ -150,7 +150,7 @@ const loadTwitchContent = () => {
                 // Update the badge count based on the latest data
                 liveChannelsCount = res.twitchStreams.length;
 
-                updateBadge();
+                //updateBadge();
             } else {
                 // Display a message when no matching results are found
                 const noResultsMessage = document.createElement("div");
@@ -188,3 +188,12 @@ setInterval(() => {
     loadTwitchContent();
 }, 1000 * 60);
 /*}, 100000 * 60);*/
+
+
+chrome.runtime.onMessage.addListener((request) => {
+    if (request.message === "update-badge") {
+        const badgeText = request.liveChannelsCount > 0 ? request.liveChannelsCount.toString() : "";
+        chrome.action.setBadgeText({ text: badgeText });
+        chrome.action.setBadgeBackgroundColor({ color: "#67676b" });
+    }
+});

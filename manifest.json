@@ -1,8 +1,8 @@
 {
-    "manifest_version": 2,
+    "manifest_version": 3,
     "name": "Sam's Twitch Live",
     "description": "Sam's Twitch Live: Your Following Channels, Constantly in View.",
-    "version": "0.1.8",
+    "version": "0.3.8",
     "author": "yungsamd17",
     "homepage_url": "https://github.com/yungsamd17/Twitch-Live",
     "icons":
@@ -17,15 +17,9 @@
         "identity"
     ],
     "background": {
-      "scripts": [
-        "src/js/background.js",
-        "src/js/auth.js",
-        "src/js/streams.js",
-        "src/js/util.js"
-      ],
-      "persistent": false
+        "service_worker": "src/js/background.js"
     },
-    "browser_action":
+    "action":
     {
         "default_title": "Sam's Twitch Live",
         "default_popup": "popup.html"
