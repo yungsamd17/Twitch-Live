@@ -8,10 +8,9 @@ const setToggleSwitchStatus = (toggleId, status) => {
 };
 
 // Retrieve the stored settings on popup load
-chrome.storage.local.get(["openInPlayerToggle", "openInNewWindowToggle", "openInNewTabToggle"], (result) => {
+chrome.storage.local.get(["openInPlayerToggle", "openInNewWindowToggle"], (result) => {
     setToggleSwitchStatus("openInPlayerToggle", result.openInPlayerToggle !== undefined ? result.openInPlayerToggle : false);
     setToggleSwitchStatus("openInNewWindowToggle", result.openInNewWindowToggle !== undefined ? result.openInNewWindowToggle : false);
-    setToggleSwitchStatus("openInNewTabToggle", result.openInNewTabToggle !== undefined ? result.openInNewTabToggle : true);
 });
 
 // Listen for changes in the toggle switches and store the settings
@@ -23,10 +22,6 @@ document.getElementById("openInNewWindowToggle").addEventListener("change", func
     setToggleSwitchStatus("openInNewWindowToggle", this.checked);
 });
 
-document.getElementById("openInNewTabToggle").addEventListener("change", function () {
-    setToggleSwitchStatus("openInNewTabToggle", this.checked);
-});
-
 // Listen for changes in storage and update the toggle switches accordingly
 chrome.storage.onChanged.addListener((changes) => {
     if (changes.openInPlayerToggle !== undefined) {
@@ -35,18 +30,13 @@ chrome.storage.onChanged.addListener((changes) => {
     if (changes.openInNewWindowToggle !== undefined) {
         setToggleSwitchStatus("openInNewWindowToggle", changes.openInNewWindowToggle.newValue);
     }
-    if (changes.openInNewTabToggle !== undefined) {
-        setToggleSwitchStatus("openInNewTabToggle", changes.openInNewTabToggle.newValue);
-    }
 });
 
 // Log the toggle switch statuses
 const openInPlayerToggle = document.getElementById("openInPlayerToggle");
 const openInNewWindowToggle = document.getElementById("openInNewWindowToggle");
-const openInNewTabToggle = document.getElementById("openInNewTabToggle");
-console.log("Toggle Switch Status - Open in Player:", openInPlayerToggle.checked);
-console.log("Toggle Switch Status - Open in New Window:", openInNewWindowToggle.checked);
-console.log("Toggle Switch Status - Open in New Tab:", openInNewTabToggle.checked);
+/*console.log("Toggle Switch Status - Open in Player:", openInPlayerToggle.checked);
+console.log("Toggle Switch Status - Open in New Window:", openInNewWindowToggle.checked);*/
 
 
 // Settings Modal
