@@ -7,6 +7,7 @@ const launch = async () => {
         if (request.message === "fetch-twitch-auth-token") {
             const result = await getTwitchAuth();
             if (result === true && request.popup === true) {
+                await getLiveTwitchStreams();
                 await chrome.runtime.sendMessage({ message: "popup-auth-success" });
             }
         }
@@ -118,79 +119,79 @@ const getTwitchAuth = async () => {
 
 // Function to validate the Twitch access token
 const validateTwitchToken = async () => {
-    chrome.storage.local.get("twitchAccessToken", async (res) => {
-        const accessToken = res.twitchAccessToken;
-        if (!accessToken) return;
-        await fetch("https://id.twitch.tv/oauth2/validate", {
+    const res = await chrome.storage.local.get("twitchAccessToken");
+
+    const accessToken = res.twitchAccessToken;
+    if (!accessToken) return;
+
+    try {
+        let response = await fetch("https://id.twitch.tv/oauth2/validate", {
             headers: { Authorization: `Bearer ${accessToken}` },
-        })
-            .then((response) => response.json())
-            .then(async (response) => {
-                if (response.expires_in === 0) {
-                    handleTwitchUnauthorized();
-                } else {
-                    chrome.storage.local.set({
-                        twitchIsValidated: true,
-                        twitchUserId: response["user_id"],
-                    });
-                }
-            })
-            .catch((error) => {
-                handleTwitchUnauthorized();
-                console.error(error);
+        });
+        if (response.status !== 200) {
+            throw new Error(error);
+        }
+        response = await response.json();
+
+        if (response.expires_in === 0) {
+            handleTwitchUnauthorized();
+            throw new Error("Token expiry was 0.");
+        } else {
+            await chrome.storage.local.set({
+                twitchIsValidated: true,
+                twitchUserId: response["user_id"],
             });
-    });
-    return true;
+        }
+    } catch (error) {
+        handleTwitchUnauthorized();
+        console.error(error);
+    }
 };
-
-
 
 // Function to get live Twitch streams
 const getLiveTwitchStreams = async () => {
-
     const storageItems = [
         "twitchIsValidated",
         "twitchAccessToken",
         "twitchUserId",
     ];
 
-    chrome.storage.local.get(storageItems, (res) => {
-        if (!res.twitchIsValidated) return;
+    const res = await chrome.storage.local.get(storageItems);
+    if (!res.twitchIsValidated) return;
 
-        const followUrl = "https://api.twitch.tv/helix/streams/followed" + `?&first=100&user_id=${res.twitchUserId}`;
-        fetch(followUrl, {
+    const followUrl = "https://api.twitch.tv/helix/streams/followed" + `?&first=100&user_id=${res.twitchUserId}`;
+    try {
+        let response = await fetch(followUrl, {
             headers: {
                 Authorization: `Bearer ${res.twitchAccessToken}`,
                 "Client-ID": TWITCH_APP_TOKEN,
             },
-        }
-        ).then((response) => {
-            if (response.status !== 200) {
-                handleTwitchUnauthorized();
-                throw new Error("An error occurred");
-            }
-            return response.json();
-        })
-            .then((response) => {
-                chrome.storage.local.set({
-                    twitchStreams: response.data.map((stream) => ({
-                        gameName: stream["game_name"],
-                        thumbnail: stream["thumbnail_url"],
-                        title: stream["title"],
-                        channelName: stream["user_name"],
-                        viewerCount: stream["viewer_count"],
-                        liveTime: getTimePassed(stream["started_at"]),
-                    })),
-                });
+        });
 
-                chrome.storage.local.set({ liveChannelsCount: response.data.length }); // Store live channels count
-                updateBadge(); // Update badge
-            })
-            .catch((error) => {
-                handleTwitchUnauthorized();
-                console.error(error);
-            });
-    });
+        if (response.status !== 200) {
+            throw new Error("Response status: " + response.status);
+        }
+
+        response = await response.json();
+
+        await chrome.storage.local.set({
+            twitchStreams: response.data.map((stream) => ({
+                gameName: stream["game_name"],
+                thumbnail: stream["thumbnail_url"],
+                title: stream["title"],
+                channelName: stream["user_name"],
+                viewerCount: stream["viewer_count"],
+                liveTime: getTimePassed(stream["started_at"]),
+            })),
+        });
+
+        chrome.storage.local.set({ liveChannelsCount: response.data.length }); // Store live channels count
+        updateBadge(); // Update badge
+    } catch (error) {
+        handleTwitchUnauthorized();
+        console.error(error);
+    }
+    return true;
 };
 
 // Function to handle the periodic update of streams

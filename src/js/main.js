@@ -79,80 +79,79 @@ const openStream = (stream) => {
 
 const loadTwitchContent = async () => {
     const storageItems = ["twitchIsValidated", "twitchAccessToken", "twitchStreams"];
-    chrome.storage.local.get(storageItems, async (res) => {
-        // Always refresh Twitch streams when the popup is opened
-        await refreshTwitchStreams();
+    const res = await chrome.storage.local.get(storageItems);
 
-        if (authScreenPresent()) {
-            return; // Skip refreshing streams when authScreen is present
+    // Always refresh Twitch streams when the popup is opened
+    await refreshTwitchStreams();
+
+    if (authScreenPresent()) {
+        return; // Skip refreshing streams when authScreen is present
+    }
+
+    if (res.twitchStreams) {
+        const query = filterInput.value.toLowerCase();
+        const filteredStreams = res.twitchStreams.filter(
+            (stream) =>
+                stream.channelName.toLowerCase().includes(query) ||
+                stream.title.toLowerCase().includes(query) ||
+                stream.gameName.toLowerCase().includes(query)
+        );
+
+        if (filteredStreams.length > 0) {
+            const streamList = filteredStreams.map((stream) => {
+                const streamContainer = document.createElement("div");
+                streamContainer.setAttribute("class", "stream-container");
+                streamContainer.onclick = () => openStream(stream);
+
+                const streamThumbnail = document.createElement("div");
+                streamThumbnail.setAttribute("class", "stream-thumbnail");
+                streamContainer.appendChild(streamThumbnail);
+
+                const uptime = document.createElement("div");
+                uptime.setAttribute("class", "stream-uptime");
+                uptime.innerHTML = `${stream.liveTime}`;
+                streamThumbnail.appendChild(uptime);
+
+                const thumbnail = document.createElement("img");
+                thumbnail.src = stream.thumbnail
+                    .replace("{width}", "128")
+                    .replace("{height}", "72");
+                streamThumbnail.appendChild(thumbnail);
+
+                const streamDetails = document.createElement("div");
+                streamDetails.setAttribute("class", "stream-details");
+                streamContainer.appendChild(streamDetails);
+
+                const channel = document.createElement("span");
+                channel.setAttribute("class", "stream-channel-name");
+                channel.innerHTML = stream.channelName;
+                streamDetails.appendChild(channel);
+
+                const categoryAndViewCount = document.createElement("span");
+                categoryAndViewCount.setAttribute("class", "stream-game-and-viewers");
+                categoryAndViewCount.innerHTML = `${stream.gameName} - ${formatViewerCount(stream.viewerCount)} viewers`;
+                streamDetails.appendChild(categoryAndViewCount);
+
+                const title = document.createElement("span");
+                title.setAttribute("class", "stream-title");
+                title.innerHTML = stream.title;
+                title.setAttribute("title", stream.title);
+                streamDetails.appendChild(title);
+
+                return streamContainer;
+            });
+
+            contentSection.replaceChildren(...streamList);
+        } else {
+            // Display a message when no matching results are found
+            const noResultsMessage = document.createElement("div");
+            noResultsMessage.setAttribute("class", "no-search-results");
+            noResultsMessage.innerHTML = "No matching Search results found.";
+            contentSection.replaceChildren(noResultsMessage);
         }
-
-        if (res.twitchStreams) {
-            const query = filterInput.value.toLowerCase();
-            const filteredStreams = res.twitchStreams.filter(
-                (stream) =>
-                    stream.channelName.toLowerCase().includes(query) ||
-                    stream.title.toLowerCase().includes(query) ||
-                    stream.gameName.toLowerCase().includes(query)
-            );
-
-            if (filteredStreams.length > 0) {
-                const streamList = filteredStreams.map((stream) => {
-                    const streamContainer = document.createElement("div");
-                    streamContainer.setAttribute("class", "stream-container");
-                    streamContainer.onclick = () => openStream(stream);
-
-                    const streamThumbnail = document.createElement("div");
-                    streamThumbnail.setAttribute("class", "stream-thumbnail");
-                    streamContainer.appendChild(streamThumbnail);
-
-                    const uptime = document.createElement("div");
-                    uptime.setAttribute("class", "stream-uptime");
-                    uptime.innerHTML = `${stream.liveTime}`;
-                    streamThumbnail.appendChild(uptime);
-
-                    const thumbnail = document.createElement("img");
-                    thumbnail.src = stream.thumbnail
-                        .replace("{width}", "128")
-                        .replace("{height}", "72");
-                    streamThumbnail.appendChild(thumbnail);
-
-                    const streamDetails = document.createElement("div");
-                    streamDetails.setAttribute("class", "stream-details");
-                    streamContainer.appendChild(streamDetails);
-
-                    const channel = document.createElement("span");
-                    channel.setAttribute("class", "stream-channel-name");
-                    channel.innerHTML = stream.channelName;
-                    streamDetails.appendChild(channel);
-
-                    const categoryAndViewCount = document.createElement("span");
-                    categoryAndViewCount.setAttribute("class", "stream-game-and-viewers");
-                    categoryAndViewCount.innerHTML = `${stream.gameName} - ${formatViewerCount(stream.viewerCount)} viewers`;
-                    streamDetails.appendChild(categoryAndViewCount);
-
-                    const title = document.createElement("span");
-                    title.setAttribute("class", "stream-title");
-                    title.innerHTML = stream.title;
-                    title.setAttribute("title", stream.title);
-                    streamDetails.appendChild(title);
-
-                    return streamContainer;
-                });
-
-                contentSection.replaceChildren(...streamList);
-            } else {
-                // Display a message when no matching results are found
-                const noResultsMessage = document.createElement("div");
-                noResultsMessage.setAttribute("class", "no-search-results");
-                noResultsMessage.innerHTML = "No matching Search results found.";
-                contentSection.replaceChildren(noResultsMessage);
-            }
-        } else if (!res.twitchIsValidated || !res.twitchAccessToken) {
-            authScreen();
-        }
-    });
-    return true;
+    } else if (!res.twitchIsValidated || !res.twitchAccessToken) {
+        authScreen();
+    }
 };
 
 const refreshTwitchStreams = async () => {
@@ -171,18 +170,18 @@ refreshButton.addEventListener("click", handleRefreshButtonClick);
 
 // Initial load
 addEventListener("DOMContentLoaded", async () => { 
-    await loadTwitchContent(); 
-
+    await loadTwitchContent();
     if (authScreenPresent()) return;
-
     setupAutoRefresh();
 });
 
 const setupAutoRefresh = () => {
     // Automatically refresh streams every minute (when popup is "open")
-    setInterval(async () => {
+    window.setInterval(async () => {
         await loadTwitchContent();
-    }, 1000 * 60);
+    }, 1000);
+
+    return true;
 };
 
 // Reload popup on successful authentication
@@ -195,12 +194,7 @@ chrome.runtime.onMessage.addListener(async (request) => {
         // Show the navbar
         setNavbar(true);
 
-        // Wait a bit to ensure that the Twitch auth is valid
-        await new Promise(resolve => setTimeout(resolve, 500));
-        
         await loadTwitchContent();
         setupAutoRefresh();
-
-        // window.location.reload();
     }
 });
