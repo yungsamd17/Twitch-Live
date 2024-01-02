@@ -33,7 +33,7 @@ Forked from [MatthewMoye/who-is-live](https://github.com/MatthewMoye/who-is-live
 
 ### Contributions
 
-- [**xezrunner**](https://github.com/xezrunner) For helping with the push to v1.0 release stage with migration to Manifest V3.
+- [**xezrunner**](https://github.com/xezrunner) For helping with the push to v1.0 release stage, with migration to Manifest V3.
 
 ## License
 
