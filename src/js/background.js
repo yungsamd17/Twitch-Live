@@ -1,50 +1,51 @@
 importScripts('util.js');
 
+// Set up listeners and alarms: 
+//
+// Listen for messages to fetch Twitch auth token
+chrome.runtime.onMessage.addListener(async (request) => {
+    if (request.message === "fetch-twitch-auth-token") {
+        const result = await getTwitchAuth();
+        if (result === true && request.popup === true) {
+            await getLiveTwitchStreams();
+            await chrome.runtime.sendMessage({ message: "popup-auth-success" });
+        }
+    }
+    return true;
+});
+
+// Listen for messages to refresh Twitch streams
+chrome.runtime.onMessage.addListener(async (request) => {
+    if (request.message === "refresh-twitch-streams") {
+        console.log("Refreshing Twitch streams...");
+        await getLiveTwitchStreams();
+    }
+    return true;
+});
+
+// Create an alarm to validate Twitch token every hour
+chrome.alarms.onAlarm.addListener((alarm) => {
+    if (alarm.name === "validateTwitchTokenAlarm") {
+        validateTwitchToken();
+    }
+});
+chrome.alarms.create("validateTwitchTokenAlarm", { periodInMinutes: 60 });
+
+// Update streams update every 5 minutes
+chrome.alarms.onAlarm.addListener((alarm) => {
+    if (alarm.name === "updateStreamsAlarm") {
+        updateStreamsPeriodically();
+    }
+});
+chrome.alarms.create("updateStreamsAlarm", { periodInMinutes: 5 });
+
 // Set up message listeners and refresh data on browser startup and extension reload (dev/unpacked)
 const launch = async () => {
-    // Listen for messages to fetch Twitch auth token
-    chrome.runtime.onMessage.addListener(async (request) => {
-        if (request.message === "fetch-twitch-auth-token") {
-            const result = await getTwitchAuth();
-            if (result === true && request.popup === true) {
-                await getLiveTwitchStreams();
-                await chrome.runtime.sendMessage({ message: "popup-auth-success" });
-            }
-        }
-        return true;
-    });
-
-    // Listen for messages to refresh Twitch streams
-    chrome.runtime.onMessage.addListener(async (request) => {
-        if (request.message === "refresh-twitch-streams") {
-            console.log("Refreshing Twitch streams...");
-            await getLiveTwitchStreams();
-        }
-        return true;
-    });
-
-    // Create an alarm to validate Twitch token every hour
-    chrome.alarms.onAlarm.addListener((alarm) => {
-        if (alarm.name === "validateTwitchTokenAlarm") {
-            validateTwitchToken();
-        }
-    });
-    chrome.alarms.create("validateTwitchTokenAlarm", { periodInMinutes: 60 });
-
-    // Update streams update every 5 minutes
-    chrome.alarms.onAlarm.addListener((alarm) => {
-        if (alarm.name === "updateStreamsAlarm") {
-            updateStreamsPeriodically();
-        }
-    });
-    chrome.alarms.create("updateStreamsAlarm", { periodInMinutes: 5 });
-
     // NOTE: it is necessary to await these, otherwise the functions would run in parallel, before the streams are fetched.
     await validateTwitchToken();
     await getLiveTwitchStreams();
     await updateBadge();
 }
-
 chrome.runtime.onStartup.addListener(async () => launch());
 chrome.runtime.onInstalled.addListener(async () => launch());
 
