@@ -4,24 +4,37 @@
 
 > Your Following Channels, Constantly in View.
 
-TODO List _(For v1.0 Release)_:
+**Sam's Twitch Live** is your ultimate companion for staying connected with your favorite Twitch streams.
+This extension brings the channels you follow to the forefront, providing a seamless viewing experience right from your browser.
 
-- [x] Search
-- [x] Scrollbar
-- [x] Link tooltips
-- [x] Settings options togles
-- [x] Refresh button - Refresh Streams / Clear Search input
-- [x] Extension Badge - Showing # number of channels live
-- [x] Settings option - Open in New Tab, Open in New Window and Open in Player
-- [x] Settings option - Log out option
-- [ ] ~~Settings option - Set custom refresh intervar of streams in the background~~
-- [ ] Migrate from manifest V2 to manifest V3
-- [ ] Polish, cleanup
+### Key Features
+- Live Following Channels: Keep track of the live channels you follow on Twitch with ease.
+- Customizable Viewing Options: Tailor your viewing experience by choosing to open streams in a new window or a new tab.
+- Quick Search: Effortlessly find your preferred streams with the built-in search functionality.
+
+## Install
+
+Extension not yet published.
+
+<a href="https://github.com/yungsamd17/Twitch-Live">
+	<img src="https://raw.githubusercontent.com/alrra/browser-logos/main/src/chrome/chrome.svg" width="48" alt="Chrome" valign="middle"> <b>Chrome</b>
+</a>
+or chromium-based browsers (e.g. Brave, Edge, Opera)
+
+### How to Use
+1. Log in with your Twitch account to authenticate the extension.
+2. Explore your live following channels directly from the extension popup.
+3. Customize your viewing preferences in the settings for an optimal experience.
+4. Enjoy uninterrupted Twitch streaming without leaving your Chrome browser.
 
 ## Credits
 
 Forked from [MatthewMoye/who-is-live](https://github.com/MatthewMoye/who-is-live)
 
+### Contributions
+
+- [**xezrunner**](https://github.com/xezrunner) For helping with the push to v1.0 release stage with migration to Manifest V3.
+
 ## License
 
-This software is released under the terms of the MIT License. See the [LICENSE](https://github.com/yungsamd17/Twitch-Live/blob/main/LICENSE) file for further information.
+This software is released under the terms of the MIT License. See the [LICENSE](https://github.com/yungsamd17/Twitch-Live/blob/main/LICENSE) for further information.
