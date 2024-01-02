@@ -182,7 +182,7 @@ const setupAutoRefresh = () => {
     // Automatically refresh streams every minute (when popup is "open")
     setInterval(async () => {
         await loadTwitchContent();
-    }, 1000);
+    }, 1000 * 60);
 };
 
 // Reload popup on successful authentication
