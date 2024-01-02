@@ -6,12 +6,10 @@ const launch = async () => {
     chrome.runtime.onMessage.addListener(async (request) => {
         if (request.message === "fetch-twitch-auth-token") {
             const result = await getTwitchAuth();
-
             if (result === true && request.popup === true) {
                 await chrome.runtime.sendMessage({ message: "popup-auth-success" });
             }
         }
-        
         return true;
     });
 

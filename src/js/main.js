@@ -9,8 +9,8 @@ const authScreenPresent = () => {
 const setNavbar = (isVisible) => {
     const navbar = document.querySelector(".navbar");
     if (navbar) {
-        if (isVisible) navbar.style.opacity = "1";
-        else navbar.style.opacity = "0";
+        if (isVisible) navbar.style.display = "block";
+        else navbar.style.display = "none";
     }
 }
 
@@ -202,6 +202,5 @@ chrome.runtime.onMessage.addListener(async (request) => {
         setupAutoRefresh();
 
         // window.location.reload();
-        
     }
 });
