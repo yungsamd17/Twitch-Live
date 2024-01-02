@@ -45,16 +45,6 @@ const formatViewerCount = (count) => {
     return count.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 };
 
-// Define a variable to store the number of live channels
-let liveChannelsCount = 0;
-
-// Function to update the badge text and color on the extension icon
-const updateBadge = () => {
-    const badgeText = liveChannelsCount > 0 ? liveChannelsCount.toString() : "";
-    chrome.browserAction.setBadgeText({ text: badgeText });
-    chrome.browserAction.setBadgeBackgroundColor({ color: "#67676b" });
-};
-
 // Open stream in new window and player settings
 const openStream = (stream) => {
     const openInPlayerToggle = document.getElementById("openInPlayerToggle");
@@ -146,11 +136,6 @@ const loadTwitchContent = () => {
                 });
 
                 contentSection.replaceChildren(...streamList);
-
-                // Update the badge count based on the latest data
-                liveChannelsCount = res.twitchStreams.length;
-
-                //updateBadge();
             } else {
                 // Display a message when no matching results are found
                 const noResultsMessage = document.createElement("div");
@@ -186,12 +171,3 @@ setInterval(() => {
     loadTwitchContent();
 }, 1000 * 60);
 /*}, 100000 * 60);*/
-
-
-chrome.runtime.onMessage.addListener((request) => {
-    if (request.message === "update-badge") {
-        const badgeText = request.liveChannelsCount > 0 ? request.liveChannelsCount.toString() : "";
-        chrome.action.setBadgeText({ text: badgeText });
-        chrome.action.setBadgeBackgroundColor({ color: "#67676b" });
-    }
-});
