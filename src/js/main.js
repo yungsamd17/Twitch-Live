@@ -6,12 +6,17 @@ const authScreenPresent = () => {
     return contentSection.querySelector(".auth-header");
 };
 
+const setNavbar = (isVisible) => {
+    const navbar = document.querySelector(".navbar");
+    if (navbar) {
+        if (isVisible) navbar.style.opacity = "1";
+        else navbar.style.opacity = "0";
+    }
+}
+
 const authScreen = () => {
     // Hide the navbar when creating the authentication screen
-    const hideNavbar = document.querySelector(".navbar");
-    if (hideNavbar) {
-        hideNavbar.style.display = "none";
-    }
+    setNavbar(false);
 
     const authHeader = document.createElement("span");
     authHeader.setAttribute("class", "auth-header");
@@ -31,7 +36,7 @@ const authScreen = () => {
     authButton.setAttribute("id", "auth-button");
     authButton.setAttribute("class", "auth-button");
     authButton.innerHTML = "Login with Twitch";
-    authButton.onclick = () => chrome.runtime.sendMessage({ message: "fetch-twitch-auth-token" });
+    authButton.onclick = () => chrome.runtime.sendMessage({ message: "fetch-twitch-auth-token", popup: true });
     contentSection.appendChild(authButton);
 
     const authLoginText = document.createElement("span");
@@ -43,16 +48,6 @@ const authScreen = () => {
 const formatViewerCount = (count) => {
     // Format viewer count with space-separated thousands
     return count.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-};
-
-// Define a variable to store the number of live channels
-let liveChannelsCount = 0;
-
-// Function to update the badge text and color on the extension icon
-const updateBadge = () => {
-    const badgeText = liveChannelsCount > 0 ? liveChannelsCount.toString() : "";
-    chrome.browserAction.setBadgeText({ text: badgeText });
-    chrome.browserAction.setBadgeBackgroundColor({ color: "#67676b" });
 };
 
 // Open stream in new window and player settings
@@ -82,11 +77,11 @@ const openStream = (stream) => {
     }
 };
 
-const loadTwitchContent = () => {
+const loadTwitchContent = async () => {
     const storageItems = ["twitchIsValidated", "twitchAccessToken", "twitchStreams"];
-    chrome.storage.local.get(storageItems, (res) => {
+    chrome.storage.local.get(storageItems, async (res) => {
         // Always refresh Twitch streams when the popup is opened
-        refreshTwitchStreams();
+        await refreshTwitchStreams();
 
         if (authScreenPresent()) {
             return; // Skip refreshing streams when authScreen is present
@@ -146,11 +141,6 @@ const loadTwitchContent = () => {
                 });
 
                 contentSection.replaceChildren(...streamList);
-
-                // Update the badge count based on the latest data
-                liveChannelsCount = res.twitchStreams.length;
-
-                //updateBadge();
             } else {
                 // Display a message when no matching results are found
                 const noResultsMessage = document.createElement("div");
@@ -162,16 +152,16 @@ const loadTwitchContent = () => {
             authScreen();
         }
     });
+    return true;
 };
 
-const refreshTwitchStreams = () => {
-    chrome.runtime.sendMessage({ message: "refresh-twitch-streams" });
+const refreshTwitchStreams = async () => {
+    await chrome.runtime.sendMessage({ message: "refresh-twitch-streams" });
 };
 
 // Function to handle the refresh button click
 const handleRefreshButtonClick = () => {
     filterInput.value = ""; // Clear the search input
-    refreshTwitchStreams();
     loadTwitchContent();
 };
 
@@ -180,20 +170,38 @@ filterInput.addEventListener("input", loadTwitchContent);
 refreshButton.addEventListener("click", handleRefreshButtonClick);
 
 // Initial load
-loadTwitchContent();
+addEventListener("DOMContentLoaded", async () => { 
+    await loadTwitchContent(); 
 
-// Automatically refresh streams every minute (when popup is "open")
-setInterval(() => {
-    refreshTwitchStreams();
-    loadTwitchContent();
-}, 1000 * 60);
-/*}, 100000 * 60);*/
+    if (authScreenPresent()) return;
 
+    setupAutoRefresh();
+});
 
-chrome.runtime.onMessage.addListener((request) => {
-    if (request.message === "update-badge") {
-        const badgeText = request.liveChannelsCount > 0 ? request.liveChannelsCount.toString() : "";
-        chrome.action.setBadgeText({ text: badgeText });
-        chrome.action.setBadgeBackgroundColor({ color: "#67676b" });
+const setupAutoRefresh = () => {
+    // Automatically refresh streams every minute (when popup is "open")
+    setInterval(async () => {
+        await loadTwitchContent();
+    }, 1000 * 60);
+};
+
+// Reload popup on successful authentication
+chrome.runtime.onMessage.addListener(async (request) => {
+    if (request.message === "popup-auth-success") {
+        // Remove all elements that have class starting with "auth"
+        const authElements = document.querySelectorAll("[class^=auth]");
+        authElements.forEach((element) => element.remove());
+
+        // Show the navbar
+        setNavbar(true);
+
+        // Wait a bit to ensure that the Twitch auth is valid
+        await new Promise(resolve => setTimeout(resolve, 500));
+        
+        await loadTwitchContent();
+        setupAutoRefresh();
+
+        // window.location.reload();
+        
     }
 });
