@@ -36,6 +36,7 @@
     width: 45%;
     align-self: center;
     cursor: pointer;
+    user-select: none;
 }
 
 .auth-button:hover {

@@ -1,4 +1,4 @@
-/*  SETTINGS TAB (MODAL)  */
+/*  SETTINGS (MODAL)  */
 
 .settings-modal {
     display: none;
@@ -184,7 +184,6 @@ input:checked+.slider:before {
     text-align: center;
     font-size: 14px;
     font-weight: bold;
-    /* margin-right: 10px; */
 }
 
 .settings-link:hover {
@@ -195,7 +194,7 @@ input:checked+.slider:before {
     background-color: #772ce8;
 }
 
-/* Logout button styles */
+/*  LOGOUNT BUTTON  */
 .logout-button {
     width: 30%;
     background-color: #e74c3c;
