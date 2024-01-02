@@ -3,18 +3,23 @@ importScripts('util.js');
 // Set up message listeners and refresh data on browser startup and extension reload (dev/unpacked)
 const launch = async () => {
     // Listen for messages to fetch Twitch auth token
-    chrome.runtime.onMessage.addListener((request) => {
+    chrome.runtime.onMessage.addListener(async (request) => {
         if (request.message === "fetch-twitch-auth-token") {
-            getTwitchAuth();
+            const result = await getTwitchAuth();
+
+            if (result === true && request.popup === true) {
+                await chrome.runtime.sendMessage({ message: "popup-auth-success" });
+            }
         }
+        
         return true;
     });
 
     // Listen for messages to refresh Twitch streams
-    chrome.runtime.onMessage.addListener((request) => {
+    chrome.runtime.onMessage.addListener(async (request) => {
         if (request.message === "refresh-twitch-streams") {
             console.log("Refreshing Twitch streams...");
-            getLiveTwitchStreams();
+            await getLiveTwitchStreams();
         }
         return true;
     });
@@ -66,13 +71,6 @@ const updateBadge = async () => {
 const TWITCH_APP_TOKEN = "veho7ytn25l8a9dpgfkk79sqgey43j";
 const redirectURL = chrome.identity.getRedirectURL();
 
-// Function to send live channels count to the popup and update badge
-// TODO: revise!
-const sendLiveChannelsCountToPopup = async () => {
-    liveChannelsCount = await getLiveChannelsCount();
-    updateBadge();
-};
-
 // Function to handle Twitch unauthorized state
 const handleTwitchUnauthorized = () => {
     chrome.storage.local.set({
@@ -84,32 +82,40 @@ const handleTwitchUnauthorized = () => {
 };
 
 // Function to store the Twitch access token
-const storeTwitchToken = (url) => {
+const storeTwitchToken = async (url) => {
     if (url) {
         const tokenParam = url.split("#")[1];
         if (tokenParam) {
             const token = tokenParam.split("=")[1].split("&")[0];
             chrome.storage.local.set({ twitchAccessToken: token });
-            validateTwitchToken();
+            await validateTwitchToken();
         } else {
             console.error("Token parameter not found in the URL");
         }
     } else {
         console.error("URL is undefined");
     }
+    return true;
 };
 
 // Function to initiate Twitch authentication
-const getTwitchAuth = () => {
+const getTwitchAuth = async () => {
     const authPage =
         `https://id.twitch.tv/oauth2/authorize` +
         `?client_id=${TWITCH_APP_TOKEN}` +
         `&response_type=token` +
         `&redirect_uri=${redirectURL}` +
         "&scope=user:read:follows&force_verify=true";
-    chrome.identity.launchWebAuthFlow({ interactive: true, url: authPage },
-        storeTwitchToken
-    );
+
+    try {
+        const result = await chrome.identity.launchWebAuthFlow({ interactive: true, url: authPage });
+        await storeTwitchToken(result);
+        return true;
+    } catch (error) {
+        console.error(error);
+    }
+    
+    return false;
 };
 
 // Function to validate the Twitch access token
@@ -136,6 +142,7 @@ const validateTwitchToken = async () => {
                 console.error(error);
             });
     });
+    return true;
 };
 
 

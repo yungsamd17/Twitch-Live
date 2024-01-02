@@ -6,12 +6,17 @@ const authScreenPresent = () => {
     return contentSection.querySelector(".auth-header");
 };
 
+const setNavbar = (isVisible) => {
+    const navbar = document.querySelector(".navbar");
+    if (navbar) {
+        if (isVisible) navbar.style.opacity = "1";
+        else navbar.style.opacity = "0";
+    }
+}
+
 const authScreen = () => {
     // Hide the navbar when creating the authentication screen
-    const hideNavbar = document.querySelector(".navbar");
-    if (hideNavbar) {
-        hideNavbar.style.display = "none";
-    }
+    setNavbar(false);
 
     const authHeader = document.createElement("span");
     authHeader.setAttribute("class", "auth-header");
@@ -31,7 +36,7 @@ const authScreen = () => {
     authButton.setAttribute("id", "auth-button");
     authButton.setAttribute("class", "auth-button");
     authButton.innerHTML = "Login with Twitch";
-    authButton.onclick = () => chrome.runtime.sendMessage({ message: "fetch-twitch-auth-token" });
+    authButton.onclick = () => chrome.runtime.sendMessage({ message: "fetch-twitch-auth-token", popup: true });
     contentSection.appendChild(authButton);
 
     const authLoginText = document.createElement("span");
@@ -72,11 +77,11 @@ const openStream = (stream) => {
     }
 };
 
-const loadTwitchContent = () => {
+const loadTwitchContent = async () => {
     const storageItems = ["twitchIsValidated", "twitchAccessToken", "twitchStreams"];
-    chrome.storage.local.get(storageItems, (res) => {
+    chrome.storage.local.get(storageItems, async (res) => {
         // Always refresh Twitch streams when the popup is opened
-        refreshTwitchStreams();
+        await refreshTwitchStreams();
 
         if (authScreenPresent()) {
             return; // Skip refreshing streams when authScreen is present
@@ -147,10 +152,11 @@ const loadTwitchContent = () => {
             authScreen();
         }
     });
+    return true;
 };
 
-const refreshTwitchStreams = () => {
-    chrome.runtime.sendMessage({ message: "refresh-twitch-streams" });
+const refreshTwitchStreams = async () => {
+    await chrome.runtime.sendMessage({ message: "refresh-twitch-streams" });
 };
 
 // Function to handle the refresh button click
@@ -164,10 +170,38 @@ filterInput.addEventListener("input", loadTwitchContent);
 refreshButton.addEventListener("click", handleRefreshButtonClick);
 
 // Initial load
-loadTwitchContent();
+addEventListener("DOMContentLoaded", async () => { 
+    await loadTwitchContent(); 
 
-// Automatically refresh streams every minute (when popup is "open")
-setInterval(() => {
-    loadTwitchContent();
-}, 1000 * 60);
-/*}, 100000 * 60);*/
+    if (authScreenPresent()) return;
+
+    setupAutoRefresh();
+});
+
+const setupAutoRefresh = () => {
+    // Automatically refresh streams every minute (when popup is "open")
+    setInterval(async () => {
+        await loadTwitchContent();
+    }, 1000);
+};
+
+// Reload popup on successful authentication
+chrome.runtime.onMessage.addListener(async (request) => {
+    if (request.message === "popup-auth-success") {
+        // Remove all elements that have class starting with "auth"
+        const authElements = document.querySelectorAll("[class^=auth]");
+        authElements.forEach((element) => element.remove());
+
+        // Show the navbar
+        setNavbar(true);
+
+        // Wait a bit to ensure that the Twitch auth is valid
+        await new Promise(resolve => setTimeout(resolve, 500));
+        
+        await loadTwitchContent();
+        setupAutoRefresh();
+
+        // window.location.reload();
+        
+    }
+});
