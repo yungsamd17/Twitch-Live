@@ -38,11 +38,6 @@ const authScreen = () => {
     authButton.innerHTML = "Login with Twitch";
     authButton.onclick = () => chrome.runtime.sendMessage({ message: "fetch-twitch-auth-token", popup: true });
     contentSection.appendChild(authButton);
-
-    const authLoginText = document.createElement("span");
-    authLoginText.setAttribute("class", "auth-text auth-text-after");
-    authLoginText.innerHTML = "After logging in reopen the extension.";
-    contentSection.appendChild(authLoginText);
 };
 
 const formatViewerCount = (count) => {
