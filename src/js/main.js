@@ -171,7 +171,6 @@ const refreshTwitchStreams = () => {
 // Function to handle the refresh button click
 const handleRefreshButtonClick = () => {
     filterInput.value = ""; // Clear the search input
-    refreshTwitchStreams();
     loadTwitchContent();
 };
 
@@ -184,7 +183,6 @@ loadTwitchContent();
 
 // Automatically refresh streams every minute (when popup is "open")
 setInterval(() => {
-    refreshTwitchStreams();
     loadTwitchContent();
 }, 1000 * 60);
 /*}, 100000 * 60);*/
