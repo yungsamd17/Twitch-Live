@@ -14,12 +14,10 @@ This extension brings the channels you follow to the forefront, providing a seam
 
 ## Install
 
-Extension not yet published.
-
-<a href="https://github.com/yungsamd17/Twitch-Live">
+<a href="https://chromewebstore.google.com/detail/sams-twitch-live/fnaolpkjdickppbebcafdajjndmkgbei">
 	<img src="https://raw.githubusercontent.com/alrra/browser-logos/main/src/chrome/chrome.svg" width="48" alt="Chrome" valign="middle"> <b>Chrome</b>
 </a>
-or chromium-based browsers (e.g. Brave, Edge, Opera)
+or any chromium-based browsers (e.g. Brave, Edge, Opera)
 
 ### How to Use
 1. Log in with your Twitch account to authenticate the extension.
@@ -33,7 +31,7 @@ Forked from [MatthewMoye/who-is-live](https://github.com/MatthewMoye/who-is-live
 
 ### Contributions
 
-- [**xezrunner**](https://github.com/xezrunner) For helping with the push to v1.0 release stage, with migration to Manifest V3.
+- [**xezrunner**](https://github.com/xezrunner) For helping with migration to Manifest V3.
 
 ## License
 
