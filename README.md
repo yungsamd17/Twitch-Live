@@ -18,6 +18,10 @@ This extension brings the channels you follow to the forefront, providing a seam
 	<img src="https://raw.githubusercontent.com/alrra/browser-logos/main/src/chrome/chrome.svg" width="48" alt="Chrome" valign="middle"> <b>Chrome</b>
 </a>
 or any chromium-based browsers (e.g. Brave, Edge, Opera)
+<br>
+<br>
+
+[How to Install and setup](https://github.com/yungsamd17/Twitch-Live/blob/main/docs/INSTALL_FROM_STORAGE.md) unpacked extension (from storage)
 
 ### How to Use
 1. Log in with your Twitch account to authenticate the extension.
