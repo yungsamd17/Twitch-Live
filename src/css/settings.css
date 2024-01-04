@@ -87,6 +87,18 @@
     user-select: none;
 }
 
+.text-container a {
+    color: #999999;
+}
+
+.text-container a:hover {
+    color: #fff;
+}
+
+.text-container a:active {
+    color: #9146ff;
+}
+
 /*  TOGGLE SWITCH  */
 .slider-container {
     float: right;
