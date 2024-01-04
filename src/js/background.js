@@ -63,8 +63,13 @@ const getLiveChannelsCount = async () => {
 const updateBadge = async () => {
     const liveChannelsCount = await getLiveChannelsCount();
     const badgeText = liveChannelsCount > 0 ? liveChannelsCount.toString() : "";
-    chrome.action.setBadgeText({ text: badgeText });
-    chrome.action.setBadgeBackgroundColor({ color: "#67676b" });
+
+    // Retrieve custom badge color from local storage
+    chrome.storage.local.get("customBadgeColor", (result) => {
+        const badgeColor = result.customBadgeColor || "#666666";
+        chrome.action.setBadgeText({ text: badgeText });
+        chrome.action.setBadgeBackgroundColor({ color: badgeColor });
+    });
 };
 
 // Twitch app token

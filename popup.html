@@ -54,7 +54,7 @@
                 <!-- Settings options -->
                 <div class="option-container">
                     <div class="text-container">
-                        <span>Open streams in New Window</span>
+                        <span>Open in a new window</span>
                     </div>
                     <div class="slider-container">
                         <label class="switch">
@@ -65,13 +65,21 @@
                 </div>
                 <div class="option-container">
                     <div class="text-container">
-                        <span>Open streams in Player</span>
+                        <span>Open streams in player <a href="https://player.twitch.tv/?channel=rifftrax&parent=twitch" aria-label-4="player.twitch.tv example" target="_blank"><i class="fa-solid fa-circle-info"></i></a></span>
                     </div>
                     <div class="slider-container">
                         <label class="switch">
                             <input type="checkbox" id="openInPlayerToggle">
                             <span class="slider"></span>
                         </label>
+                    </div>
+                </div>
+                <div class="option-container">
+                    <div class="text-container">
+                        <span>Custom badge color</span>
+                    </div>
+                    <div class="color-input">
+                        <input type="text" id="colorInput" placeholder="#RRGGBB" minlength="7" maxlength="7" autocomplete="off" spellcheck="false"/>
                     </div>
                 </div>
 
