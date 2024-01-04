@@ -154,6 +154,36 @@ input:checked+.slider:before {
     background-color: #9146ff;
 }
 
+/*  COLOR INPUT  */
+.color-input {
+    float: right;
+    display: inline-flex;
+    align-items: center;
+    height: 100%;
+}
+
+.color-input input[type="text"] {
+    width: 64px;
+    background-color: #0e0e10;
+    color: #999999;
+    border: 2px solid #999999;
+    border-radius: 10px;
+    padding: 8px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.color-input input[type="text"]:hover {
+    color: #fff;
+    border: 2px solid #fff;
+}
+
+.color-input input[type="text"]:focus {
+    color: #fff;
+    border: 2px solid #9146ff;
+    outline: 0;
+}
+
 /*  SETTINGS FOOTER  */
 .settings-footer {
     display: flex;
