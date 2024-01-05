@@ -81,7 +81,7 @@ body::-webkit-scrollbar {
 
 .install-button {
     margin-top: 40px;
-    padding: 15px 50px;
+    padding: 15px 30px;
     border: 0;
     border-radius: 8px;
     background-color: #9146ff;
@@ -89,6 +89,7 @@ body::-webkit-scrollbar {
     font-size: 1.5rem;
     font-weight: bold;
     text-decoration: none;
+    user-select: none;
 }
 
 .install-button:hover {
@@ -161,7 +162,7 @@ body::-webkit-scrollbar {
 
     .install-button {
         margin-top: 20px;
-        padding: 10px 20px;
+        padding: 10px 15px;
         font-size: 1rem;
     }
 
@@ -185,7 +186,7 @@ body::-webkit-scrollbar {
 
     .install-button {
         margin-top: 15px;
-        padding: 8px 15px;
+        padding: 8px 10px;
         border-radius: 6px;
         font-size: 0.8rem;
     }
