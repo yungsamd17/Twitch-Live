@@ -33,7 +33,7 @@ This is done for security reasons from Twitch's side. Not registering your local
 4. Under **Category**, select **Browser Extension**.  
    Under **Client Type**, select **Confidential**, then press **Create**.
 5. After creating the Application, copy the **Client ID**.
-6. Open `background.js` in any text/code editor and replace `TWITCH_APP_TOKEN` with the copied value.
+6. Open `background.js` in any text/code editor and replace existing `TWITCH_APP_TOKEN` value with the copied value.
 7. Refresh the extension on the Extensions page with the refresh button.
 8. Open the extension and log in with your account.
 
