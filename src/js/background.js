@@ -188,6 +188,7 @@ const getLiveTwitchStreams = async () => {
                 channelName: stream["user_name"],
                 viewerCount: stream["viewer_count"],
                 liveTime: getTimePassed(stream["started_at"]),
+                startedAt: getStartedAtTime(stream["started_at"]),
             })),
         });
 
