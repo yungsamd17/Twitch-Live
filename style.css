@@ -104,6 +104,10 @@ body::-webkit-scrollbar {
     margin: 10px;
 }
 
+.previewImage img {
+    border-radius: 5px;
+}
+
 .previewImage p {
     color: var(--secondary-text);
     margin: 4px 0;
@@ -121,7 +125,7 @@ body::-webkit-scrollbar {
     text-decoration: none;
     text-align: center;
     color: var(--secondary-text);
-    margin-right: 10px;
+    margin-right: 15px;
 }
 
 .footer a:hover {
@@ -172,10 +176,12 @@ body::-webkit-scrollbar {
 
     .footer {
         flex-direction: column;
+        padding-bottom: 20px;
     }
 
     .footer a {
-    margin-top: 5px;
+    margin-top: 10px;
+    margin-right: 0;
     }
 }
 
