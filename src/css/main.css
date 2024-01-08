@@ -87,14 +87,14 @@ body {
     color: #fff;
     font-weight: bold;
     background-color: #38383f;
-    padding: 7px 7px 5.5px 7px;
+    padding: 6.5px 7px;
     border: 0;
     border-radius: 5px;
     text-decoration: none;
-    margin: 10px;
+    margin: 10px 10px 10px 0;
     display: inline;
     align-content: center;
-    font-size: 0.9rem;
+    font-size: 1rem;
     cursor: pointer;
     user-select: none;
 }
@@ -105,13 +105,6 @@ body {
 
 .navbar-link:active {
     background-color: #772ce8;
-}
-
-.navbar-icon-link {
-    padding: 6.5px 7.5px;
-    margin-left: 0;
-    margin-right: 10px;
-    font-size: 1rem;
 }
 
 .refresh-button {
