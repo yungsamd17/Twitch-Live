@@ -72,17 +72,6 @@ function handleColorInput() {
     }
 }
 
-// Settings Modal
-var modal = document.getElementById("settingsModal");
-var btn = document.getElementById("settingsBtn");
-var span = document.getElementsByClassName("settings-close-btn")[0];
-btn.onclick = function() {
-    modal.style.display = "flex";
-}
-span.onclick = function() {
-    modal.style.display = "none";
-}
-
 // Function to handle the logout button click
 const handleLogoutButtonClick = () => {
     chrome.storage.local.set({
@@ -102,4 +91,27 @@ const handleLogoutButtonClick = () => {
 const logoutButton = document.getElementById("logoutBtn");
 if (logoutButton) {
     logoutButton.addEventListener("click", handleLogoutButtonClick);
+}
+
+// Filter dropdown
+var dropdown = document.getElementById("filterDropdown");
+var filterBtn = document.getElementById("filterButton");
+filterBtn.onclick = function() {
+    dropdown.style.display = "flex";
+}
+window.onclick = function(event) {
+    if (event.target == dropdown) {
+        dropdown.style.display = "none";
+    }
+}
+
+// Settings Modal
+var modal = document.getElementById("settingsModal");
+var btn = document.getElementById("settingsBtn");
+var span = document.getElementsByClassName("settings-close-btn")[0];
+btn.onclick = function() {
+    modal.style.display = "flex";
+}
+span.onclick = function() {
+    modal.style.display = "none";
 }

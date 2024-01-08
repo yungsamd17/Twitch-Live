@@ -36,13 +36,13 @@ body {
 }
 
 .search-container {
-    width: 50%;
+    width: auto;
     display: inline-flex;
     height: 100%;
 }
 
 .search-container input[type="text"] {
-    width: 100%;
+    width: 150px;
     background-color: #242429;
     color: #fff;
     border: 2px solid #242429;
@@ -115,6 +115,84 @@ body {
 }
 
 
+
+/*  FILTER DROPDOWN  */
+.dropdown {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 430px;
+    height: 600px;
+    overflow: auto;
+    align-items: center;
+}
+
+.dropdown-content {
+    position: relative;
+    top: -24%;
+    right: -34%;
+    background-color: #242429;
+    padding: 0;
+    width: 170px;
+    height: auto;
+    border: 1px solid #38383f;
+    border-radius: 5px;
+    display: flex;
+}
+
+.dropdown-body {
+    color: #fff;
+    width: 100%;
+}
+
+.filter-option {
+    height: 30px;
+    font-size: 1rem;
+    padding: 5px 5px 0 5px;
+}
+
+.last-option {
+    padding: 5px;
+}
+
+.filter-divider {
+    height: 1px;
+    background-color: #38383f;
+}
+
+.filter-button {
+    display: inline-flex;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    padding: 0 15px;
+    background-color: #242429;
+    border: 0;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.filter-button:hover {
+    background-color: #38383f;
+}
+
+.filter-button:active {
+    background-color: #484851;
+}
+
+.active-filter {
+    background-color: #9146ff;
+}
+
+.active-filter:hover {
+    background-color: rgba(145, 70, 255, 0.5);
+}
+
+.active-filter:active {
+    background-color: rgba(145, 70, 255, 0.25);
+}
 
 /*  MAIN ELEMENT CLASSES  */
 

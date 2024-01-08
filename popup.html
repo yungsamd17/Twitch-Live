@@ -18,6 +18,34 @@
             <input type="text" id="searchStreams" placeholder="Search..." maxlength="17" autocomplete="off" spellcheck="false" autofocus />
             <button id="refreshButton" class="navbar-link refresh-button" aria-label-3="Refresh Streams">
                 <i class="fa-solid fa-rotate-left"></i></button>
+            <button id="filterButton" class="navbar-link" filter-label="Filter">
+                <i class="fa-solid fa-filter"></i></button>
+            <!-- Filter Dropdown -->
+            <div id="filterDropdown" class="dropdown">
+                <div class="dropdown-content">
+                    <div class="dropdown-body">
+                        <div class="filter-option">
+                            <button class="filter-button">Broadcaster</button>
+                        </div>
+                        <div class="filter-option">
+                            <button class="filter-button">Category</button>
+                        </div>
+                        <div class="filter-option">
+                            <button class="filter-button">Uptime</button>
+                        </div>
+                        <div class="filter-option last-option">
+                            <button class="filter-button">Viewers</button>
+                        </div>
+                        <div class="filter-divider"></div>
+                        <div class="filter-option">
+                            <button class="filter-button">Descending</button>
+                        </div>
+                        <div class="filter-option last-option">
+                            <button class="filter-button">Ascending</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <!-- Navbar link/button -->
         <div class="link-container">
