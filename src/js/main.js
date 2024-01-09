@@ -174,6 +174,7 @@ const loadTwitchContent = async () => {
                 const categoryAndViewCount = document.createElement("span");
                 categoryAndViewCount.setAttribute("class", "stream-game-and-viewers");
                 categoryAndViewCount.innerHTML = `${stream.gameName} - ${formatViewerCount(stream.viewerCount)} viewers`;
+                categoryAndViewCount.setAttribute("title", `${stream.gameName} - ${formatViewerCount(stream.viewerCount)} viewers`);
                 streamDetails.appendChild(categoryAndViewCount);
 
                 const title = document.createElement("span");
