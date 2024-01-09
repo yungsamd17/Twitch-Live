@@ -96,11 +96,13 @@ if (logoutButton) {
 // Filter dropdown
 var dropdown = document.getElementById("filterDropdown");
 var filterBtn = document.getElementById("filterButton");
-filterBtn.onclick = function() {
-    dropdown.style.display = "flex";
-}
+filterBtn.onclick = function(event) {
+    dropdown.style.display = dropdown.style.display === "flex" ? "none" : "flex";
+    event.stopPropagation();
+};
+
 window.onclick = function(event) {
-    if (event.target == dropdown) {
+    if (!event.target.matches('.dropdown-content') && dropdown.style.display === "flex") {
         dropdown.style.display = "none";
     }
 }
