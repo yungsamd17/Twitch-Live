@@ -36,13 +36,13 @@ body {
 }
 
 .search-container {
-    width: 50%;
+    width: auto;
     display: inline-flex;
     height: 100%;
 }
 
 .search-container input[type="text"] {
-    width: 100%;
+    width: 150px;
     background-color: #242429;
     color: #fff;
     border: 2px solid #242429;
@@ -87,14 +87,14 @@ body {
     color: #fff;
     font-weight: bold;
     background-color: #38383f;
-    padding: 7px 7px 5.5px 7px;
+    padding: 6.5px 7px;
     border: 0;
     border-radius: 5px;
     text-decoration: none;
-    margin: 10px;
+    margin: 10px 10px 10px 0;
     display: inline;
     align-content: center;
-    font-size: 0.9rem;
+    font-size: 1rem;
     cursor: pointer;
     user-select: none;
 }
@@ -107,13 +107,6 @@ body {
     background-color: #772ce8;
 }
 
-.navbar-icon-link {
-    padding: 6.5px 7.5px;
-    margin-left: 0;
-    margin-right: 10px;
-    font-size: 1rem;
-}
-
 .refresh-button {
     margin-left: 0px;
     border-radius: 0 5px 5px 0;
@@ -122,6 +115,74 @@ body {
 }
 
 
+
+/*  FILTER DROPDOWN  */
+.dropdown {
+    display: none;
+    align-items: center;
+}
+
+.dropdown-content {
+    position: absolute;
+    top: 100%;
+    right: 26%;
+    background-color: #242429;
+    padding: 0;
+    width: 176px;
+    height: auto;
+    border: 1px solid #38383f;
+    border-radius: 5px;
+    display: flex;
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2), 0 0 10px 6px rgba(0, 0, 0, 0.3);
+}
+
+.dropdown-body {
+    color: #fff;
+    width: 100%;
+    padding: 5px 0;
+}
+
+.filter-option {
+    height: 30px;
+    font-size: 1rem;
+    padding: 0 5px;
+}
+
+.filter-button {
+    display: inline-flex;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    padding: 0 6px;
+    background-color: #242429;
+    border: 0;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.filter-button:hover {
+    background-color: #38383f;
+}
+
+.filter-button:active {
+    background-color: #54545f;
+}
+
+.active {
+    background-color: #9146ff;
+}
+
+.active:hover {
+    background-color: #772ce8;
+}
+
+.active:active {
+    background-color: #5c16c5;
+}
+
+.filter-icon {
+    margin-right: 8px;
+}
 
 /*  MAIN ELEMENT CLASSES  */
 
@@ -179,11 +240,11 @@ body {
     position: absolute;
     right: 10.1%;
     bottom: 15.5%;
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(0, 0, 0, 0.6);
     color: rgba(255, 255, 255, 0.8);
     font-size: 0.78rem;
     font-weight: 600;
-    padding: 2px 2px 1px 3px;;
+    padding: 2px 2px 1px 3px;
     border-radius: 4px 0;
     text-shadow: 0 0 4px #000;
     z-index: 900;
@@ -231,6 +292,6 @@ body {
     color: #fff;
     text-align: center;
     font-weight: bold;
-    font-size: 1rem;
-    padding: 10px;
+    font-size: 1.1rem;
+    padding: 42px 0 0 0;
 }

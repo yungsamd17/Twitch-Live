@@ -1,3 +1,21 @@
+const getStartedAtTime = (startTime) => {
+  const options = {
+    year: 'numeric',
+    month: 'numeric',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric',
+    hour12: true,
+  };
+
+  const formattedTime = new Intl.DateTimeFormat('en-US', options)
+    .format(new Date(startTime))
+    .replace(',', '');
+
+  return formattedTime;
+};
+
 const getTimePassed = (startTime) => {
   let elapsedTime = Date.now() - Date.parse(startTime);
   const hours = Math.floor(elapsedTime / 3600000);

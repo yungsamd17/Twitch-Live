@@ -41,38 +41,35 @@ const colorInput = document.getElementById("colorInput");
 console.log("Toggle Switch Status - Open in New Window:", openInNewWindowToggle.checked);*/
 
 // Custom color badge input
-colorInput.addEventListener("keydown", function (event) {
-    if (event.key === "Enter") {
-        const color = this.value.trim();
+colorInput.addEventListener("focus", function () {
+    this.addEventListener("input", handleColorInput);
+});
 
-        // Check if the entered color is a valid HEX format and starts with "#"
-        if (/^#[0-9A-Fa-f]{6}$/.test(color) && color.startsWith("#")) {
+colorInput.addEventListener("blur", function () {
+    this.removeEventListener("input", handleColorInput);
+});
+
+function handleColorInput() {
+    const color = this.value.trim();
+
+    // Check if the entered color is a valid HEX format and starts with "#"
+    if (/^#[0-9A-Fa-f]{6}$/.test(color) && color.startsWith("#") && color.length >= 7) {
+        // Clear any existing timeout
+        clearTimeout(this.timeoutId);
+
+        // Schedule the update after a delay (e.g., 100 milliseconds)
+        this.timeoutId = setTimeout(() => {
             chrome.storage.local.set({ customBadgeColor: color }, () => {
                 // Update the badge color
                 chrome.action.setBadgeBackgroundColor({ color });
             });
-        } else {
-            // If the input is invalid or empty, set to default color and clear the input
-            chrome.storage.local.set({ customBadgeColor: "" }, () => {
-                this.value = "";
-                chrome.action.setBadgeBackgroundColor({ color: "#666666" });
-            });
-        }
-
-        // Prevent the default form submission behavior
-        event.preventDefault();
+        }, 100);
+    } else if (color.length === 0) {
+        // If the input is empty, set to default color
+        chrome.storage.local.set({ customBadgeColor: "" }, () => {
+            chrome.action.setBadgeBackgroundColor({ color: "#666666" });
+        });
     }
-});
-
-// Settings Modal
-var modal = document.getElementById("settingsModal");
-var btn = document.getElementById("settingsBtn");
-var span = document.getElementsByClassName("settings-close-btn")[0];
-btn.onclick = function() {
-    modal.style.display = "flex";
-}
-span.onclick = function() {
-    modal.style.display = "none";
 }
 
 // Function to handle the logout button click
@@ -94,4 +91,29 @@ const handleLogoutButtonClick = () => {
 const logoutButton = document.getElementById("logoutBtn");
 if (logoutButton) {
     logoutButton.addEventListener("click", handleLogoutButtonClick);
+}
+
+// Filter dropdown
+var dropdown = document.getElementById("filterDropdown");
+var filterBtn = document.getElementById("filterButton");
+filterBtn.onclick = function(event) {
+    dropdown.style.display = dropdown.style.display === "flex" ? "none" : "flex";
+    event.stopPropagation();
+};
+
+window.onclick = function(event) {
+    if (!event.target.matches('.dropdown-content') && dropdown.style.display === "flex") {
+        dropdown.style.display = "none";
+    }
+}
+
+// Settings Modal
+var modal = document.getElementById("settingsModal");
+var btn = document.getElementById("settingsBtn");
+var span = document.getElementsByClassName("settings-close-btn")[0];
+btn.onclick = function() {
+    modal.style.display = "flex";
+}
+span.onclick = function() {
+    modal.style.display = "none";
 }

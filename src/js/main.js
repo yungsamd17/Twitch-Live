@@ -84,8 +84,56 @@ const loadTwitchContent = async () => {
     }
 
     if (res.twitchStreams) {
+        let filteredStreams = [...res.twitchStreams]; // Copy the array to avoid modifying the original
+
+        // Filter/Sort options
+        const selectedFilter = getSelectedFilterOption();
+        switch (selectedFilter) {
+            case "Broadcaster":
+                filteredStreams.sort((a, b) => (a.channelName > b.channelName ? 1 : -1));
+                break;
+            case "Category":
+                filteredStreams.sort((a, b) => (a.gameName > b.gameName ? 1 : -1));
+                break;
+            case "Uptime":
+                filteredStreams.sort((a, b) => {
+                    const aUptime = new Date(a.startedAt).getTime();
+                    const bUptime = new Date(b.startedAt).getTime();
+                    return aUptime - bUptime;
+                });
+                break;
+            case "Viewers (High to Low)":
+                filteredStreams.sort((a, b) => b.viewerCount - a.viewerCount);
+                break;
+            case "Viewers (Low to High)":
+                filteredStreams.sort((a, b) => a.viewerCount - b.viewerCount);
+                break;
+            case "Recently Started":
+                filteredStreams.sort((a, b) => {
+                    const aStarted = new Date(a.startedAt).getTime();
+                    const bStarted = new Date(b.startedAt).getTime();
+                    return bStarted - aStarted;
+                });
+                break;
+            case "Longest Running":
+                filteredStreams.sort((a, b) => {
+                    const aStarted = new Date(a.startedAt).getTime();
+                    const bStarted = new Date(b.startedAt).getTime();
+                    const aRunning = a.runningAt ? new Date(a.runningAt).getTime() : Date.now();
+                    const bRunning = b.runningAt ? new Date(b.runningAt).getTime() : Date.now();
+                    const aDuration = aRunning - aStarted;
+                    const bDuration = bRunning - bStarted;
+
+                    // console.log("aDuration:", aDuration, "bDuration:", bDuration); // debugging
+                    return bDuration - aDuration;
+                });
+                break;
+            default:
+                break;
+        }
+
         const query = filterInput.value.toLowerCase();
-        const filteredStreams = res.twitchStreams.filter(
+        filteredStreams = filteredStreams.filter(
             (stream) =>
                 stream.channelName.toLowerCase().includes(query) ||
                 stream.title.toLowerCase().includes(query) ||
@@ -105,6 +153,7 @@ const loadTwitchContent = async () => {
                 const uptime = document.createElement("div");
                 uptime.setAttribute("class", "stream-uptime");
                 uptime.innerHTML = `${stream.liveTime}`;
+                uptime.setAttribute("title", `${stream.startedAt}`);
                 streamThumbnail.appendChild(uptime);
 
                 const thumbnail = document.createElement("img");
@@ -125,6 +174,7 @@ const loadTwitchContent = async () => {
                 const categoryAndViewCount = document.createElement("span");
                 categoryAndViewCount.setAttribute("class", "stream-game-and-viewers");
                 categoryAndViewCount.innerHTML = `${stream.gameName} - ${formatViewerCount(stream.viewerCount)} viewers`;
+                categoryAndViewCount.setAttribute("title", `${stream.gameName} - ${formatViewerCount(stream.viewerCount)} viewers`);
                 streamDetails.appendChild(categoryAndViewCount);
 
                 const title = document.createElement("span");
@@ -158,6 +208,55 @@ const handleRefreshButtonClick = () => {
     filterInput.value = ""; // Clear the search input
     loadTwitchContent();
 };
+
+// Function to get the selected filter option
+const getSelectedFilterOption = () => {
+    const broadcasterButton = document.getElementById("broadcasterButton");
+    const categoryButton = document.getElementById("categoryButton");
+    const viewersHighToLowButton = document.getElementById("viewersHighToLowButton");
+    const viewersLowToHighButton = document.getElementById("viewersLowToHighButton");
+    const startedButton = document.getElementById("startedButton");
+    const runningButton = document.getElementById("runningButton");
+
+    if (broadcasterButton && broadcasterButton.classList.contains("active")) {
+        return "Broadcaster";
+    } else if (categoryButton && categoryButton.classList.contains("active")) {
+        return "Category";
+    } else if (viewersHighToLowButton && viewersHighToLowButton.classList.contains("active")) {
+        return "Viewers (High to Low)";
+    } else if (viewersLowToHighButton && viewersLowToHighButton.classList.contains("active")) {
+        return "Viewers (Low to High)";
+    } else if (startedButton && startedButton.classList.contains("active")) {
+        return "Recently Started";
+    } else if (runningButton && runningButton.classList.contains("active")) {
+        return "Longest Running";
+    }
+
+    return "viewersHighToLowButton"; // Default filter option
+};
+
+// Function to set the selected filter option
+const setSelectedFilterOption = (buttonId) => {
+    // Remove the 'active' class from all filter buttons
+    const filterButtons = document.querySelectorAll('.filter-button');
+    filterButtons.forEach(button => button.classList.remove('active'));
+
+    // Add the 'active' class to the clicked filter button
+    const selectedButton = document.getElementById(buttonId);
+    if (selectedButton) {
+        selectedButton.classList.add('active');
+    }
+};
+
+// Event listeners for the filter buttons
+const filterButtons = document.querySelectorAll('.filter-button');
+filterButtons.forEach(button => {
+    button.addEventListener('click', function() {
+        const buttonId = this.id;
+        setSelectedFilterOption(buttonId);
+        loadTwitchContent(); // Reload content based on the selected filter
+    });
+});
 
 // Event listeners for the search input and refresh button
 filterInput.addEventListener("input", loadTwitchContent);

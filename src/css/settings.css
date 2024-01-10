@@ -229,11 +229,11 @@ input:checked+.slider:before {
 }
 
 .settings-link:hover {
-    background-color: #9146ff;
+    background-color: #54545f;
 }
 
 .settings-link:active {
-    background-color: #772ce8;
+    background-color: #9146ff;
 }
 
 /*  LOGOUNT BUTTON  */
