@@ -1,26 +1,26 @@
 /*  SETTINGS TOOLTIP  */
 
-[aria-label] {
+[settings-label] {
     position: relative;
 }
 
-[aria-label]:after,
-[aria-label]:before {
+[settings-label]:after,
+[settings-label]:before {
     content: "";
     position: absolute;
     z-index: 500;
     pointer-events: none;
 }
 
-[aria-label]:after {
-    content: attr(aria-label);
+[settings-label]:after {
+    content: attr(settings-label);
     display: block;
     position: absolute;
     top: 133%;
     right: 0%;
     z-index: 500;
     pointer-events: none;
-    padding: 6px 5px;
+    padding: 5px;
     line-height: 15px;
     white-space: nowrap;
     text-decoration: none;
@@ -33,7 +33,7 @@
     opacity: 0;
 }
 
-[aria-label]:before {
+[settings-label]:before {
     content: "";
     border-style: solid;
     border-width: 0 8px 10px 8px;
@@ -44,45 +44,45 @@
     opacity: 0;
 }
 
-[aria-label]:hover:after {
+[settings-label]:hover:after {
     opacity: 1;
     transition-delay: 0.3s;
 }
 
-[aria-label]:hover:before {
+[settings-label]:hover:before {
     opacity: 1;
     transition-delay: 0.3s;
 }
 
-[aria-label]:not(:hover):after,
-[aria-label]:not(:hover):before {
+[settings-label]:not(:hover):after,
+[settings-label]:not(:hover):before {
     transition-delay: 0s;
 }
 
 
 /*  TWITCH LIVE FOLLOWING TOOLTIP  */
 
-[aria-label-2] {
+[twitch-label] {
     position: relative;
 }
 
-[aria-label-2]:after,
-[aria-label-2]:before {
+[twitch-label]:after,
+[twitch-label]:before {
     content: "";
     position: absolute;
     z-index: 500;
     pointer-events: none;
 }
 
-[aria-label-2]:after {
-    content: attr(aria-label-2);
+[twitch-label]:after {
+    content: attr(twitch-label);
     display: block;
     position: absolute;
     top: 133%;
     right: -132%;
     z-index: 500;
     pointer-events: none;
-    padding: 6px 5px;
+    padding: 5px;
     line-height: 15px;
     white-space: nowrap;
     text-decoration: none;
@@ -95,7 +95,7 @@
     opacity: 0;
 }
 
-[aria-label-2]:before {
+[twitch-label]:before {
     content: "";
     border-style: solid;
     border-width: 0 8px 10px 8px;
@@ -106,45 +106,45 @@
     opacity: 0;
 }
 
-[aria-label-2]:hover:after {
+[twitch-label]:hover:after {
     opacity: 1;
     transition-delay: 0.3s;
 }
 
-[aria-label-2]:hover:before {
+[twitch-label]:hover:before {
     opacity: 1;
     transition-delay: 0.3s;
 }
 
-[aria-label-2]:not(:hover):after,
-[aria-label-2]:not(:hover):before {
+[twitch-label]:not(:hover):after,
+[twitch-label]:not(:hover):before {
     transition-delay: 0s;
 }
 
 
 /*  REFRESH BUTTON TOOLTIP  */
 
-[aria-label-3] {
+[refresh-label] {
     position: relative;
 }
 
-[aria-label-3]:after,
-[aria-label-3]:before {
+[refresh-label]:after,
+[refresh-label]:before {
     content: "";
     position: absolute;
     z-index: 500;
     pointer-events: none;
 }
 
-[aria-label-3]:after {
-    content: attr(aria-label-3);
+[refresh-label]:after {
+    content: attr(refresh-label);
     display: block;
     position: absolute;
     top: 133%;
     left: -125%;
     z-index: 500;
     pointer-events: none;
-    padding: 6px 5px;
+    padding: 5px;
     line-height: 15px;
     white-space: nowrap;
     text-decoration: none;
@@ -157,7 +157,7 @@
     opacity: 0;
 }
 
-[aria-label-3]:before {
+[refresh-label]:before {
     content: "";
     border-style: solid;
     border-width: 0 8px 10px 8px;
@@ -168,45 +168,45 @@
     opacity: 0;
 }
 
-[aria-label-3]:hover:after {
+[refresh-label]:hover:after {
     opacity: 1;
     transition-delay: 0.3s;
 }
 
-[aria-label-3]:hover:before {
+[refresh-label]:hover:before {
     opacity: 1;
     transition-delay: 0.3s;
 }
 
-[aria-label-3]:not(:hover):after,
-[aria-label-3]:not(:hover):before {
+[refresh-label]:not(:hover):after,
+[refresh-label]:not(:hover):before {
     transition-delay: 0s;
 }
 
 
 /*  "Open streams in Player" SETTINGS OPTION INFO LINK TOOLTIP  */
 
-[aria-label-4] {
+[info-label] {
     position: relative;
 }
 
-[aria-label-4]:after,
-[aria-label-4]:before {
+[info-label]:after,
+[info-label]:before {
     content: "";
     position: absolute;
     z-index: 500;
     pointer-events: none;
 }
 
-[aria-label-4]:after {
-    content: attr(aria-label-4);
+[info-label]:after {
+    content: attr(info-label);
     display: block;
     position: absolute;
     top: 174%;
     left: -450%;
     z-index: 500;
     pointer-events: none;
-    padding: 6px 5px;
+    padding: 5px;
     line-height: 15px;
     white-space: nowrap;
     text-decoration: none;
@@ -219,7 +219,7 @@
     opacity: 0;
 }
 
-[aria-label-4]:before {
+[info-label]:before {
     content: "";
     border-style: solid;
     border-width: 0 8px 10px 8px;
@@ -230,18 +230,18 @@
     opacity: 0;
 }
 
-[aria-label-4]:hover:after {
+[info-label]:hover:after {
     opacity: 1;
     transition-delay: 0.3s;
 }
 
-[aria-label-4]:hover:before {
+[info-label]:hover:before {
     opacity: 1;
     transition-delay: 0.3s;
 }
 
-[aria-label-4]:not(:hover):after,
-[aria-label-4]:not(:hover):before {
+[info-label]:not(:hover):after,
+[info-label]:not(:hover):before {
     transition-delay: 0s;
 }
 
@@ -268,7 +268,7 @@
     left: -99.5%;
     z-index: 500;
     pointer-events: none;
-    padding: 6px 5px;
+    padding: 5px;
     line-height: 15px;
     white-space: nowrap;
     text-decoration: none;

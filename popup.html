@@ -16,7 +16,7 @@
         <!-- Search -->
         <div class="search-container">
             <input type="text" id="searchStreams" placeholder="Search..." maxlength="17" autocomplete="off" spellcheck="false" autofocus />
-            <button id="refreshButton" class="navbar-link refresh-button" aria-label-3="Refresh Streams">
+            <button id="refreshButton" class="navbar-link refresh-button" refresh-label="Refresh Streams">
                 <i class="fa-solid fa-rotate-left"></i></button>
             <button id="filterButton" class="navbar-link" filter-label="Sort Streams" style="padding: 6px;">
                 <i class="fa-solid fa-arrow-down-wide-short"></i></button>
@@ -54,9 +54,9 @@
         </div>
         <!-- Navbar link/button -->
         <div class="link-container">
-            <a class="navbar-link" aria-label-2="Twitch Live Following" href="https://www.twitch.tv/directory/following/live" target="_blank">
+            <a class="navbar-link" twitch-label="Twitch Live Following" href="https://www.twitch.tv/directory/following/live" target="_blank">
                 <i class="fa-brands fa-twitch"></i></a>
-            <button class="navbar-link" id="settingsBtn" aria-label="Settings">
+            <button class="navbar-link" id="settingsBtn" settings-label="Settings">
                 <i class="fa-solid fa-gear"></i></button>
         </div>
     </div>
@@ -91,7 +91,7 @@
                 </div>
                 <div class="option-container">
                     <div class="text-container">
-                        <span>Open streams in player <a href="https://player.twitch.tv/?channel=rifftrax&parent=twitch" aria-label-4="Click for example stream" target="_blank"><i class="fa-solid fa-circle-info"></i></a></span>
+                        <span>Open streams in player <a href="https://player.twitch.tv/?channel=rifftrax&parent=twitch" info-label="Click for example stream" target="_blank"><i class="fa-solid fa-circle-info"></i></a></span>
                     </div>
                     <div class="slider-container">
                         <label class="switch">
