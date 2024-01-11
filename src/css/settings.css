@@ -105,6 +105,7 @@
     display: inline-flex;
     align-items: center;
     height: 100%;
+    margin-right: 1.5px
 }
 
 .switch {
