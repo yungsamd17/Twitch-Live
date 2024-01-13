@@ -12,7 +12,7 @@ const setNavbar = (isVisible) => {
         if (isVisible) navbar.style.display = "block";
         else navbar.style.display = "none";
     }
-}
+};
 
 const authScreen = () => {
     // Hide the navbar when creating the authentication screen
@@ -135,9 +135,9 @@ const loadTwitchContent = async () => {
         const query = filterInput.value.toLowerCase();
         filteredStreams = filteredStreams.filter(
             (stream) =>
-                stream.channelName.toLowerCase().includes(query) ||
-                stream.title.toLowerCase().includes(query) ||
-                stream.gameName.toLowerCase().includes(query)
+            stream.channelName.toLowerCase().includes(query) ||
+            stream.title.toLowerCase().includes(query) ||
+            stream.gameName.toLowerCase().includes(query)
         );
 
         if (filteredStreams.length > 0) {
@@ -263,7 +263,7 @@ filterInput.addEventListener("input", loadTwitchContent);
 refreshButton.addEventListener("click", handleRefreshButtonClick);
 
 // Initial load
-addEventListener("DOMContentLoaded", async () => { 
+addEventListener("DOMContentLoaded", async () => {
     await loadTwitchContent();
     if (authScreenPresent()) return;
     setupAutoRefresh();
