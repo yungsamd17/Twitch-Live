@@ -85,18 +85,18 @@ body {
 
 .navbar-link {
     color: #fff;
-    font-weight: bold;
     background-color: #38383f;
-    padding: 6.5px 7px;
     border: 0;
     border-radius: 5px;
     text-decoration: none;
     margin: 10px 10px 10px 0;
-    display: inline;
-    align-content: center;
     font-size: 1rem;
     cursor: pointer;
     user-select: none;
+    width: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .navbar-link:hover {
@@ -115,11 +115,6 @@ body {
 }
 
 
-
-/*  SORT BUTTON  */
-.sort-button {
-    padding: 6px;
-}
 
 /*  FILTER/SORT DROPDOWN  */
 .dropdown {
@@ -244,7 +239,7 @@ body {
 .stream-uptime {
     position: absolute;
     right: 10.1%;
-    bottom: 15.5%;
+    bottom: 15.3%;
     background: rgba(0, 0, 0, 0.6);
     color: rgba(255, 255, 255, 0.8);
     font-size: 0.78rem;

@@ -18,7 +18,7 @@
             <input type="text" id="searchStreams" placeholder="Search..." maxlength="17" autocomplete="off" spellcheck="false" autofocus />
             <button id="refreshButton" class="navbar-link refresh-button" refresh-label="Refresh Streams">
                 <i class="fa-solid fa-rotate-left"></i></button>
-            <button id="filterButton" class="navbar-link sort-button" filter-label="Sort Streams">
+            <button id="filterButton" class="navbar-link" filter-label="Sort Streams">
                 <i class="fa-solid fa-arrow-down-wide-short"></i></button>
             <!-- Filter Dropdown -->
             <div id="filterDropdown" class="dropdown">
@@ -26,27 +26,33 @@
                     <div class="dropdown-body">
                         <div class="filter-option">
                             <button class="filter-button" id="broadcasterButton">
-                                <div class="filter-icon"><i class="fa-solid fa-user"></i></div>Broadcaster</button>
+                                <div class="filter-icon"><i class="fa-solid fa-user"></i></div>Broadcaster
+                            </button>
                         </div>
                         <div class="filter-option">
                             <button class="filter-button" id="categoryButton">
-                                <div class="filter-icon"><i class="fa-solid fa-gamepad"></i></div>Category</button>
+                                <div class="filter-icon"><i class="fa-solid fa-gamepad"></i></div>Category
+                            </button>
                         </div>
                         <div class="filter-option">
                             <button class="filter-button active" id="viewersHighToLowButton">
-                                <div class="filter-icon"><i class="fa-solid fa-arrow-down-wide-short"></i></div>Viewers (High to Low)</button>
+                                <div class="filter-icon"><i class="fa-solid fa-arrow-down-wide-short"></i></div>Viewers (High to Low)
+                            </button>
                         </div>
                         <div class="filter-option">
                             <button class="filter-button" id="viewersLowToHighButton">
-                                <div class="filter-icon"><i class="fa-solid fa-arrow-down-short-wide"></i></div>Viewers (Low to High)</button>
+                                <div class="filter-icon"><i class="fa-solid fa-arrow-down-short-wide"></i></div>Viewers (Low to High)
+                            </button>
                         </div>
                         <div class="filter-option">
                             <button class="filter-button" id="startedButton">
-                                <div class="filter-icon"><i class="fa-regular fa-clock"></i></div>Recently started</button>
+                                <div class="filter-icon"><i class="fa-regular fa-clock"></i></div>Recently started
+                            </button>
                         </div>
                         <div class="filter-option">
                             <button class="filter-button" id="runningButton">
-                                <div class="filter-icon"><i class="fa-solid fa-clock"></i></div>Longest Running</button>
+                                <div class="filter-icon"><i class="fa-solid fa-clock"></i></div>Longest Running
+                            </button>
                         </div>
                     </div>
                 </div>
