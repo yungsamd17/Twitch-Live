@@ -27,6 +27,7 @@
     text-indent: 0;
     overflow: visible;
     font-size: .8em;
+    font-weight: bold;
     color: #000;
     background-color: #fff;
     border-radius: 5px;
@@ -89,6 +90,7 @@
     text-indent: 0;
     overflow: visible;
     font-size: .8em;
+    font-weight: bold;
     color: #000;
     background-color: #fff;
     border-radius: 5px;
@@ -151,6 +153,7 @@
     text-indent: 0;
     overflow: visible;
     font-size: .8em;
+    font-weight: bold;
     color: #000;
     background-color: #fff;
     border-radius: 5px;
@@ -213,6 +216,7 @@
     text-indent: 0;
     overflow: visible;
     font-size: .8em;
+    font-weight: bold;
     color: #000;
     background-color: #fff;
     border-radius: 5px;
@@ -275,6 +279,7 @@
     text-indent: 0;
     overflow: visible;
     font-size: .8em;
+    font-weight: bold;
     color: #000;
     background-color: #fff;
     border-radius: 5px;
