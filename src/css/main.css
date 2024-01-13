@@ -282,6 +282,42 @@ body {
 
 
 
+/*  CONTEXT MENU  */
+
+#context-menu {
+    position: fixed;
+    z-index: 1000;
+    background-color: #ffffff;
+    background-color: #0e0e10;
+    border: 1px solid #242429;
+    border-radius: 5px;
+    padding: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    font-size: 12px;
+    visibility: hidden;
+    user-select: none;
+}
+
+.context-item {
+    padding: 4px 12px;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.context-item:hover {
+    background-color: #38383f;
+}
+
+.context-item:active {
+    background-color: #9146ff;
+}
+
+.cm-divider {
+    height: 1px;
+    background-color: #242429;
+    margin: 5px 0;
+}
+
 /*  OTHER  */
 
 .accent-color {

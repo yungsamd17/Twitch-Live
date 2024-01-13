@@ -292,3 +292,85 @@ chrome.runtime.onMessage.addListener(async (request) => {
         setupAutoRefresh();
     }
 });
+
+// Right click context menu
+let contextMenu = document.getElementById("context-menu");
+let currentChannelName = null;
+let currentCategoryName;
+
+document.addEventListener('contextmenu', (event) => {
+    const streamContainer = event.target.closest('.stream-container');
+    if (streamContainer) {
+        event.preventDefault();
+        currentChannelName = streamContainer.querySelector('.stream-channel-name').innerHTML.trim();
+        currentCategoryName = streamContainer.querySelector('.stream-game-and-viewers').innerText.split(' - ')[0].trim();
+        const mouseX = event.clientX;
+        const mouseY = event.clientY;
+        showContextMenu(mouseX, mouseY);
+    }
+});
+
+const showContextMenu = (x, y) => {
+    const menuWidth = contextMenu.getBoundingClientRect().width;
+    const menuHeight = contextMenu.getBoundingClientRect().height;
+    const windowWidth = window.innerWidth;
+    const windowHeight = window.innerHeight;
+
+    let menuX = x + 5;
+    let menuY = y;
+
+    if (menuX + menuWidth > windowWidth) {
+        menuX = windowWidth - menuWidth;
+    }
+    if (menuY + menuHeight > windowHeight) {
+        menuY = windowHeight - menuHeight;
+    }
+
+    contextMenu.style.left = `${menuX}px`;
+    contextMenu.style.top = `${menuY}px`;
+    contextMenu.style.visibility = 'visible';
+
+    const openChannelItem = contextMenu.querySelector('.context-item-open-channel');
+    const openPlayerItem = contextMenu.querySelector('.context-item-open-player');
+    const chatItem = contextMenu.querySelector('.context-item-open-chat');
+    const aboutItem = contextMenu.querySelector('.context-item-about');
+    const videosItem = contextMenu.querySelector('.context-item-videos');
+    const clipsItem = contextMenu.querySelector('.context-item-clips');
+    const goToCategoryItem = contextMenu.querySelector('.context-item-go-to-category');
+
+    openChannelItem.addEventListener('click', handleOpenChannel);
+    openPlayerItem.addEventListener('click', handleOpenPlayer);
+    chatItem.addEventListener('click', handleOpenChat);
+    aboutItem.addEventListener('click', handleOpenAbout);
+    videosItem.addEventListener('click', handleOpenVideos);
+    clipsItem.addEventListener('click', handleOpenClips);
+    goToCategoryItem.addEventListener('click', handleGoToCategory);
+};
+
+const openLink = (url, openInNewWindow) => {
+    if (openInNewWindowToggle.checked) {
+        chrome.windows.create({ url, type: 'popup' });
+    } else {
+        chrome.tabs.create({ url });
+    }
+    contextMenu.style.visibility = 'hidden';
+};
+
+// Click outside the menu to close it
+document.addEventListener('mousedown', (event) => {
+    if (!contextMenu.contains(event.target)) {
+        contextMenu.style.visibility = 'hidden';
+    }
+});
+
+// Defined separate functions to handle each context menu item click
+const handleOpenChannel = () => openLink(`https://www.twitch.tv/${currentChannelName}`);
+const handleOpenPlayer = () => openLink(`https://player.twitch.tv/?channel=${currentChannelName}&parent=twitch-live`);
+const handleOpenChat = () => openLink(`https://www.twitch.tv/popout/${currentChannelName}/chat`);
+const handleOpenAbout = () => openLink(`https://www.twitch.tv/${currentChannelName}/about`);
+const handleOpenVideos = () => openLink(`https://www.twitch.tv/${currentChannelName}/videos`);
+const handleOpenClips = () => openLink(`https://www.twitch.tv/${currentChannelName}/clips?filter=clips&range=7d`);
+const handleGoToCategory = () => {
+    const formattedCategory = encodeURIComponent(currentCategoryName.toLowerCase().replace(/\s/g, '-'));
+    openLink(`https://www.twitch.tv/directory/category/${formattedCategory}`);
+};
