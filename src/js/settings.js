@@ -13,17 +13,6 @@ const getExtensionVersion = () => {
     return manifestData.version;
 };
 
-// Function to check if the version has changed
-const checkAndUpdateVersion = async () => {
-    const storedVersion = await chrome.storage.local.get("extensionVersion");
-    const currentVersion = getExtensionVersion();
-
-    if (storedVersion.extensionVersion !== currentVersion) {
-        // Update the stored version
-        chrome.storage.local.set({ extensionVersion: currentVersion });
-    }
-};
-
 // Retrieve the stored settings on popup load
 chrome.storage.local.get(
     ["openInPlayerToggle", "openInNewWindowToggle", "customBadgeColor", "extensionVersion"],
@@ -37,8 +26,6 @@ chrome.storage.local.get(
             result.openInNewWindowToggle !== undefined ? result.openInNewWindowToggle : false
         );
         document.getElementById("colorInput").value = result.customBadgeColor || "";
-        // Check and update extension version
-        checkAndUpdateVersion();
 
         // Display the extension version in the settings modal
         const versionElement = document.getElementById("extensionVersion");
