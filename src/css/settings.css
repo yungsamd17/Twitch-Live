@@ -257,3 +257,18 @@ input:checked+.slider:before {
 .logout-button:active {
     background-color: #e3301c;
 }
+
+/*  OTHER  */
+
+.version-container {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    bottom: -470%;
+    right: 45%;
+}
+
+#extensionVersion {
+    color: rgba(153, 153, 153, 0.5);
+    font-weight: bold;
+}

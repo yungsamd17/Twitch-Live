@@ -7,12 +7,47 @@ const setToggleSwitchStatus = (toggleId, status) => {
     }
 };
 
+// Function to fetch the extension version from manifest.json
+const getExtensionVersion = () => {
+    const manifestData = chrome.runtime.getManifest();
+    return manifestData.version;
+};
+
+// Function to check if the version has changed
+const checkAndUpdateVersion = async () => {
+    const storedVersion = await chrome.storage.local.get("extensionVersion");
+    const currentVersion = getExtensionVersion();
+
+    if (storedVersion.extensionVersion !== currentVersion) {
+        // Update the stored version
+        chrome.storage.local.set({ extensionVersion: currentVersion });
+    }
+};
+
 // Retrieve the stored settings on popup load
-chrome.storage.local.get(["openInPlayerToggle", "openInNewWindowToggle", "customBadgeColor"], (result) => {
-    setToggleSwitchStatus("openInPlayerToggle", result.openInPlayerToggle !== undefined ? result.openInPlayerToggle : false);
-    setToggleSwitchStatus("openInNewWindowToggle", result.openInNewWindowToggle !== undefined ? result.openInNewWindowToggle : false);
-    document.getElementById("colorInput").value = result.customBadgeColor || "";
-});
+chrome.storage.local.get(
+    ["openInPlayerToggle", "openInNewWindowToggle", "customBadgeColor", "extensionVersion"],
+    (result) => {
+        setToggleSwitchStatus(
+            "openInPlayerToggle",
+            result.openInPlayerToggle !== undefined ? result.openInPlayerToggle : false
+        );
+        setToggleSwitchStatus(
+            "openInNewWindowToggle",
+            result.openInNewWindowToggle !== undefined ? result.openInNewWindowToggle : false
+        );
+        document.getElementById("colorInput").value = result.customBadgeColor || "";
+        // Check and update extension version
+        checkAndUpdateVersion();
+
+        // Display the extension version in the settings modal
+        const versionElement = document.getElementById("extensionVersion");
+        if (versionElement) {
+            versionElement.textContent = `v${getExtensionVersion()}`;
+        }
+        // console.log(`%cSam's Twitch Live v${getExtensionVersion()}`, "color: #a855f7");
+    }
+);
 
 // Listen for changes in the toggle switches and store the settings
 document.getElementById("openInPlayerToggle").addEventListener("change", function () {
@@ -37,8 +72,8 @@ chrome.storage.onChanged.addListener((changes) => {
 const openInPlayerToggle = document.getElementById("openInPlayerToggle");
 const openInNewWindowToggle = document.getElementById("openInNewWindowToggle");
 const colorInput = document.getElementById("colorInput");
-/*console.log("Toggle Switch Status - Open in Player:", openInPlayerToggle.checked);
-console.log("Toggle Switch Status - Open in New Window:", openInNewWindowToggle.checked);*/
+// console.log("Toggle Switch Status - Open in Player:", openInPlayerToggle.checked);
+// console.log("Toggle Switch Status - Open in New Window:", openInNewWindowToggle.checked);
 
 // Custom color badge input
 colorInput.addEventListener("focus", function () {
