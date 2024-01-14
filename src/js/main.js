@@ -63,8 +63,13 @@ const openStream = (stream) => {
             url = baseStreamUrl;
         }
 
+        // Open in a new window
         if (openInNewWindow) {
-            chrome.windows.create({ url, type: 'popup' });
+            if (openInPlayer) {
+                chrome.windows.create({ url, type: 'popup' });
+            } else {
+                chrome.windows.create({ url });
+            }
         } else {
             // Open in a new tab
             chrome.tabs.create({ url });
@@ -349,6 +354,15 @@ const showContextMenu = (x, y) => {
 
 const openLink = (url, openInNewWindow) => {
     if (openInNewWindowToggle.checked) {
+        chrome.windows.create({ url });
+    } else {
+        chrome.tabs.create({ url });
+    }
+    contextMenu.style.visibility = 'hidden';
+};
+
+const openLinkInPopup = (url, openInNewWindow) => {
+    if (openInNewWindowToggle.checked) {
         chrome.windows.create({ url, type: 'popup' });
     } else {
         chrome.tabs.create({ url });
@@ -365,7 +379,7 @@ document.addEventListener('mousedown', (event) => {
 
 // Defined separate functions to handle each context menu item click
 const handleOpenChannel = () => openLink(`https://www.twitch.tv/${currentChannelName}`);
-const handleOpenPlayer = () => openLink(`https://player.twitch.tv/?channel=${currentChannelName}&parent=twitch-live`);
+const handleOpenPlayer = () => openLinkInPopup(`https://player.twitch.tv/?channel=${currentChannelName}&parent=twitch-live`);
 const handleOpenChat = () => openLink(`https://www.twitch.tv/popout/${currentChannelName}/chat`);
 const handleOpenAbout = () => openLink(`https://www.twitch.tv/${currentChannelName}/about`);
 const handleOpenVideos = () => openLink(`https://www.twitch.tv/${currentChannelName}/videos`);
