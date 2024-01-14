@@ -302,13 +302,19 @@ chrome.runtime.onMessage.addListener(async (request) => {
 let contextMenu = document.getElementById("context-menu");
 let currentChannelName = null;
 let currentCategoryName;
+let currentStreamContainer = null;
 
 document.addEventListener('contextmenu', (event) => {
     const streamContainer = event.target.closest('.stream-container');
     if (streamContainer) {
         event.preventDefault();
+        if (currentStreamContainer) {
+            currentStreamContainer.classList.remove('context-active');
+        }
         currentChannelName = streamContainer.querySelector('.stream-channel-name').innerHTML.trim();
         currentCategoryName = streamContainer.querySelector('.stream-game-and-viewers').innerText.split(' - ')[0].trim();
+        currentStreamContainer = streamContainer;
+        currentStreamContainer.classList.add('context-active');
         const mouseX = event.clientX;
         const mouseY = event.clientY;
         showContextMenu(mouseX, mouseY);
@@ -370,10 +376,20 @@ const openLinkInPopup = (url, openInNewWindow) => {
     contextMenu.style.visibility = 'hidden';
 };
 
+// Function to hide the context menu and remove the class from the stream container
+const hideContextMenu = () => {
+    contextMenu.style.visibility = 'hidden';
+    // Remove the class from the stream container
+    if (currentStreamContainer) {
+        currentStreamContainer.classList.remove('context-active');
+        currentStreamContainer = null;
+    }
+};
+
 // Click outside the menu to close it
 document.addEventListener('mousedown', (event) => {
     if (!contextMenu.contains(event.target)) {
-        contextMenu.style.visibility = 'hidden';
+        hideContextMenu();
     }
 });
 
