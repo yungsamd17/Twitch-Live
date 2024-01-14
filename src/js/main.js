@@ -184,7 +184,9 @@ const loadTwitchContent = async () => {
 
                 const title = document.createElement("span");
                 title.setAttribute("class", "stream-title");
-                title.innerHTML = stream.title;
+
+                title.innerHTML = escapeHTML(stream.title);
+
                 title.setAttribute("title", stream.title);
                 streamDetails.appendChild(title);
 
@@ -403,4 +405,22 @@ const handleOpenClips = () => openLink(`https://www.twitch.tv/${currentChannelNa
 const handleGoToCategory = () => {
     const formattedCategory = encodeURIComponent(currentCategoryName.toLowerCase().replace(/\s/g, '-'));
     openLink(`https://www.twitch.tv/directory/category/${formattedCategory}`);
+};
+
+// Function to escape HTML tags
+const escapeHTML = (unsafe) => {
+    return unsafe.replace(/[&<"']/g, (match) => {
+        switch (match) {
+            case "&":
+                return "&amp;";
+            case "<":
+                return "&lt;";
+            case '"':
+                return "&quot;";
+            case "'":
+                return "&#039;";
+            default:
+                return match;
+        }
+    });
 };

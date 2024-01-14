@@ -318,6 +318,12 @@ body {
     margin: 5px 0;
 }
 
+.context-active {
+    background-color: #242429;
+}
+
+
+
 /*  OTHER  */
 
 .accent-color {
