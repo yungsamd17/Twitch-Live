@@ -106,14 +106,33 @@
                         </label>
                     </div>
                 </div>
+
+                <div class="option-container">
+                    <div class="text-container">
+                        <span>Background update interval</span>
+                    </div>
+                    <div class="settings-input">
+                        <select id="backgroundRefreshSelect">
+                            <option value="1">1 minute</option>
+                            <option value="2">2 minutes</option>
+                            <option value="5">5 minutes</option>
+                            <option value="10">10 minutes</option>
+                            <option value="15">15 minutes</option>
+                            <option value="30">30 minutes</option>
+                            <option value="60">60 minutes</option>
+                        </select>
+                    </div>
+                </div>
+
                 <div class="option-container">
                     <div class="text-container">
                         <span>Custom badge color</span>
                     </div>
-                    <div class="color-input">
+                    <div class="settings-input">
                         <input type="text" id="colorInput" placeholder="#RRGGBB" minlength="7" maxlength="7" autocomplete="off" spellcheck="false" />
                     </div>
                 </div>
+                
                 <!-- Settings footer link -->
                 <div class="settings-footer">
                     <div class="footer-container">

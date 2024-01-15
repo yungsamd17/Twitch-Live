@@ -167,13 +167,14 @@ input:checked+.slider:before {
     background-color: #9146ff;
 }
 
-/*  COLOR INPUT  */
-.color-input {
+.settings-input {
     float: right;
     display: inline-flex;
     align-items: center;
     height: 100%;
 }
+
+/*  COLOR INPUT  */
 
 .color-input input[type="text"] {
     width: 64px;
