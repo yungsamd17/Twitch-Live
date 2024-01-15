@@ -175,13 +175,19 @@ input:checked+.slider:before {
 }
 
 /*  COLOR INPUT  */
+.color-input {
+    float: right;
+    display: inline-flex;
+    align-items: center;
+    height: 100%;
+}
 
-.color-input, input[type="text"] {
+.color-input input[type="text"] {
     width: 64px;
     background-color: #0e0e10;
     color: #999999;
-    border: 1px solid #999999;
-    border-radius: 5px;
+    border: 2px solid #999999;
+    border-radius: 10px;
     padding: 8px;
     text-align: center;
     font-weight: bold;
