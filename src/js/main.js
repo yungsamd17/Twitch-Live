@@ -319,9 +319,22 @@ document.addEventListener('contextmenu', (event) => {
         currentStreamContainer.classList.add('context-active');
         const mouseX = event.clientX;
         const mouseY = event.clientY;
+        hideContextMenu();
         showContextMenu(mouseX, mouseY);
     }
 });
+
+function animatePopup(element, targetState) {
+    if (targetState === true) {
+        element.style.visibility = 'visible';
+        element.classList.remove('popup-anim-out');
+        element.classList.add('popup-anim-in');
+    } 
+    else {
+        element.classList.remove('popup-anim-in');
+        element.classList.add('popup-anim-out');
+    }
+}
 
 const showContextMenu = (x, y) => {
     const menuWidth = contextMenu.getBoundingClientRect().width;
@@ -341,7 +354,8 @@ const showContextMenu = (x, y) => {
 
     contextMenu.style.left = `${menuX}px`;
     contextMenu.style.top = `${menuY}px`;
-    contextMenu.style.visibility = 'visible';
+
+    animatePopup(contextMenu, true);
 
     const openChannelItem = contextMenu.querySelector('.context-item-open-channel');
     const openPlayerItem = contextMenu.querySelector('.context-item-open-player');
@@ -358,6 +372,17 @@ const showContextMenu = (x, y) => {
     videosItem.addEventListener('click', handleOpenVideos);
     clipsItem.addEventListener('click', handleOpenClips);
     goToCategoryItem.addEventListener('click', handleGoToCategory);
+};
+
+// Function to hide the context menu and remove the class from the stream container
+const hideContextMenu = () => {
+    animatePopup(contextMenu, false);
+
+    // Remove the class from the stream container
+    if (currentStreamContainer) {
+        currentStreamContainer.classList.remove('context-active');
+        currentStreamContainer = null;
+    }
 };
 
 const openLink = (url, openInNewWindow) => {
@@ -378,18 +403,14 @@ const openLinkInPopup = (url, openInNewWindow) => {
     contextMenu.style.visibility = 'hidden';
 };
 
-// Function to hide the context menu and remove the class from the stream container
-const hideContextMenu = () => {
-    contextMenu.style.visibility = 'hidden';
-    // Remove the class from the stream container
-    if (currentStreamContainer) {
-        currentStreamContainer.classList.remove('context-active');
-        currentStreamContainer = null;
-    }
-};
-
 // Click outside the menu to close it
 document.addEventListener('mousedown', (event) => {
+    // Only allow closing with primary click
+    // This prevents the hide function being called when right-clicking streams as well
+    if (event.button !== 0) {
+        return;
+    }
+
     if (!contextMenu.contains(event.target)) {
         hideContextMenu();
     }

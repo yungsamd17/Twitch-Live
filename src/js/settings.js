@@ -116,26 +116,56 @@ if (logoutButton) {
 }
 
 // Filter dropdown
+
+function animatePopup(element, targetState) {
+    if (targetState === true) {
+        element.style.visibility = 'visible';
+        element.classList.remove('popup-anim-out');
+        element.classList.add('popup-anim-in');
+    } 
+    else {
+        element.classList.remove('popup-anim-in');
+        element.classList.add('popup-anim-out');
+    }
+}
+
 var dropdown = document.getElementById("filterDropdown");
 var filterBtn = document.getElementById("filterButton");
 filterBtn.onclick = function(event) {
-    dropdown.style.display = dropdown.style.display === "flex" ? "none" : "flex";
+    let dropdownVisibility = window.getComputedStyle(dropdown).visibility === "visible";
+    animatePopup(dropdown, !dropdownVisibility);
+
     event.stopPropagation();
 };
 
 window.onclick = function(event) {
-    if (!event.target.matches('.dropdown-content') && dropdown.style.display === "flex") {
-        dropdown.style.display = "none";
+    if (!event.target.matches('.dropdown-content') && dropdown.style.visibility === "visible") {
+        animatePopup(dropdown, false);
+    }
+}
+
+function animateSettingsBackground(element, targetState) {
+    if (targetState === true) {
+        element.style.visibility = 'visible';
+        element.classList.remove('settings-background-anim-out');
+        element.classList.add('settings-background-anim-in');
+    } 
+    else {
+        element.classList.remove('settings-background-anim-in');
+        element.classList.add('settings-background-anim-out');
     }
 }
 
 // Settings Modal
 var modal = document.getElementById("settingsModal");
+var modalContent = document.getElementById("settingsModalContent");
 var btn = document.getElementById("settingsBtn");
 var span = document.getElementsByClassName("settings-close-btn")[0];
 btn.onclick = function() {
-    modal.style.display = "flex";
+    animateSettingsBackground(modal, true);
+    animatePopup(modalContent, true);
 }
 span.onclick = function() {
-    modal.style.display = "none";
+    animateSettingsBackground(modal, false);
+    animatePopup(modalContent, false);
 }
