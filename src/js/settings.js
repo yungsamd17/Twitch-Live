@@ -15,7 +15,7 @@ const getExtensionVersion = () => {
 
 // Retrieve the stored settings on popup load
 chrome.storage.local.get(
-    ["openInPlayerToggle", "openInNewWindowToggle", "customBadgeColor", "extensionVersion"],
+    ["openInPlayerToggle", "openInNewWindowToggle", "customBadgeColor", "extensionVersion", "backgroundUpdateRateMin"],
     (result) => {
         setToggleSwitchStatus(
             "openInPlayerToggle",
@@ -26,6 +26,8 @@ chrome.storage.local.get(
             result.openInNewWindowToggle !== undefined ? result.openInNewWindowToggle : false
         );
         document.getElementById("colorInput").value = result.customBadgeColor || "";
+
+        backgroundRefreshSelect.value = result.backgroundUpdateRateMin || 5;
 
         // Display the extension version in the settings modal
         const versionElement = document.getElementById("extensionVersion");
@@ -52,6 +54,9 @@ chrome.storage.onChanged.addListener((changes) => {
     }
     if (changes.openInNewWindowToggle !== undefined) {
         setToggleSwitchStatus("openInNewWindowToggle", changes.openInNewWindowToggle.newValue);
+    }
+    if (changes.backgroundUpdateRateMin !== undefined) {
+        backgroundRefreshSelect.value = changes.backgroundUpdateRateMin.newValue;
     }
 });
 
@@ -128,6 +133,12 @@ window.onclick = function(event) {
         dropdown.style.display = "none";
     }
 }
+
+// Background update refresh dropdown
+var backgroundRefreshSelect = document.getElementById("backgroundRefreshSelect");
+backgroundRefreshSelect.addEventListener("change", function(value) {
+    chrome.storage.local.set({ backgroundUpdateRateMin: parseInt(value.target.value) });
+});
 
 // Settings Modal
 var modal = document.getElementById("settingsModal");
