@@ -176,12 +176,12 @@ input:checked+.slider:before {
 
 /*  COLOR INPUT  */
 
-.color-input input[type="text"] {
+.color-input, input[type="text"] {
     width: 64px;
     background-color: #0e0e10;
     color: #999999;
-    border: 2px solid #999999;
-    border-radius: 10px;
+    border: 1px solid #999999;
+    border-radius: 5px;
     padding: 8px;
     text-align: center;
     font-weight: bold;
@@ -196,6 +196,23 @@ input:checked+.slider:before {
     color: #fff;
     border: 2px solid #9146ff;
     outline: 0;
+}
+
+/* SELECT DROPDOWNS */
+
+select {
+    width: 100%;
+    background-color: #38383f;
+    border: none;
+    padding: 6px 0px 6px 4px;
+    border-radius: 5px;
+    border-right: 8px solid transparent;
+}
+select:hover {
+    background-color: #54545f;
+}
+select:focus, input:focus {
+    outline: none;
 }
 
 /*  SETTINGS FOOTER  */
@@ -238,7 +255,7 @@ input:checked+.slider:before {
     background-color: #9146ff;
 }
 
-/*  LOGOUNT BUTTON  */
+/*  LOGOUT BUTTON  */
 .logout-button {
     width: 30%;
     background-color: #e74c3c;
