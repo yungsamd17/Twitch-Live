@@ -311,3 +311,16 @@
 [filter-label]:not(:hover):before {
     transition-delay: 0s;
 }
+
+
+/*  HIDDEN LABELS  */
+
+[settings-label].hidden-label:after,
+[settings-label].hidden-label:before {
+    opacity: 0;
+}
+
+[settings-label].hidden-label:hover:after,
+[settings-label].hidden-label:hover:before {
+    opacity: 0;
+}

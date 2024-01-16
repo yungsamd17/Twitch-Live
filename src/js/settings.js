@@ -39,11 +39,11 @@ chrome.storage.local.get(
 );
 
 // Listen for changes in the toggle switches and store the settings
-document.getElementById("openInPlayerToggle").addEventListener("change", function () {
+document.getElementById("openInPlayerToggle").addEventListener("change", function() {
     setToggleSwitchStatus("openInPlayerToggle", this.checked);
 });
 
-document.getElementById("openInNewWindowToggle").addEventListener("change", function () {
+document.getElementById("openInNewWindowToggle").addEventListener("change", function() {
     setToggleSwitchStatus("openInNewWindowToggle", this.checked);
 });
 
@@ -68,11 +68,11 @@ const colorInput = document.getElementById("colorInput");
 // console.log("Toggle Switch Status - Open in New Window:", openInNewWindowToggle.checked);
 
 // Custom color badge input
-colorInput.addEventListener("focus", function () {
+colorInput.addEventListener("focus", function() {
     this.addEventListener("input", handleColorInput);
 });
 
-colorInput.addEventListener("blur", function () {
+colorInput.addEventListener("blur", function() {
     this.removeEventListener("input", handleColorInput);
 });
 
@@ -121,16 +121,40 @@ if (logoutButton) {
 }
 
 // Filter dropdown
+function animatePopup(element, targetState) {
+    if (targetState === true) {
+        element.style.visibility = 'visible';
+        element.classList.remove('popup-anim-out');
+        element.classList.add('popup-anim-in');
+    } else {
+        element.classList.remove('popup-anim-in');
+        element.classList.add('popup-anim-out');
+    }
+}
+
 var dropdown = document.getElementById("filterDropdown");
 var filterBtn = document.getElementById("filterButton");
 filterBtn.onclick = function(event) {
-    dropdown.style.display = dropdown.style.display === "flex" ? "none" : "flex";
+    let dropdownVisibility = window.getComputedStyle(dropdown).visibility === "visible";
+    animatePopup(dropdown, !dropdownVisibility);
+
     event.stopPropagation();
 };
 
-window.onclick = function(event) {
-    if (!event.target.matches('.dropdown-content') && dropdown.style.display === "flex") {
-        dropdown.style.display = "none";
+window.onmousedown = function(event) {
+    if (!event.target.matches('.dropdown-content') && dropdown.style.visibility === "visible") {
+        animatePopup(dropdown, false);
+    }
+}
+
+function animateSettingsBackground(element, targetState) {
+    if (targetState === true) {
+        element.style.visibility = 'visible';
+        element.classList.remove('settings-background-anim-out');
+        element.classList.add('settings-background-anim-in');
+    } else {
+        element.classList.remove('settings-background-anim-in');
+        element.classList.add('settings-background-anim-out');
     }
 }
 
@@ -142,11 +166,24 @@ backgroundRefreshSelect.addEventListener("change", function(value) {
 
 // Settings Modal
 var modal = document.getElementById("settingsModal");
+var modalContent = document.getElementById("settingsModalContent");
 var btn = document.getElementById("settingsBtn");
 var span = document.getElementsByClassName("settings-close-btn")[0];
+var settingsLabel = document.querySelector("[settings-label]");
+
+btn.addEventListener("mousedown", function() {
+    // Hide the settings-label on mousedown
+    settingsLabel.classList.add("hidden-label");
+});
+
 btn.onclick = function() {
-    modal.style.display = "flex";
-}
+    animateSettingsBackground(modal, true);
+    animatePopup(modalContent, true);
+};
+
 span.onclick = function() {
-    modal.style.display = "none";
-}
+    // Restore the settings-label when the modal is closed
+    settingsLabel.classList.remove("hidden-label");
+    animateSettingsBackground(modal, false);
+    animatePopup(modalContent, false);
+};
