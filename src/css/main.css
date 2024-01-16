@@ -121,14 +121,14 @@ body {
     position: absolute;
     background-color: #242429;
     padding: 0;
-    width: 182px;
+    width: 184px;
     height: auto;
     border: 1px solid #38383f;
     border-radius: 5px;
     display: flex;
     box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2), 0 0 10px 6px rgba(0, 0, 0, 0.3);
 
-    transform: translate(-117px, 45px);
+    transform: translate(-118px, 45px);
 }
 
 .dropdown-body {
