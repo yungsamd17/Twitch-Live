@@ -167,62 +167,39 @@ input:checked+.slider:before {
     background-color: #9146ff;
 }
 
+/*  SETTINGS INPUTS  */
+.settings-input-container {
+    float: right;
+    display: inline-flex;
+    align-items: center;
+    height: 100%;
+}
+
 .settings-input {
-    float: right;
-    display: inline-flex;
-    align-items: center;
-    height: 100%;
-}
-
-/*  COLOR INPUT  */
-.color-input {
-    float: right;
-    display: inline-flex;
-    align-items: center;
-    height: 100%;
-}
-
-.color-input input[type="text"] {
-    width: 64px;
+    width: 72px;
+    height: 28px;
     background-color: #0e0e10;
     color: #999999;
     border: 2px solid #999999;
     border-radius: 10px;
-    padding: 8px;
     text-align: center;
     font-weight: bold;
 }
 
-.color-input input[type="text"]:hover {
+.settings-input:hover {
     color: #fff;
     border: 2px solid #fff;
 }
 
-.color-input input[type="text"]:focus {
+.settings-input:focus {
     color: #fff;
     border: 2px solid #9146ff;
     outline: 0;
 }
 
-/*  SELECT DROPDOWNS  */
-.settings-input select {
-    width: 100%;
-    background-color: #0e0e10;
-    color: #999999;
-    border: 2px solid #999999;
-    border-radius: 10px;
-    padding: 8px 2px;
-}
-
-.settings-input select:hover {
-    color: #fff;
-    border: 2px solid #fff;
-}
-
-.settings-input select:focus {
-    color: #fff;
-    border: 2px solid #9146ff;
-    outline: 0;
+#backgroundRefreshSelect {
+    width: 80px;
+    height: 34px;
 }
 
 /*  SETTINGS FOOTER  */
