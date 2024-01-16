@@ -121,26 +121,25 @@ body {
     position: absolute;
     background-color: #242429;
     padding: 0;
-    width: 176px;
+    width: 182px;
     height: auto;
     border: 1px solid #38383f;
     border-radius: 5px;
     display: flex;
     box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2), 0 0 10px 6px rgba(0, 0, 0, 0.3);
 
-    transform: translate(-115px, 50px);
+    transform: translate(-117px, 45px);
 }
 
 .dropdown-body {
     color: #fff;
     width: 100%;
-    padding: 5px 0;
+    padding: 5px;
 }
 
 .filter-option {
     height: 30px;
     font-size: 1rem;
-    padding: 0 5px;
 }
 
 .filter-button {
@@ -148,8 +147,8 @@ body {
     align-items: center;
     height: 100%;
     width: 100%;
-    padding: 0 6px;
     background-color: #242429;
+    padding: 0;
     border: 0;
     border-radius: 3px;
     cursor: pointer;
@@ -176,7 +175,7 @@ body {
 }
 
 .filter-icon {
-    margin-right: 8px;
+    margin: 0 8px;
 }
 
 /*  MAIN ELEMENT CLASSES  */
@@ -204,8 +203,8 @@ body {
     border-top: 1px solid #242429;
     border-bottom: 1px solid #000;
     display: flex;
-    animation: fade-anim-in 0.6s cubic-bezier(0.35, 0.55, 0, 1);
-    transition: transform 333ms cubic-bezier(0.35, 0.55, 0, 1);
+    /*animation: fade-anim-in 0.6s cubic-bezier(0.35, 0.55, 0, 1);
+    transition: transform 333ms cubic-bezier(0.35, 0.55, 0, 1);*/
 }
 
 .stream-container:hover {
@@ -214,7 +213,7 @@ body {
 }
 
 .stream-container:active {
-    transform: scale(0.99);
+    background-color: #29292e;
 }
 
 .stream-thumbnail {
@@ -331,10 +330,8 @@ body {
     visibility: hidden;
     user-select: none;
     animation-fill-mode: forwards;
-    transform-origin: top left;
+    transform-origin: top center;
 }
-
-/* ANIMATIONS */
 
 .context-item {
     padding: 6px 12px;

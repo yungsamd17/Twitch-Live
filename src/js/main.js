@@ -89,7 +89,7 @@ const loadTwitchContent = async () => {
     }
 
     if (res.twitchStreams) {
-        let filteredStreams = [...res.twitchStreams]; // Copy the array to avoid modifying the original
+        let filteredStreams = [...res.twitchStreams];
 
         // Filter/Sort options
         const selectedFilter = getSelectedFilterOption();
@@ -304,19 +304,13 @@ chrome.runtime.onMessage.addListener(async (request) => {
 let contextMenu = document.getElementById("context-menu");
 let currentChannelName = null;
 let currentCategoryName;
-let currentStreamContainer = null;
 
 document.addEventListener('contextmenu', (event) => {
     const streamContainer = event.target.closest('.stream-container');
     if (streamContainer) {
         event.preventDefault();
-        if (currentStreamContainer) {
-            currentStreamContainer.classList.remove('context-active');
-        }
         currentChannelName = streamContainer.querySelector('.stream-channel-name').innerHTML.trim();
         currentCategoryName = streamContainer.querySelector('.stream-game-and-viewers').innerText.split(' - ')[0].trim();
-        currentStreamContainer = streamContainer;
-        currentStreamContainer.classList.add('context-active');
         const mouseX = event.clientX;
         const mouseY = event.clientY;
         hideContextMenu();
@@ -329,8 +323,7 @@ function animatePopup(element, targetState) {
         element.style.visibility = 'visible';
         element.classList.remove('popup-anim-out');
         element.classList.add('popup-anim-in');
-    } 
-    else {
+    } else {
         element.classList.remove('popup-anim-in');
         element.classList.add('popup-anim-out');
     }
@@ -342,8 +335,8 @@ const showContextMenu = (x, y) => {
     const windowWidth = window.innerWidth;
     const windowHeight = window.innerHeight;
 
-    let menuX = x + 5;
-    let menuY = y;
+    let menuX = x - 57;
+    let menuY = y + 5;
 
     if (menuX + menuWidth > windowWidth) {
         menuX = windowWidth - menuWidth;
@@ -377,12 +370,6 @@ const showContextMenu = (x, y) => {
 // Function to hide the context menu and remove the class from the stream container
 const hideContextMenu = () => {
     animatePopup(contextMenu, false);
-
-    // Remove the class from the stream container
-    if (currentStreamContainer) {
-        currentStreamContainer.classList.remove('context-active');
-        currentStreamContainer = null;
-    }
 };
 
 const openLink = (url, openInNewWindow) => {
