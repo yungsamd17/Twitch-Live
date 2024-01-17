@@ -3,7 +3,9 @@ const setToggleSwitchStatus = (toggleId, status) => {
     const toggleSwitch = document.getElementById(toggleId);
     if (toggleSwitch) {
         toggleSwitch.checked = status;
-        chrome.storage.local.set({ [toggleId]: status });
+        chrome.storage.local.set({
+            [toggleId]: status
+        });
     }
 };
 

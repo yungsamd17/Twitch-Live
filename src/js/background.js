@@ -69,7 +69,7 @@ const createUpdateStreamsAlarm = (updateRateMin) => {
     });
 };
 
-chrome.storage.local.get({backgroundUpdateRateMin: 5}, (data) => {
+chrome.storage.local.get({ backgroundUpdateRateMin: 5 }, (data) => {
     value = data.backgroundUpdateRateMin;
     console.log(`[startup] Background update rate: ${value} minutes`);
     createUpdateStreamsAlarm(value);
@@ -163,7 +163,7 @@ const getTwitchAuth = async () => {
     } catch (error) {
         console.error(error);
     }
-    
+
     return false;
 };
 

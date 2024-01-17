@@ -209,7 +209,6 @@ input:checked+.slider:before {
     position: absolute;
     bottom: 0;
     width: 100%;
-    margin-bottom: 18px;
 }
 
 .footer-container {
@@ -217,7 +216,7 @@ input:checked+.slider:before {
     height: 30px;
     width: 100%;
     font-size: 1rem;
-    padding: 0 18px 0 18px;
+    padding: 0 18px 18px 18px;
     justify-content: space-between;
 }
 
@@ -271,6 +270,7 @@ input:checked+.slider:before {
         background-color: transparent;
         backdrop-filter: blur(0px);
     }
+
     to {
         background-color: rgba(0, 0, 0, 0.75);
         backdrop-filter: blur(6px);
@@ -290,6 +290,7 @@ input:checked+.slider:before {
         transform: scale(0.9);
         opacity: 0;
     }
+
     to {
         transform: scale(1.0);
         opacity: 1;

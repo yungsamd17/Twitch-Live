@@ -43,7 +43,7 @@ body {
     color: #fff;
     border: 2px solid #242429;
     border-radius: 5px 0 0 5px;
-    padding: 8px;
+    padding: 0 8px;
     margin: 10px 0 10px 10px;
     font-size: 1rem;
     font-weight: bold;
@@ -203,8 +203,6 @@ body {
     border-top: 1px solid #242429;
     border-bottom: 1px solid #000;
     display: flex;
-    /*animation: fade-anim-in 0.6s cubic-bezier(0.35, 0.55, 0, 1);
-    transition: transform 333ms cubic-bezier(0.35, 0.55, 0, 1);*/
 }
 
 .stream-container:hover {
@@ -220,7 +218,7 @@ body {
     position: relative;
     width: 80px;
     height: 45px;
-    padding: 10px;
+    margin: 10px;
 }
 
 .stream-thumbnail img {
@@ -236,8 +234,8 @@ body {
 
 .stream-uptime {
     position: absolute;
-    right: 10.1%;
-    bottom: 15.3%;
+    right: 0;
+    bottom: 0;
     background: rgba(0, 0, 0, 0.6);
     color: rgba(255, 255, 255, 0.8);
     font-size: 0.78rem;
@@ -296,15 +294,6 @@ body {
         transform: scale(0.95);
         opacity: 0;
         visibility: hidden;
-    }
-}
-
-@keyframes fade-anim-in {
-    from {
-        opacity: 0;
-    }
-    to {
-        overflow: 1;
     }
 }
 
