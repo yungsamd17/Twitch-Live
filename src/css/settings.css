@@ -264,7 +264,6 @@ input:checked+.slider:before {
 }
 
 /* ANIMATIONS */
-
 @keyframes settings-background-anim-in {
     from {
         background-color: transparent;
@@ -306,7 +305,6 @@ input:checked+.slider:before {
 }
 
 /*  OTHER  */
-
 .version-container {
     display: flex;
     justify-content: center;
