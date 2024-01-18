@@ -31,13 +31,57 @@ chrome.alarms.onAlarm.addListener((alarm) => {
 });
 chrome.alarms.create("validateTwitchTokenAlarm", { periodInMinutes: 60 });
 
-// Update streams update every 5 minutes
+let lastUpdate = new Date();
+
+// Update streams (badge) in background, periodically
 chrome.alarms.onAlarm.addListener((alarm) => {
     if (alarm.name === "updateStreamsAlarm") {
+        const updateTime = new Date();
+        const diff = Math.abs(updateTime - lastUpdate);
+        const diffSeconds = diff / 1000;
+
+        console.log(`Stream update alarm at ${updateTime.toTimeString().slice(0,8)} :: difference to previous: ${lastUpdate.toTimeString().slice(0,8)} (${diffSeconds} seconds)`);
+
+        lastUpdate = updateTime;
+
         updateStreamsPeriodically();
     }
 });
-chrome.alarms.create("updateStreamsAlarm", { periodInMinutes: 5 });
+
+const createUpdateStreamsAlarm = (updateRateMin) => {
+    chrome.alarms.get("updateStreamsAlarm", (alarm) => {
+        // console.log(`[debug] creating background refresh alarm:`)
+        // console.log("  - before clear: updateStreamsAlarm get: ", alarm);
+    });
+
+    chrome.alarms.clear("updateStreamsAlarm", (wasCleared) => {
+        // console.log("    | updateStreamsAlarm wasCleared: ", wasCleared);
+    });
+
+    chrome.alarms.get("updateStreamsAlarm", (alarm) => {
+        // console.log("  - after clear: updateStreamsAlarm get: ", alarm);
+    });
+
+    chrome.alarms.create("updateStreamsAlarm", { periodInMinutes: updateRateMin });
+
+    chrome.alarms.get("updateStreamsAlarm", (alarm) => {
+        // console.log("[debug] new alarm: updateStreamsAlarm get: ", alarm);
+    });
+};
+
+chrome.storage.local.get({ backgroundUpdateRateMin: 5 }, (data) => {
+    value = data.backgroundUpdateRateMin;
+    console.log(`[startup] Background update rate: ${value} minutes`);
+    createUpdateStreamsAlarm(value);
+});
+
+chrome.storage.onChanged.addListener((changes) => {
+    if (changes.backgroundUpdateRateMin !== undefined) {
+        const newValue = changes.backgroundUpdateRateMin.newValue;
+        console.log(`[config] Background update rate changed: ${newValue} minutes`)
+        createUpdateStreamsAlarm(newValue);
+    }
+});
 
 // Set up message listeners and refresh data on browser startup and extension reload (dev/unpacked)
 const launch = async () => {
@@ -119,7 +163,7 @@ const getTwitchAuth = async () => {
     } catch (error) {
         console.error(error);
     }
-    
+
     return false;
 };
 

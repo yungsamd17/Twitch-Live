@@ -12,7 +12,7 @@ const setNavbar = (isVisible) => {
         if (isVisible) navbar.style.display = "block";
         else navbar.style.display = "none";
     }
-}
+};
 
 const authScreen = () => {
     // Hide the navbar when creating the authentication screen
@@ -63,8 +63,13 @@ const openStream = (stream) => {
             url = baseStreamUrl;
         }
 
+        // Open in a new window
         if (openInNewWindow) {
-            chrome.windows.create({ url, type: 'popup' });
+            if (openInPlayer) {
+                chrome.windows.create({ url, type: 'popup' });
+            } else {
+                chrome.windows.create({ url });
+            }
         } else {
             // Open in a new tab
             chrome.tabs.create({ url });
@@ -84,7 +89,7 @@ const loadTwitchContent = async () => {
     }
 
     if (res.twitchStreams) {
-        let filteredStreams = [...res.twitchStreams]; // Copy the array to avoid modifying the original
+        let filteredStreams = [...res.twitchStreams];
 
         // Filter/Sort options
         const selectedFilter = getSelectedFilterOption();
@@ -135,9 +140,9 @@ const loadTwitchContent = async () => {
         const query = filterInput.value.toLowerCase();
         filteredStreams = filteredStreams.filter(
             (stream) =>
-                stream.channelName.toLowerCase().includes(query) ||
-                stream.title.toLowerCase().includes(query) ||
-                stream.gameName.toLowerCase().includes(query)
+            stream.channelName.toLowerCase().includes(query) ||
+            stream.title.toLowerCase().includes(query) ||
+            stream.gameName.toLowerCase().includes(query)
         );
 
         if (filteredStreams.length > 0) {
@@ -179,7 +184,9 @@ const loadTwitchContent = async () => {
 
                 const title = document.createElement("span");
                 title.setAttribute("class", "stream-title");
-                title.innerHTML = stream.title;
+
+                title.innerHTML = escapeHTML(stream.title);
+
                 title.setAttribute("title", stream.title);
                 streamDetails.appendChild(title);
 
@@ -263,7 +270,7 @@ filterInput.addEventListener("input", loadTwitchContent);
 refreshButton.addEventListener("click", handleRefreshButtonClick);
 
 // Initial load
-addEventListener("DOMContentLoaded", async () => { 
+addEventListener("DOMContentLoaded", async () => {
     await loadTwitchContent();
     if (authScreenPresent()) return;
     setupAutoRefresh();
@@ -292,3 +299,136 @@ chrome.runtime.onMessage.addListener(async (request) => {
         setupAutoRefresh();
     }
 });
+
+// Right click context menu
+let contextMenu = document.getElementById("context-menu");
+let currentChannelName = null;
+let currentCategoryName;
+
+document.addEventListener('contextmenu', (event) => {
+    const streamContainer = event.target.closest('.stream-container');
+    if (streamContainer) {
+        event.preventDefault();
+        currentChannelName = streamContainer.querySelector('.stream-channel-name').innerHTML.trim();
+        currentCategoryName = streamContainer.querySelector('.stream-game-and-viewers').innerText.split(' - ')[0].trim();
+        const mouseX = event.clientX;
+        const mouseY = event.clientY;
+        hideContextMenu();
+        showContextMenu(mouseX, mouseY);
+    }
+});
+
+function animatePopup(element, targetState) {
+    if (targetState === true) {
+        element.style.visibility = 'visible';
+        element.classList.remove('popup-anim-out');
+        element.classList.add('popup-anim-in');
+    } else {
+        element.classList.remove('popup-anim-in');
+        element.classList.add('popup-anim-out');
+    }
+}
+
+const showContextMenu = (x, y) => {
+    const menuWidth = contextMenu.getBoundingClientRect().width;
+    const menuHeight = contextMenu.getBoundingClientRect().height;
+    const windowWidth = window.innerWidth;
+    const windowHeight = window.innerHeight;
+
+    let menuX = x - 57;
+    let menuY = y + 5;
+
+    if (menuX + menuWidth > windowWidth) {
+        menuX = windowWidth - menuWidth;
+    }
+    if (menuY + menuHeight > windowHeight) {
+        menuY = windowHeight - menuHeight;
+    }
+
+    contextMenu.style.left = `${menuX}px`;
+    contextMenu.style.top = `${menuY}px`;
+
+    animatePopup(contextMenu, true);
+
+    const openChannelItem = contextMenu.querySelector('.context-item-open-channel');
+    const openPlayerItem = contextMenu.querySelector('.context-item-open-player');
+    const chatItem = contextMenu.querySelector('.context-item-open-chat');
+    const aboutItem = contextMenu.querySelector('.context-item-about');
+    const videosItem = contextMenu.querySelector('.context-item-videos');
+    const clipsItem = contextMenu.querySelector('.context-item-clips');
+    const goToCategoryItem = contextMenu.querySelector('.context-item-go-to-category');
+
+    openChannelItem.addEventListener('click', handleOpenChannel);
+    openPlayerItem.addEventListener('click', handleOpenPlayer);
+    chatItem.addEventListener('click', handleOpenChat);
+    aboutItem.addEventListener('click', handleOpenAbout);
+    videosItem.addEventListener('click', handleOpenVideos);
+    clipsItem.addEventListener('click', handleOpenClips);
+    goToCategoryItem.addEventListener('click', handleGoToCategory);
+};
+
+// Function to hide the context menu and remove the class from the stream container
+const hideContextMenu = () => {
+    animatePopup(contextMenu, false);
+};
+
+const openLink = (url, openInNewWindow) => {
+    if (openInNewWindowToggle.checked) {
+        chrome.windows.create({ url });
+    } else {
+        chrome.tabs.create({ url });
+    }
+    contextMenu.style.visibility = 'hidden';
+};
+
+const openLinkInPopup = (url, openInNewWindow) => {
+    if (openInNewWindowToggle.checked) {
+        chrome.windows.create({ url, type: 'popup' });
+    } else {
+        chrome.tabs.create({ url });
+    }
+    contextMenu.style.visibility = 'hidden';
+};
+
+// Click outside the menu to close it
+document.addEventListener('mousedown', (event) => {
+    // Only allow closing with primary click
+    // This prevents the hide function being called when right-clicking streams as well
+    if (event.button !== 0) {
+        return;
+    }
+
+    if (!contextMenu.contains(event.target)) {
+        hideContextMenu();
+    }
+});
+
+// Defined separate functions to handle each context menu item click
+const handleOpenChannel = () => openLink(`https://www.twitch.tv/${currentChannelName}`);
+const handleOpenPlayer = () => openLinkInPopup(`https://player.twitch.tv/?channel=${currentChannelName}&parent=twitch-live`);
+const handleOpenChat = () => openLink(`https://www.twitch.tv/popout/${currentChannelName}/chat`);
+const handleOpenAbout = () => openLink(`https://www.twitch.tv/${currentChannelName}/about`);
+const handleOpenVideos = () => openLink(`https://www.twitch.tv/${currentChannelName}/videos`);
+const handleOpenClips = () => openLink(`https://www.twitch.tv/${currentChannelName}/clips?filter=clips&range=7d`);
+const handleGoToCategory = () => {
+    const formattedCategory = encodeURIComponent(currentCategoryName.toLowerCase().replace(/\s/g, '-'));
+    openLink(`https://www.twitch.tv/directory/category/${formattedCategory}`);
+};
+
+// Function to escape HTML tags
+const escapeHTML = (unsafe) => {
+    return unsafe.replace(/[&<"']/g, (match) => {
+        switch (match) {
+            case "&":
+                return "&amp;";
+            case "<":
+                return "&lt;";
+            case '"':
+                return "&quot;";
+            case "'":
+                return "&#039;";
+            default:
+                return match;
+        }
+    });
+};

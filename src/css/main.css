@@ -2,8 +2,6 @@
 @import "tooltips.css";
 @import "auth.css";
 
-
-
 :root {
     color-scheme: dark;
 }
@@ -22,9 +20,7 @@ body {
 }
 
 
-
 /*  NAVBAR  */
-
 .navbar {
     color: #fff;
     background-color: #0e0e10;
@@ -42,12 +38,12 @@ body {
 }
 
 .search-container input[type="text"] {
-    width: 150px;
+    width: 145px;
     background-color: #242429;
     color: #fff;
     border: 2px solid #242429;
     border-radius: 5px 0 0 5px;
-    padding: 8px;
+    padding: 0 8px;
     margin: 10px 0 10px 10px;
     font-size: 1rem;
     font-weight: bold;
@@ -79,24 +75,21 @@ body {
     float: right;
 }
 
-
-
 /*  NAVBAR LINKS/BUTTONS  */
-
 .navbar-link {
     color: #fff;
-    font-weight: bold;
     background-color: #38383f;
-    padding: 6.5px 7px;
     border: 0;
     border-radius: 5px;
     text-decoration: none;
     margin: 10px 10px 10px 0;
-    display: inline;
-    align-content: center;
     font-size: 1rem;
     cursor: pointer;
     user-select: none;
+    width: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .navbar-link:hover {
@@ -114,38 +107,37 @@ body {
     background-color: #242429;
 }
 
-
-
-/*  FILTER DROPDOWN  */
+/*  FILTER/SORT DROPDOWN  */
 .dropdown {
-    display: none;
     align-items: center;
+    visibility: hidden;
+
+    transform-origin: top center;
 }
 
 .dropdown-content {
     position: absolute;
-    top: 100%;
-    right: 26%;
     background-color: #242429;
     padding: 0;
-    width: 176px;
+    width: 184px;
     height: auto;
     border: 1px solid #38383f;
     border-radius: 5px;
     display: flex;
     box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2), 0 0 10px 6px rgba(0, 0, 0, 0.3);
+
+    transform: translate(-118px, 50px);
 }
 
 .dropdown-body {
     color: #fff;
     width: 100%;
-    padding: 5px 0;
+    padding: 5px;
 }
 
 .filter-option {
     height: 30px;
     font-size: 1rem;
-    padding: 0 5px;
 }
 
 .filter-button {
@@ -153,8 +145,8 @@ body {
     align-items: center;
     height: 100%;
     width: 100%;
-    padding: 0 6px;
     background-color: #242429;
+    padding: 0;
     border: 0;
     border-radius: 3px;
     cursor: pointer;
@@ -181,11 +173,10 @@ body {
 }
 
 .filter-icon {
-    margin-right: 8px;
+    margin: 0 8px;
 }
 
 /*  MAIN ELEMENT CLASSES  */
-
 .streams {
     bottom: 0;
     width: 430px;
@@ -201,10 +192,7 @@ body {
     display: flex;
 }
 
-
-
 /*  STREAM "CARD" CLASSES */
-
 .stream-container {
     width: 100%;
     cursor: pointer;
@@ -218,11 +206,15 @@ body {
     text-shadow: 0 0 4px #000;
 }
 
+.stream-container:active {
+    background-color: #29292e;
+}
+
 .stream-thumbnail {
     position: relative;
     width: 80px;
     height: 45px;
-    padding: 10px;
+    margin: 10px;
 }
 
 .stream-thumbnail img {
@@ -238,8 +230,8 @@ body {
 
 .stream-uptime {
     position: absolute;
-    right: 10.1%;
-    bottom: 15.5%;
+    right: 0;
+    bottom: 0;
     background: rgba(0, 0, 0, 0.6);
     color: rgba(255, 255, 255, 0.8);
     font-size: 0.78rem;
@@ -280,10 +272,77 @@ body {
     color: #fff;
 }
 
+/* ANIMATIONS */
+@keyframes popup-anim-in {
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1.0);
+        opacity: 1;
+    }
+}
+
+@keyframes popup-anim-out {
+    to {
+        transform: scale(0.95);
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
+.popup-anim-in {
+    animation: popup-anim-in 333ms cubic-bezier(0.35, 0.55, 0, 1) forwards;
+}
+.popup-anim-out {
+    animation: popup-anim-out 222ms cubic-bezier(0.35, 0.55, 0, 1) forwards;
+}
+
+/*  CONTEXT MENU  */
+#context-menu {
+    position: fixed;
+    z-index: 1000;
+    color: #fff;
+    background-color: #0e0e10;
+    border: 1px solid #242429;
+    border-radius: 5px;
+    padding: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    font-size: 12px;
+    visibility: hidden;
+    user-select: none;
+    animation-fill-mode: forwards;
+    transform-origin: top center;
+}
+
+.context-item {
+    padding: 6px 12px;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.context-item:hover {
+    background-color: #38383f;
+}
+
+.context-item:active {
+    background-color: #9146ff;
+}
+
+.cm-divider {
+    height: 1px;
+    background-color: #242429;
+    margin: 5px 0;
+}
+
+.context-active {
+    background-color: #242429;
+}
+
 
 
 /*  OTHER  */
-
 .accent-color {
     color: #9146ff;
 }
@@ -293,5 +352,5 @@ body {
     text-align: center;
     font-weight: bold;
     font-size: 1.1rem;
-    padding: 42px 0 0 0;
+    padding: 20px 0 0 0;
 }

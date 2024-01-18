@@ -18,7 +18,7 @@
             <input type="text" id="searchStreams" placeholder="Search..." maxlength="17" autocomplete="off" spellcheck="false" autofocus />
             <button id="refreshButton" class="navbar-link refresh-button" refresh-label="Refresh Streams">
                 <i class="fa-solid fa-rotate-left"></i></button>
-            <button id="filterButton" class="navbar-link" filter-label="Sort Streams" style="padding: 6px;">
+            <button id="filterButton" class="navbar-link" filter-label="Sort Streams">
                 <i class="fa-solid fa-arrow-down-wide-short"></i></button>
             <!-- Filter Dropdown -->
             <div id="filterDropdown" class="dropdown">
@@ -26,27 +26,33 @@
                     <div class="dropdown-body">
                         <div class="filter-option">
                             <button class="filter-button" id="broadcasterButton">
-                                <div class="filter-icon"><i class="fa-solid fa-user"></i></div>Broadcaster</button>
+                                <div class="filter-icon"><i class="fa-solid fa-user"></i></div>Broadcaster
+                            </button>
                         </div>
                         <div class="filter-option">
                             <button class="filter-button" id="categoryButton">
-                                <div class="filter-icon"><i class="fa-solid fa-gamepad"></i></div>Category</button>
+                                <div class="filter-icon"><i class="fa-solid fa-gamepad"></i></div>Category
+                            </button>
                         </div>
                         <div class="filter-option">
                             <button class="filter-button active" id="viewersHighToLowButton">
-                                <div class="filter-icon"><i class="fa-solid fa-arrow-down-wide-short"></i></div>Viewers (High to Low)</button>
+                                <div class="filter-icon"><i class="fa-solid fa-arrow-down-wide-short"></i></div>Viewers (High to Low)
+                            </button>
                         </div>
                         <div class="filter-option">
                             <button class="filter-button" id="viewersLowToHighButton">
-                                <div class="filter-icon"><i class="fa-solid fa-arrow-down-short-wide"></i></div>Viewers (Low to High)</button>
+                                <div class="filter-icon"><i class="fa-solid fa-arrow-down-short-wide"></i></div>Viewers (Low to High)
+                            </button>
                         </div>
                         <div class="filter-option">
                             <button class="filter-button" id="startedButton">
-                                <div class="filter-icon"><i class="fa-regular fa-clock"></i></div>Recently started</button>
+                                <div class="filter-icon"><i class="fa-regular fa-clock"></i></div>Recently started
+                            </button>
                         </div>
                         <div class="filter-option">
                             <button class="filter-button" id="runningButton">
-                                <div class="filter-icon"><i class="fa-solid fa-clock"></i></div>Longest Running</button>
+                                <div class="filter-icon"><i class="fa-solid fa-clock"></i></div>Longest Running
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -66,7 +72,7 @@
     </div>
     <!-- Settings Modal -->
     <div id="settingsModal" class="settings-modal">
-        <div class="settings-modal-content">
+        <div id="settingsModalContent" class="settings-modal-content">
             <div class="settings-modal-body">
                 <!-- Settings header -->
                 <div class="settings-header">
@@ -100,12 +106,28 @@
                         </label>
                     </div>
                 </div>
-                <div class="option-container" style="padding-right: 16px;">
+                <div class="option-container">
+                    <div class="text-container">
+                        <span>Background update interval</span>
+                    </div>
+                    <div class="settings-input-container">
+                        <select id="backgroundRefreshSelect" class="settings-input">
+                            <option value="1">1 min</option>
+                            <option value="2">2 min</option>
+                            <option value="5">5 min</option>
+                            <option value="10">10 min</option>
+                            <option value="15">15 min</option>
+                            <option value="30">30 min</option>
+                            <option value="60">60 min</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="option-container">
                     <div class="text-container">
                         <span>Custom badge color</span>
                     </div>
-                    <div class="color-input">
-                        <input type="text" id="colorInput" placeholder="#RRGGBB" minlength="7" maxlength="7" autocomplete="off" spellcheck="false" />
+                    <div class="settings-input-container">
+                        <input type="text" id="colorInput" class="settings-input" placeholder="#RRGGBB" minlength="7" maxlength="7" autocomplete="off" spellcheck="false" />
                     </div>
                 </div>
                 <!-- Settings footer link -->
@@ -118,8 +140,23 @@
                         <button id="logoutBtn" class="logout-button"><i class="fa-solid fa-power-off"></i> Logout</button>
                     </div>
                 </div>
+                <div class="version-container">
+                    <span id="extensionVersion">Loading extension version...</span>
+                </div>
             </div>
         </div>
+    </div>
+    <!-- Context Menu -->
+    <div id="context-menu">
+        <div class="context-item context-item-open-channel">Open Channel</div>
+        <div class="context-item context-item-open-player">Open Player</div>
+        <div class="context-item context-item-open-chat">Open Chat</div>
+        <div class="cm-divider"></div>
+        <div class="context-item context-item-about">About</div>
+        <div class="context-item context-item-videos">Videos</div>
+        <div class="context-item context-item-clips">Clips</div>
+        <div class="cm-divider"></div>
+        <div class="context-item context-item-go-to-category">Go to category</div>
     </div>
     <script src="src/js/main.js"></script>
     <script src="src/js/settings.js"></script>

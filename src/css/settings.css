@@ -1,39 +1,40 @@
 /*  SETTINGS (MODAL)  */
 
 .settings-modal {
-    display: none;
+    display: grid;
+    visibility: hidden;
+    background-color: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(6px);
+
     position: fixed;
     z-index: 1000;
-    left: 0;
-    top: 0;
     width: 430px;
     height: 600px;
     overflow: auto;
-    background-color: rgba(0, 0, 0, 0.75);
-    backdrop-filter: blur(6px);
-    animation: fadeIn 0.15s ease-in-out;
     align-items: center;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
 }
 
 .settings-modal-content {
     position: relative;
     background-color: #18181b;
-    margin: 15px;
-    padding: 0;
-    width: 100%;
+    margin: 20px;
     height: 350px;
     border: 1px solid #242429;
     border-radius: 5px;
     display: flex;
+}
+
+.settings-background-anim-in {
+    animation: settings-background-anim-in 0.2s linear forwards;
+}
+.settings-background-anim-out {
+    animation: settings-background-anim-out 0.2s linear forwards;
+}
+.popup-anim-in {
+    animation: popup-anim-in 333ms cubic-bezier(0.35, 0.55, 0, 1) forwards;
+}
+.popup-anim-out {
+    animation: popup-anim-out 111ms cubic-bezier(0.35, 0.55, 0, 1) forwards;
 }
 
 .settings-modal-body {
@@ -105,6 +106,7 @@
     display: inline-flex;
     align-items: center;
     height: 100%;
+    margin-right: 1.5px
 }
 
 .switch {
@@ -166,34 +168,39 @@ input:checked+.slider:before {
     background-color: #9146ff;
 }
 
-/*  COLOR INPUT  */
-.color-input {
+/*  SETTINGS INPUTS  */
+.settings-input-container {
     float: right;
     display: inline-flex;
     align-items: center;
     height: 100%;
 }
 
-.color-input input[type="text"] {
-    width: 64px;
+.settings-input {
+    width: 72px;
+    height: 28px;
     background-color: #0e0e10;
     color: #999999;
     border: 2px solid #999999;
     border-radius: 10px;
-    padding: 8px;
     text-align: center;
     font-weight: bold;
 }
 
-.color-input input[type="text"]:hover {
+.settings-input:hover {
     color: #fff;
     border: 2px solid #fff;
 }
 
-.color-input input[type="text"]:focus {
+.settings-input:focus {
     color: #fff;
     border: 2px solid #9146ff;
     outline: 0;
+}
+
+#backgroundRefreshSelect {
+    width: 80px;
+    height: 34px;
 }
 
 /*  SETTINGS FOOTER  */
@@ -202,7 +209,6 @@ input:checked+.slider:before {
     position: absolute;
     bottom: 0;
     width: 100%;
-    margin-bottom: 18px;
 }
 
 .footer-container {
@@ -210,7 +216,7 @@ input:checked+.slider:before {
     height: 30px;
     width: 100%;
     font-size: 1rem;
-    padding: 0 18px 0 18px;
+    padding: 0 18px 18px 18px;
     justify-content: space-between;
 }
 
@@ -236,7 +242,7 @@ input:checked+.slider:before {
     background-color: #9146ff;
 }
 
-/*  LOGOUNT BUTTON  */
+/*  LOGOUT BUTTON  */
 .logout-button {
     width: 30%;
     background-color: #e74c3c;
@@ -246,6 +252,7 @@ input:checked+.slider:before {
     cursor: pointer;
     font-size: 14px;
     font-weight: bold;
+    user-select: none;
 }
 
 .logout-button:hover {
@@ -254,4 +261,59 @@ input:checked+.slider:before {
 
 .logout-button:active {
     background-color: #e3301c;
+}
+
+/* ANIMATIONS */
+@keyframes settings-background-anim-in {
+    from {
+        background-color: transparent;
+        backdrop-filter: blur(0px);
+    }
+
+    to {
+        background-color: rgba(0, 0, 0, 0.75);
+        backdrop-filter: blur(6px);
+    }
+}
+
+@keyframes settings-background-anim-out {
+    to {
+        background-color: rgba(0, 0, 0, 0);
+        backdrop-filter: blur(0px);
+        visibility: hidden;
+    }
+}
+
+@keyframes popup-anim-in {
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1.0);
+        opacity: 1;
+    }
+}
+
+@keyframes popup-anim-out {
+    to {
+        transform: scale(0.95);
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
+/*  OTHER  */
+.version-container {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    bottom: -25px;
+    width: 100%;
+}
+
+#extensionVersion {
+    color: rgba(153, 153, 153, 0.5);
+    font-weight: bold;
 }

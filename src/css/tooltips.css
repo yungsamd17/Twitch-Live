@@ -1,129 +1,12 @@
-/*  SETTINGS TOOLTIP  */
+/*  SETTINGS TOOLTIPS  */
 
-[settings-label] {
-    position: relative;
-}
-
-[settings-label]:after,
-[settings-label]:before {
-    content: "";
-    position: absolute;
-    z-index: 500;
-    pointer-events: none;
-}
-
-[settings-label]:after {
-    content: attr(settings-label);
-    display: block;
-    position: absolute;
-    top: 133%;
-    right: 0%;
-    z-index: 500;
-    pointer-events: none;
-    padding: 5px;
-    line-height: 15px;
-    white-space: nowrap;
-    text-decoration: none;
-    text-indent: 0;
-    overflow: visible;
-    font-size: .8em;
-    color: #000;
-    background-color: #fff;
-    border-radius: 5px;
-    opacity: 0;
-}
-
-[settings-label]:before {
-    content: "";
-    border-style: solid;
-    border-width: 0 8px 10px 8px;
-    border-color: transparent transparent #fff transparent;
-    top: 35px;
-    right: 50%;
-    transform: translateX(50%);
-    opacity: 0;
-}
-
-[settings-label]:hover:after {
-    opacity: 1;
-    transition-delay: 0.3s;
-}
-
-[settings-label]:hover:before {
-    opacity: 1;
-    transition-delay: 0.3s;
-}
-
-[settings-label]:not(:hover):after,
-[settings-label]:not(:hover):before {
-    transition-delay: 0s;
-}
-
-
-/*  TWITCH LIVE FOLLOWING TOOLTIP  */
-
-[twitch-label] {
-    position: relative;
-}
-
-[twitch-label]:after,
-[twitch-label]:before {
-    content: "";
-    position: absolute;
-    z-index: 500;
-    pointer-events: none;
-}
-
-[twitch-label]:after {
-    content: attr(twitch-label);
-    display: block;
-    position: absolute;
-    top: 133%;
-    right: -132%;
-    z-index: 500;
-    pointer-events: none;
-    padding: 5px;
-    line-height: 15px;
-    white-space: nowrap;
-    text-decoration: none;
-    text-indent: 0;
-    overflow: visible;
-    font-size: .8em;
-    color: #000;
-    background-color: #fff;
-    border-radius: 5px;
-    opacity: 0;
-}
-
-[twitch-label]:before {
-    content: "";
-    border-style: solid;
-    border-width: 0 8px 10px 8px;
-    border-color: transparent transparent #fff transparent;
-    top: 35px;
-    right: 50%;
-    transform: translateX(50%);
-    opacity: 0;
-}
-
-[twitch-label]:hover:after {
-    opacity: 1;
-    transition-delay: 0.3s;
-}
-
-[twitch-label]:hover:before {
-    opacity: 1;
-    transition-delay: 0.3s;
-}
-
-[twitch-label]:not(:hover):after,
-[twitch-label]:not(:hover):before {
-    transition-delay: 0s;
+:root {
+    --tooltip-background: #fff;
+    --tooltip-text: #000;
 }
 
 
 /*  REFRESH BUTTON TOOLTIP  */
-
 [refresh-label] {
     position: relative;
 }
@@ -151,8 +34,9 @@
     text-indent: 0;
     overflow: visible;
     font-size: .8em;
-    color: #000;
-    background-color: #fff;
+    font-weight: bold;
+    color: var(--tooltip-text);
+    background-color: var(--tooltip-background);
     border-radius: 5px;
     opacity: 0;
 }
@@ -161,7 +45,7 @@
     content: "";
     border-style: solid;
     border-width: 0 8px 10px 8px;
-    border-color: transparent transparent #fff transparent;
+    border-color: transparent transparent var(--tooltip-background) transparent;
     top: 35px;
     right: 50%;
     transform: translateX(50%);
@@ -183,71 +67,7 @@
     transition-delay: 0s;
 }
 
-
-/*  "Open streams in Player" SETTINGS OPTION INFO LINK TOOLTIP  */
-
-[info-label] {
-    position: relative;
-}
-
-[info-label]:after,
-[info-label]:before {
-    content: "";
-    position: absolute;
-    z-index: 500;
-    pointer-events: none;
-}
-
-[info-label]:after {
-    content: attr(info-label);
-    display: block;
-    position: absolute;
-    top: 174%;
-    left: -450%;
-    z-index: 500;
-    pointer-events: none;
-    padding: 5px;
-    line-height: 15px;
-    white-space: nowrap;
-    text-decoration: none;
-    text-indent: 0;
-    overflow: visible;
-    font-size: .8em;
-    color: #000;
-    background-color: #fff;
-    border-radius: 5px;
-    opacity: 0;
-}
-
-[info-label]:before {
-    content: "";
-    border-style: solid;
-    border-width: 0 8px 10px 8px;
-    border-color: transparent transparent #fff transparent;
-    top: 23px;
-    right: 50%;
-    transform: translateX(50%);
-    opacity: 0;
-}
-
-[info-label]:hover:after {
-    opacity: 1;
-    transition-delay: 0.3s;
-}
-
-[info-label]:hover:before {
-    opacity: 1;
-    transition-delay: 0.3s;
-}
-
-[info-label]:not(:hover):after,
-[info-label]:not(:hover):before {
-    transition-delay: 0s;
-}
-
-
 /*  FILTER BUTTON TOOLTIP  */
-
 [filter-label] {
     position: relative;
 }
@@ -275,8 +95,9 @@
     text-indent: 0;
     overflow: visible;
     font-size: .8em;
-    color: #000;
-    background-color: #fff;
+    font-weight: bold;
+    color: var(--tooltip-text);
+    background-color: var(--tooltip-background);
     border-radius: 5px;
     opacity: 0;
 }
@@ -285,7 +106,7 @@
     content: "";
     border-style: solid;
     border-width: 0 8px 10px 8px;
-    border-color: transparent transparent #fff transparent;
+    border-color: transparent transparent var(--tooltip-background) transparent;
     top: 35px;
     right: 50%;
     transform: translateX(50%);
@@ -304,5 +125,214 @@
 
 [filter-label]:not(:hover):after,
 [filter-label]:not(:hover):before {
+    transition-delay: 0s;
+}
+
+/*  TWITCH LIVE FOLLOWING TOOLTIP  */
+[twitch-label] {
+    position: relative;
+}
+
+[twitch-label]:after,
+[twitch-label]:before {
+    content: "";
+    position: absolute;
+    z-index: 500;
+    pointer-events: none;
+}
+
+[twitch-label]:after {
+    content: attr(twitch-label);
+    display: block;
+    position: absolute;
+    top: 133%;
+    right: -132%;
+    z-index: 500;
+    pointer-events: none;
+    padding: 5px;
+    line-height: 15px;
+    white-space: nowrap;
+    text-decoration: none;
+    text-indent: 0;
+    overflow: visible;
+    font-size: .8em;
+    font-weight: bold;
+    color: var(--tooltip-text);
+    background-color: var(--tooltip-background);
+    border-radius: 5px;
+    opacity: 0;
+}
+
+[twitch-label]:before {
+    content: "";
+    border-style: solid;
+    border-width: 0 8px 10px 8px;
+    border-color: transparent transparent var(--tooltip-background) transparent;
+    top: 35px;
+    right: 50%;
+    transform: translateX(50%);
+    opacity: 0;
+}
+
+[twitch-label]:hover:after {
+    opacity: 1;
+    transition-delay: 0.3s;
+}
+
+[twitch-label]:hover:before {
+    opacity: 1;
+    transition-delay: 0.3s;
+}
+
+[twitch-label]:not(:hover):after,
+[twitch-label]:not(:hover):before {
+    transition-delay: 0s;
+}
+
+/*  SETTINGS TOOLTIP*/
+[settings-label] {
+    position: relative;
+}
+
+[settings-label]:after,
+[settings-label]:before {
+    content: "";
+    position: absolute;
+    z-index: 500;
+    pointer-events: none;
+}
+
+[settings-label]:after {
+    content: attr(settings-label);
+    display: block;
+    position: absolute;
+    top: 133%;
+    right: 0%;
+    z-index: 500;
+    pointer-events: none;
+    padding: 5px;
+    line-height: 15px;
+    white-space: nowrap;
+    text-decoration: none;
+    text-indent: 0;
+    overflow: visible;
+    font-size: .8em;
+    font-weight: bold;
+    color: var(--tooltip-text);
+    background-color: var(--tooltip-background);
+    border-radius: 5px;
+    opacity: 0;
+}
+
+[settings-label]:before {
+    content: "";
+    border-style: solid;
+    border-width: 0 8px 10px 8px;
+    border-color: transparent transparent var(--tooltip-background) transparent;
+    top: 35px;
+    right: 50%;
+    transform: translateX(50%);
+    opacity: 0;
+}
+
+[settings-label]:hover:after {
+    opacity: 1;
+    transition-delay: 0.3s;
+}
+
+[settings-label]:hover:before {
+    opacity: 1;
+    transition-delay: 0.3s;
+}
+
+[settings-label]:not(:hover):after,
+[settings-label]:not(:hover):before {
+    transition-delay: 0s;
+}
+
+/*  "Open streams in Player" SETTINGS OPTION INFO LINK TOOLTIP  */
+[info-label] {
+    position: relative;
+}
+
+[info-label]:after,
+[info-label]:before {
+    content: "";
+    position: absolute;
+    z-index: 500;
+    pointer-events: none;
+}
+
+[info-label]:after {
+    content: attr(info-label);
+    display: block;
+    position: absolute;
+    top: 174%;
+    left: -450%;
+    z-index: 500;
+    pointer-events: none;
+    padding: 5px;
+    line-height: 15px;
+    white-space: nowrap;
+    text-decoration: none;
+    text-indent: 0;
+    overflow: visible;
+    font-size: .8em;
+    font-weight: bold;
+    color: var(--tooltip-text);
+    background-color: var(--tooltip-background);
+    border-radius: 5px;
+    opacity: 0;
+}
+
+[info-label]:before {
+    content: "";
+    border-style: solid;
+    border-width: 0 8px 10px 8px;
+    border-color: transparent transparent var(--tooltip-background) transparent;
+    top: 23px;
+    right: 50%;
+    transform: translateX(50%);
+    opacity: 0;
+}
+
+[info-label]:hover:after {
+    opacity: 1;
+    transition-delay: 0.3s;
+}
+
+[info-label]:hover:before {
+    opacity: 1;
+    transition-delay: 0.3s;
+}
+
+[info-label]:not(:hover):after,
+[info-label]:not(:hover):before {
+    transition-delay: 0s;
+}
+
+
+/*  HIDDEN LABELS  */
+[settings-label].hidden-label:after,
+[settings-label].hidden-label:before {
+    opacity: 0;
+    transition-delay: 0s;
+}
+
+[settings-label].hidden-label:hover:after,
+[settings-label].hidden-label:hover:before {
+    opacity: 0;
+    transition-delay: 0s;
+}
+
+[filter-label].filter-label-hidden:after,
+[filter-label].filter-label-hidden:before {
+    opacity: 0;
+    transition-delay: 0s;
+}
+
+[filter-label].filter-label-hidden:hover:after,
+[filter-label].filter-label-hidden:hover:before {
+    opacity: 0;
     transition-delay: 0s;
 }
