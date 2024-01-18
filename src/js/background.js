@@ -50,22 +50,22 @@ chrome.alarms.onAlarm.addListener((alarm) => {
 
 const createUpdateStreamsAlarm = (updateRateMin) => {
     chrome.alarms.get("updateStreamsAlarm", (alarm) => {
-        console.log(`[debug] creating background refresh alarm:`)
-        console.log("  - before clear: updateStreamsAlarm get: ", alarm);
+        // console.log(`[debug] creating background refresh alarm:`)
+        // console.log("  - before clear: updateStreamsAlarm get: ", alarm);
     });
 
     chrome.alarms.clear("updateStreamsAlarm", (wasCleared) => {
-        console.log("    | updateStreamsAlarm wasCleared: ", wasCleared);
+        // console.log("    | updateStreamsAlarm wasCleared: ", wasCleared);
     });
 
     chrome.alarms.get("updateStreamsAlarm", (alarm) => {
-        console.log("  - after clear: updateStreamsAlarm get: ", alarm);
+        // console.log("  - after clear: updateStreamsAlarm get: ", alarm);
     });
 
     chrome.alarms.create("updateStreamsAlarm", { periodInMinutes: updateRateMin });
 
     chrome.alarms.get("updateStreamsAlarm", (alarm) => {
-        console.log("[debug] new alarm: updateStreamsAlarm get: ", alarm);
+        // console.log("[debug] new alarm: updateStreamsAlarm get: ", alarm);
     });
 };
 
