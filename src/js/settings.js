@@ -136,12 +136,27 @@ function animatePopup(element, targetState) {
 
 var dropdown = document.getElementById("filterDropdown");
 var filterBtn = document.getElementById("filterButton");
+var filterLabel = document.querySelector('[filter-label]');
+
 filterBtn.onclick = function(event) {
+    let isFilterLabelHidden = filterLabel.classList.contains('filter-label-hidden');
+
+    if (isFilterLabelHidden) {
+        filterLabel.classList.remove('filter-label-hidden');
+    } else {
+        filterLabel.classList.add('filter-label-hidden');
+    }
+
     let dropdownVisibility = window.getComputedStyle(dropdown).visibility === "visible";
     animatePopup(dropdown, !dropdownVisibility);
 
     event.stopPropagation();
 };
+
+// Event listener to reset the filter label visibility on hover
+filterBtn.addEventListener('mouseenter', function() {
+    filterLabel.classList.remove('filter-label-hidden');
+});
 
 window.onmousedown = function(event) {
     if (!event.target.matches('.dropdown-content') && dropdown.style.visibility === "visible") {

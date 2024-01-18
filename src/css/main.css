@@ -114,7 +114,6 @@ body {
     visibility: hidden;
 
     transform-origin: top center;
-    z-index: 1000;
 }
 
 .dropdown-content {
@@ -128,7 +127,7 @@ body {
     display: flex;
     box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2), 0 0 10px 6px rgba(0, 0, 0, 0.3);
 
-    transform: translate(-118px, 45px);
+    transform: translate(-118px, 50px);
 }
 
 .dropdown-body {
