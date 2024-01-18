@@ -184,23 +184,33 @@ backgroundRefreshSelect.addEventListener("change", function(value) {
 // Settings Modal
 var modal = document.getElementById("settingsModal");
 var modalContent = document.getElementById("settingsModalContent");
-var btn = document.getElementById("settingsBtn");
-var span = document.getElementsByClassName("settings-close-btn")[0];
+var settingsBtn = document.getElementById("settingsBtn");
+var settingsCloseBtn = document.getElementsByClassName("settings-close-btn")[0];
 var settingsLabel = document.querySelector("[settings-label]");
 
-btn.addEventListener("mousedown", function() {
+settingsBtn.addEventListener("mousedown", function() {
     // Hide the settings-label on mousedown
     settingsLabel.classList.add("hidden-label");
 });
 
-btn.onclick = function() {
+settingsBtn.onclick = function() {
     animateSettingsBackground(modal, true);
     animatePopup(modalContent, true);
 };
 
-span.onclick = function() {
+// Function to close the modal
+function closeModal() {
     // Restore the settings-label when the modal is closed
     settingsLabel.classList.remove("hidden-label");
     animateSettingsBackground(modal, false);
     animatePopup(modalContent, false);
-};
+}
+
+// Close modal when the close button is clicked
+settingsCloseBtn.onclick = closeModal;
+// Close modal when the 'f' key is pressed
+document.addEventListener('keydown', function(event) {
+    if (event.key.toLowerCase() === 'f') {
+        closeModal();
+    }
+});
