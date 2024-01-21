@@ -88,6 +88,10 @@
     user-select: none;
 }
 
+.text-container label {
+    cursor: pointer;
+}
+
 .text-container a {
     color: #999999;
 }
