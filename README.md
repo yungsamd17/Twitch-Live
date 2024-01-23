@@ -8,9 +8,11 @@
 This extension brings the channels you follow to the forefront, providing a seamless viewing experience right from your browser.
 
 ### Key Features
-- Live Following Channels: Keep track of the live channels you follow on Twitch with ease.
-- Customizable Viewing Options: Tailor your viewing experience by choosing to open streams in a new window or a new tab.
-- Quick Search: Effortlessly find your preferred streams with the built-in search functionality.
+- **Live Following Channels:** Keep track of the live channels you follow on Twitch with ease.
+- **Customizable Viewing Options:** Tailor your viewing experience by choosing to open streams in a new window or in the player. Customize background update intervals and badge colors according to your preferences.
+- **Quick Search:** Effortlessly find your preferred streams with the built-in search functionality.
+- **Sort Streams:** Sort streams based on various criteria, including Viewers (High to Low or Low to High), Broadcasters, Categories, Recently Started, and Longest Running.
+- **Context Menu:** Enhance your browsing experience with a right-click context menu that allows you to open streams in the channel, player, or chat. Additionally, you can directly access channels' about, videos, and clips pages. Explore streams by category with ease using context menu.
 
 ## Install
 
@@ -35,7 +37,7 @@ Forked from [MatthewMoye/who-is-live](https://github.com/MatthewMoye/who-is-live
 
 ### Contributions
 
-- [**xezrunner**](https://github.com/xezrunner) For helping with migration to Manifest V3.
+- [**xezrunner**](https://github.com/xezrunner) For helping with migration to Manifest V3 and more.
 
 ## License
 
