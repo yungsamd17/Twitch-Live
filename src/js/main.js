@@ -188,7 +188,6 @@ const loadTwitchContent = async () => {
                 channel.innerHTML = stream.channelName;
                 channelContainer.appendChild(channel);
 
-                // Add a separate click event listener for the raid button
                 const raidButton = document.createElement("button");
                 raidButton.setAttribute("class", "channel-raid-button");
                 raidButton.setAttribute("title", "Click to copy raid command");
@@ -202,7 +201,6 @@ const loadTwitchContent = async () => {
                     event.stopPropagation();
                     // Handle raid button click - copy channel name with raid command
                     const raidCommand = `/raid ${stream.channelName}`;
-
 
                     // Create a temporary textarea to copy text to clipboard
                     const textArea = document.createElement("textarea");

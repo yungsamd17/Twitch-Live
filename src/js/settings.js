@@ -53,7 +53,6 @@ document.getElementById("openInNewWindowToggle").addEventListener("change", func
     setToggleSwitchStatus("openInNewWindowToggle", this.checked);
 });
 
-// Listen for changes in the showRaidButtonToggle and store the setting
 document.getElementById("showRaidButtonToggle").addEventListener("change", function() {
     setToggleSwitchStatus("showRaidButtonToggle", this.checked);
 });
@@ -65,6 +64,9 @@ chrome.storage.onChanged.addListener((changes) => {
     }
     if (changes.openInNewWindowToggle !== undefined) {
         setToggleSwitchStatus("openInNewWindowToggle", changes.openInNewWindowToggle.newValue);
+    }
+    if (changes.showRaidButtonToggle !== undefined) {
+        setToggleSwitchStatus("showRaidButtonToggle", changes.showRaidButtonToggle.newValue);
     }
     if (changes.backgroundUpdateRateMin !== undefined) {
         backgroundRefreshSelect.value = changes.backgroundUpdateRateMin.newValue;
@@ -119,9 +121,8 @@ const handleLogoutButtonClick = () => {
         twitchStreams: null,
     });
 
-    // Remove the extension badge
+    // Remove the extension badge, and close the popup
     chrome.action.setBadgeText({ text: "" });
-    // Close the popup
     window.close();
 };
 
