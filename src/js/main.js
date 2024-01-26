@@ -46,15 +46,13 @@ const formatViewerCount = (count) => {
 };
 
 // Open stream in new window and player settings
-const openStream = (stream, event) => {
+const openStream = (stream) => {
     const openInPlayerToggle = document.getElementById("openInPlayerToggle");
     const openInNewWindowToggle = document.getElementById("openInNewWindowToggle");
-    const showRaidButtonToggle = document.getElementById("showRaidButtonToggle");
 
-    if (openInPlayerToggle && openInNewWindowToggle && showRaidButtonToggle) {
+    if (openInPlayerToggle && openInNewWindowToggle) {
         const openInPlayer = openInPlayerToggle.checked;
         const openInNewWindow = openInNewWindowToggle.checked;
-        const showRaidButton = showRaidButtonToggle.checked;
 
         const baseStreamUrl = `https://www.twitch.tv/${stream.channelName}`;
         let url;
@@ -65,22 +63,16 @@ const openStream = (stream, event) => {
             url = baseStreamUrl;
         }
 
-        // Check if the click target has the "channel-raid-button" class and the setting is enabled
-        if (!event.target.classList.contains("channel-raid-button") && showRaidButton) {
-            // Open in a new window
-            if (openInNewWindow) {
-                if (openInPlayer) {
-                    chrome.windows.create({ url, type: 'popup' });
-                } else {
-                    chrome.windows.create({ url });
-                }
+        // Open in a new window
+        if (openInNewWindow) {
+            if (openInPlayer) {
+                chrome.windows.create({ url, type: 'popup' });
             } else {
-                // Open in a new tab
-                chrome.tabs.create({ url });
+                chrome.windows.create({ url });
             }
         } else {
-            // Stop event propagation to prevent opening the stream
-            event.stopPropagation();
+            // Open in a new tab
+            chrome.tabs.create({ url });
         }
     }
 };
@@ -157,7 +149,6 @@ const loadTwitchContent = async () => {
             const streamList = filteredStreams.map((stream) => {
                 const streamContainer = document.createElement("div");
                 streamContainer.setAttribute("class", "stream-container");
-                streamContainer.onclick = (event) => openStream(stream, event);
 
                 const streamThumbnail = document.createElement("div");
                 streamThumbnail.setAttribute("class", "stream-thumbnail");
