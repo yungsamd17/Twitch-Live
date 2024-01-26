@@ -249,12 +249,47 @@ body {
     justify-content: center;
 }
 
+.channel-container {
+    display: flex;
+    flex-direction: row;
+}
+
 .stream-channel-name {
     font-size: 1rem;
     font-weight: bold;
     white-space: nowrap;
     text-overflow: ellipsis;
     color: #fff;
+}
+
+.channel-raid-button {
+    background-color: transparent;
+    color: #787878;
+    display: flex;
+    justify-content: center;
+    height: 17px;
+    width: 17px;
+    border: 0;
+    border-radius: 3px;
+    margin-left: 8px;
+    cursor: pointer;
+    visibility: hidden;
+}
+
+.channel-raid-button:hover {
+    color: #fff;
+}
+
+.channel-raid-button:active {
+    color: #9146ff;
+}
+
+.stream-container:hover .channel-raid-button {
+    visibility: visible;
+}
+
+.channel-raid-button.hidden {
+    display: none;
 }
 
 .stream-game-and-viewers,

@@ -17,7 +17,7 @@ const getExtensionVersion = () => {
 
 // Retrieve the stored settings on popup load
 chrome.storage.local.get(
-    ["openInPlayerToggle", "openInNewWindowToggle", "customBadgeColor", "extensionVersion", "backgroundUpdateRateMin"],
+    ["openInPlayerToggle", "openInNewWindowToggle", "showRaidButtonToggle", "customBadgeColor", "extensionVersion", "backgroundUpdateRateMin"],
     (result) => {
         setToggleSwitchStatus(
             "openInPlayerToggle",
@@ -26,6 +26,10 @@ chrome.storage.local.get(
         setToggleSwitchStatus(
             "openInNewWindowToggle",
             result.openInNewWindowToggle !== undefined ? result.openInNewWindowToggle : false
+        );
+        setToggleSwitchStatus(
+            "showRaidButtonToggle",
+            result.showRaidButtonToggle !== undefined ? result.showRaidButtonToggle : false
         );
         document.getElementById("colorInput").value = result.customBadgeColor || "";
 
@@ -47,6 +51,11 @@ document.getElementById("openInPlayerToggle").addEventListener("change", functio
 
 document.getElementById("openInNewWindowToggle").addEventListener("change", function() {
     setToggleSwitchStatus("openInNewWindowToggle", this.checked);
+});
+
+// Listen for changes in the showRaidButtonToggle and store the setting
+document.getElementById("showRaidButtonToggle").addEventListener("change", function() {
+    setToggleSwitchStatus("showRaidButtonToggle", this.checked);
 });
 
 // Listen for changes in storage and update the toggle switches accordingly

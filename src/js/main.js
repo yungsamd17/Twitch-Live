@@ -46,13 +46,15 @@ const formatViewerCount = (count) => {
 };
 
 // Open stream in new window and player settings
-const openStream = (stream) => {
+const openStream = (stream, event) => {
     const openInPlayerToggle = document.getElementById("openInPlayerToggle");
     const openInNewWindowToggle = document.getElementById("openInNewWindowToggle");
+    const showRaidButtonToggle = document.getElementById("showRaidButtonToggle");
 
-    if (openInPlayerToggle && openInNewWindowToggle) {
+    if (openInPlayerToggle && openInNewWindowToggle && showRaidButtonToggle) {
         const openInPlayer = openInPlayerToggle.checked;
         const openInNewWindow = openInNewWindowToggle.checked;
+        const showRaidButton = showRaidButtonToggle.checked;
 
         const baseStreamUrl = `https://www.twitch.tv/${stream.channelName}`;
         let url;
@@ -63,22 +65,28 @@ const openStream = (stream) => {
             url = baseStreamUrl;
         }
 
-        // Open in a new window
-        if (openInNewWindow) {
-            if (openInPlayer) {
-                chrome.windows.create({ url, type: 'popup' });
+        // Check if the click target has the "channel-raid-button" class and the setting is enabled
+        if (!event.target.classList.contains("channel-raid-button") && showRaidButton) {
+            // Open in a new window
+            if (openInNewWindow) {
+                if (openInPlayer) {
+                    chrome.windows.create({ url, type: 'popup' });
+                } else {
+                    chrome.windows.create({ url });
+                }
             } else {
-                chrome.windows.create({ url });
+                // Open in a new tab
+                chrome.tabs.create({ url });
             }
         } else {
-            // Open in a new tab
-            chrome.tabs.create({ url });
+            // Stop event propagation to prevent opening the stream
+            event.stopPropagation();
         }
     }
 };
 
 const loadTwitchContent = async () => {
-    const storageItems = ["twitchIsValidated", "twitchAccessToken", "twitchStreams"];
+    const storageItems = ["twitchIsValidated", "twitchAccessToken", "twitchStreams", "showRaidButtonToggle"];
     const res = await chrome.storage.local.get(storageItems);
 
     // Always refresh Twitch streams when the popup is opened
@@ -149,7 +157,7 @@ const loadTwitchContent = async () => {
             const streamList = filteredStreams.map((stream) => {
                 const streamContainer = document.createElement("div");
                 streamContainer.setAttribute("class", "stream-container");
-                streamContainer.onclick = () => openStream(stream);
+                streamContainer.onclick = (event) => openStream(stream, event);
 
                 const streamThumbnail = document.createElement("div");
                 streamThumbnail.setAttribute("class", "stream-thumbnail");
@@ -171,10 +179,51 @@ const loadTwitchContent = async () => {
                 streamDetails.setAttribute("class", "stream-details");
                 streamContainer.appendChild(streamDetails);
 
+                const channelContainer = document.createElement("div");
+                channelContainer.setAttribute("class", "channel-container")
+                streamDetails.appendChild(channelContainer);
+
                 const channel = document.createElement("span");
                 channel.setAttribute("class", "stream-channel-name");
                 channel.innerHTML = stream.channelName;
-                streamDetails.appendChild(channel);
+                channelContainer.appendChild(channel);
+
+                // Add a separate click event listener for the raid button
+                const raidButton = document.createElement("button");
+                raidButton.setAttribute("class", "channel-raid-button");
+                raidButton.setAttribute("title", "Click to copy raid command");
+
+                // Add the "hidden" class if the showRaidButtonToggle is disabled
+                if (!res.showRaidButtonToggle) {
+                    raidButton.classList.add("hidden");
+                }
+
+                raidButton.addEventListener("click", (event) => {
+                    event.stopPropagation();
+                    // Handle raid button click - copy channel name with raid command
+                    const raidCommand = `/raid ${stream.channelName}`;
+
+
+                    // Create a temporary textarea to copy text to clipboard
+                    const textArea = document.createElement("textarea");
+                    textArea.value = raidCommand;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+
+                    // Copy text to clipboard
+                    document.execCommand("copy");
+
+                    // Remove the temporary textarea
+                    document.body.removeChild(textArea);
+
+                    console.log(`Raid command copied to clipboard: ${raidCommand}`);
+                });
+
+                channelContainer.appendChild(raidButton);
+
+                const raidButtonIcon = document.createElement("i");
+                raidButtonIcon.setAttribute("class", "fa-regular fa-copy");
+                raidButton.appendChild(raidButtonIcon);
 
                 const categoryAndViewCount = document.createElement("span");
                 categoryAndViewCount.setAttribute("class", "stream-game-and-viewers");
@@ -189,6 +238,9 @@ const loadTwitchContent = async () => {
 
                 title.setAttribute("title", stream.title);
                 streamDetails.appendChild(title);
+
+                // Add the click event for the entire stream container
+                streamContainer.addEventListener("click", () => openStream(stream));
 
                 return streamContainer;
             });
@@ -215,6 +267,14 @@ const handleRefreshButtonClick = () => {
     filterInput.value = ""; // Clear the search input
     loadTwitchContent();
 };
+
+// Raid command button toggle
+document.getElementById("showRaidButtonToggle").addEventListener("change", async function() {
+    await chrome.storage.local.set({ showRaidButtonToggle: this.checked });
+
+    // Refresh Twitch streams immediately upon toggling the raid button visibility
+    await loadTwitchContent();
+});
 
 // Function to get the selected filter option
 const getSelectedFilterOption = () => {

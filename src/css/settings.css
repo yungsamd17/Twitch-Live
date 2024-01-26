@@ -18,7 +18,7 @@
     position: relative;
     background-color: #18181b;
     margin: 20px;
-    height: 350px;
+    height: 360px;
     border: 1px solid #242429;
     border-radius: 5px;
     display: flex;
@@ -92,11 +92,17 @@
     cursor: pointer;
 }
 
-.text-container a {
+.text-container label span {
+    cursor: help;
+}
+
+.text-container a,
+.text-container label span {
     color: #999999;
 }
 
-.text-container a:hover {
+.text-container a:hover,
+.text-container label span:hover {
     color: #fff;
 }
 
