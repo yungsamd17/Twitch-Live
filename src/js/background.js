@@ -117,7 +117,7 @@ const updateBadge = async () => {
 };
 
 // Twitch app token
-const TWITCH_APP_TOKEN = "rcailimmjedyclwyf2u3xjw5xnt7j6";
+const TWITCH_APP_TOKEN = "veho7ytn25l8a9dpgfkk79sqgey43j";
 const redirectURL = chrome.identity.getRedirectURL();
 
 // Function to handle Twitch unauthorized state
