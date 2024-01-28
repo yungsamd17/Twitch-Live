@@ -283,6 +283,10 @@ const loadTwitchContent = async () => {
 
             contentSection.replaceChildren(noResultsMessage);
         }
+
+        // Show logout button after login/when logged in
+        document.getElementById("logoutBtn").style.display = "block";
+
     } else if (!res.twitchIsValidated || !res.twitchAccessToken) {
         authScreen();
     }

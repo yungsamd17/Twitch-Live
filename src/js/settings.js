@@ -44,8 +44,8 @@ chrome.storage.local.get(
 
         // Check if the user is logged in
         if (result.twitchAccessToken) {
-            // User is logged in, show the button
-            document.getElementById("logoutBtn").style.display = "block";
+            // User is logged in
+            return
         } else {
             // User is not logged in, hide the button
             document.getElementById("logoutBtn").style.display = "none";
