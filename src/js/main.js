@@ -6,18 +6,7 @@ const authScreenPresent = () => {
     return contentSection.querySelector(".auth-header");
 };
 
-const setNavbar = (isVisible) => {
-    const navbar = document.querySelector(".navbar");
-    if (navbar) {
-        if (isVisible) navbar.style.display = "block";
-        else navbar.style.display = "none";
-    }
-};
-
 const authScreen = () => {
-    // Hide the navbar when creating the authentication screen
-    setNavbar(false);
-
     const authHeader = document.createElement("span");
     authHeader.setAttribute("class", "auth-header");
     authHeader.innerHTML = "Sam's Twitch ";
@@ -35,7 +24,12 @@ const authScreen = () => {
     const authButton = document.createElement("button");
     authButton.setAttribute("id", "auth-button");
     authButton.setAttribute("class", "auth-button");
-    authButton.innerHTML = "Login with Twitch";
+
+    const authButtonIcon = document.createElement("i");
+    authButtonIcon.setAttribute("class", "fa-brands fa-twitch");
+    authButton.appendChild(authButtonIcon);
+    authButton.innerHTML += "&nbsp;&nbsp;Login with Twitch";
+
     authButton.onclick = () => chrome.runtime.sendMessage({ message: "fetch-twitch-auth-token", popup: true });
     contentSection.appendChild(authButton);
 };
@@ -357,9 +351,6 @@ chrome.runtime.onMessage.addListener(async (request) => {
         // Remove all elements that have class starting with "auth"
         const authElements = document.querySelectorAll("[class^=auth]");
         authElements.forEach((element) => element.remove());
-
-        // Show the navbar
-        setNavbar(true);
 
         await loadTwitchContent();
         setupAutoRefresh();

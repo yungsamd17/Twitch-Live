@@ -17,7 +17,7 @@ const getExtensionVersion = () => {
 
 // Retrieve the stored settings on popup load
 chrome.storage.local.get(
-    ["openInPlayerToggle", "openInNewWindowToggle", "showRaidButtonToggle", "customBadgeColor", "extensionVersion", "backgroundUpdateRateMin"],
+    ["openInPlayerToggle", "openInNewWindowToggle", "showRaidButtonToggle", "customBadgeColor", "extensionVersion", "backgroundUpdateRateMin", "twitchAccessToken"],
     (result) => {
         setToggleSwitchStatus(
             "openInPlayerToggle",
@@ -41,6 +41,15 @@ chrome.storage.local.get(
             versionElement.textContent = `v${getExtensionVersion()}`;
         }
         // console.log(`%cSam's Twitch Live v${getExtensionVersion()}`, "color: #a855f7");
+
+        // Check if the user is logged in
+        if (result.twitchAccessToken) {
+            // User is logged in, show the button
+            document.getElementById("logoutBtn").style.display = "block";
+        } else {
+            // User is not logged in, hide the button
+            document.getElementById("logoutBtn").style.display = "none";
+        }
     }
 );
 

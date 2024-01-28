@@ -227,7 +227,7 @@ input:checked+.slider:before {
     width: 100%;
     font-size: 1rem;
     padding: 0 18px 18px 18px;
-    justify-content: space-between;
+    justify-content: center;
 }
 
 /*  SETTINGS LINK  */
@@ -252,6 +252,14 @@ input:checked+.slider:before {
     background-color: #9146ff;
 }
 
+.github {
+    margin-right: 9px;
+}
+
+.donate {
+    margin-left: 9px;
+}
+
 /*  LOGOUT BUTTON  */
 .logout-button {
     width: 30%;
@@ -263,6 +271,7 @@ input:checked+.slider:before {
     font-size: 14px;
     font-weight: bold;
     user-select: none;
+    margin-left: 18px;
 }
 
 .logout-button:hover {
