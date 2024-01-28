@@ -236,10 +236,27 @@ const loadTwitchContent = async () => {
 
             contentSection.replaceChildren(...streamList);
         } else {
+            const searchTerm = filterInput.value.trim();
+
             // Display a message when no matching results are found
             const noResultsMessage = document.createElement("div");
             noResultsMessage.setAttribute("class", "no-search-results");
-            noResultsMessage.innerHTML = "No matching Search results found.";
+
+            const noResultsMessageText = document.createElement("p")
+            noResultsMessageText.innerHTML = "No matching Search results found.";
+            noResultsMessage.appendChild(noResultsMessageText)
+
+            const searchOnTwitch = document.createElement("a")
+            searchOnTwitch.setAttribute("class", "search-on-twitch-link")
+            searchOnTwitch.setAttribute("href", `https://www.twitch.tv/search?term=${searchTerm}`)
+            searchOnTwitch.setAttribute("target", "_blank")
+            noResultsMessage.appendChild(searchOnTwitch)
+
+            const searchOnTwitchIcon = document.createElement("i");
+            searchOnTwitchIcon.setAttribute("class", "fa-solid fa-arrow-up-right-from-square search-on-twitch-link-icon");
+            searchOnTwitch.innerHTML += "Search on Twitch&nbsp;";
+            searchOnTwitch.appendChild(searchOnTwitchIcon);
+
             contentSection.replaceChildren(noResultsMessage);
         }
     } else if (!res.twitchIsValidated || !res.twitchAccessToken) {

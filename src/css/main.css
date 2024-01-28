@@ -387,5 +387,33 @@ body {
     text-align: center;
     font-weight: bold;
     font-size: 1.1rem;
-    padding: 20px 0 0 0;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.no-search-results p {
+    margin-bottom: 10px;
+}
+
+.search-on-twitch-link {
+    color: #9146ff;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+.search-on-twitch-link:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 2.25px;
+}
+
+.search-on-twitch-link-icon {
+    color: #999999;
+    font-size: 0.8rem;
+}
+
+p {
+    margin: 0;
 }
