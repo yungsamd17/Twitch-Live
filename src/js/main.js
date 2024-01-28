@@ -182,7 +182,34 @@ const loadTwitchContent = async () => {
                     raidButton.classList.add("hidden");
                 }
 
-                raidButton.addEventListener("click", (event) => {
+                // Function to show and hide timedAlert
+                const showTimedAlert = (message) => {
+                    const timedAlert = document.querySelector('.timed-alert');
+
+                    // Check if the timedAlert is currently visible
+                    if (timedAlert) {
+                        // Remove the timedAlert from the DOM
+                        document.body.removeChild(timedAlert);
+                    }
+
+                    // Create a new timedAlert
+                    const newTimedAlert = document.createElement("div");
+                    newTimedAlert.classList.add("timed-alert");
+                    newTimedAlert.innerHTML = message;
+
+                    document.body.appendChild(newTimedAlert);
+
+                    // Set a timeout to remove the alert after 2 seconds
+                    setTimeout(() => {
+                        // Check if the newTimedAlert is still a child of document.body before attempting to remove it
+                        if (document.body.contains(newTimedAlert)) {
+                            document.body.removeChild(newTimedAlert);
+                        }
+                    }, 2500);
+                };
+
+                // Inside the raidButton.addEventListener callback
+                raidButton.addEventListener("click", async (event) => {
                     event.stopPropagation();
                     // Handle raid button click - copy channel name with raid command
                     const raidCommand = `/raid ${stream.channelName}`;
@@ -200,6 +227,9 @@ const loadTwitchContent = async () => {
                     document.body.removeChild(textArea);
 
                     console.log(`Raid command copied to clipboard: ${raidCommand}`);
+
+                    // Call the helper function to show and hide the timedAlert
+                    showTimedAlert(`Copied "${raidCommand}"`);
                 });
 
                 channelContainer.appendChild(raidButton);
