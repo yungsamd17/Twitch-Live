@@ -311,7 +311,7 @@
     transition-delay: 0s;
 }
 
-/*  "Copy raid command button" SETTINGS OPTION INFO LINK TOOLTIP  */
+/*  "Copy raid command button" SETTINGS OPTION INFO TOOLTIP  */
 [info-label-2] {
     position: relative;
 }
@@ -329,7 +329,7 @@
     display: block;
     position: absolute;
     top: 174%;
-    left: -800%;
+    left: -790%;
     z-index: 500;
     pointer-events: none;
     padding: 5px;
