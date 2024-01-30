@@ -75,6 +75,10 @@ const loadTwitchContent = async () => {
     const storageItems = ["twitchIsValidated", "twitchAccessToken", "twitchStreams", "showRaidButtonToggle"];
     const res = await chrome.storage.local.get(storageItems);
 
+    // Check if Simple view is enabled
+    const simpleViewToggle = document.getElementById("simpleViewToggle");
+    const simpleViewEnabled = simpleViewToggle ? simpleViewToggle.checked : false;
+
     // Always refresh Twitch streams when the popup is opened
     await refreshTwitchStreams();
 
@@ -142,10 +146,10 @@ const loadTwitchContent = async () => {
         if (filteredStreams.length > 0) {
             const streamList = filteredStreams.map((stream) => {
                 const streamContainer = document.createElement("div");
-                streamContainer.setAttribute("class", "stream-container");
+                streamContainer.setAttribute("class", `stream-container ${simpleViewEnabled ? 'simpleview-stream-container' : ''}`);
 
                 const streamThumbnail = document.createElement("div");
-                streamThumbnail.setAttribute("class", "stream-thumbnail");
+                streamThumbnail.setAttribute("class", `stream-thumbnail ${simpleViewEnabled ? 'simpleview-stream-thumbnail' : ''}`);
                 streamContainer.appendChild(streamThumbnail);
 
                 const uptime = document.createElement("div");
@@ -161,7 +165,7 @@ const loadTwitchContent = async () => {
                 streamThumbnail.appendChild(thumbnail);
 
                 const streamDetails = document.createElement("div");
-                streamDetails.setAttribute("class", "stream-details");
+                streamDetails.setAttribute("class", `stream-details ${simpleViewEnabled ? 'simpleview-stream-details' : ''}`);
                 streamContainer.appendChild(streamDetails);
 
                 const channelContainer = document.createElement("div");

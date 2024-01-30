@@ -17,8 +17,21 @@ const getExtensionVersion = () => {
 
 // Retrieve the stored settings on popup load
 chrome.storage.local.get(
-    ["openInPlayerToggle", "openInNewWindowToggle", "showRaidButtonToggle", "customBadgeColor", "extensionVersion", "backgroundUpdateRateMin", "twitchAccessToken"],
+    [
+        "simpleViewToggle",
+        "openInPlayerToggle",
+        "openInNewWindowToggle",
+        "showRaidButtonToggle",
+        "customBadgeColor",
+        "extensionVersion",
+        "backgroundUpdateRateMin",
+        "twitchAccessToken"
+    ],
     (result) => {
+        setToggleSwitchStatus(
+            "simpleViewToggle",
+            result.simpleViewToggle !== undefined ? result.simpleViewToggle : false
+        );
         setToggleSwitchStatus(
             "openInPlayerToggle",
             result.openInPlayerToggle !== undefined ? result.openInPlayerToggle : false
@@ -54,6 +67,11 @@ chrome.storage.local.get(
 );
 
 // Listen for changes in the toggle switches and store the settings
+document.getElementById("simpleViewToggle").addEventListener("change", function() {
+    setToggleSwitchStatus("simpleViewToggle", this.checked);
+    loadTwitchContent(); // Reload content based on the Simple view toggle
+});
+
 document.getElementById("openInPlayerToggle").addEventListener("change", function() {
     setToggleSwitchStatus("openInPlayerToggle", this.checked);
 });
@@ -76,6 +94,9 @@ chrome.storage.onChanged.addListener((changes) => {
     }
     if (changes.showRaidButtonToggle !== undefined) {
         setToggleSwitchStatus("showRaidButtonToggle", changes.showRaidButtonToggle.newValue);
+    }
+    if (changes.simpleViewToggle !== undefined) {
+        setToggleSwitchStatus("simpleViewToggle", changes.simpleViewToggle.newValue);
     }
     if (changes.backgroundUpdateRateMin !== undefined) {
         backgroundRefreshSelect.value = changes.backgroundUpdateRateMin.newValue;
