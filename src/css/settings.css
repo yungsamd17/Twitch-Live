@@ -335,4 +335,10 @@ input:checked+.slider:before {
 #extensionVersion {
     color: rgba(153, 153, 153, 0.5);
     font-weight: bold;
+    text-decoration: none;
+}
+
+#extensionVersion:hover {
+    color: #fff;
+    text-decoration: underline;
 }
