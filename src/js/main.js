@@ -155,7 +155,7 @@ const loadTwitchContent = async () => {
                 const uptime = document.createElement("div");
                 uptime.setAttribute("class", "stream-uptime");
                 uptime.innerHTML = `${stream.liveTime}`;
-                uptime.setAttribute("title", `${stream.startedAt}`);
+                uptime.setAttribute("title", `Live since ${stream.startedAt}`);
                 streamThumbnail.appendChild(uptime);
 
                 const thumbnail = document.createElement("img");

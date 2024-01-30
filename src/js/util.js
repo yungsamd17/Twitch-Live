@@ -11,7 +11,7 @@ const getStartedAtTime = (startTime) => {
 
   const formattedTime = new Intl.DateTimeFormat('en-US', options)
     .format(new Date(startTime))
-    .replace(',', '');
+    // .replace(',', '');
 
   return formattedTime;
 };
