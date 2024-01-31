@@ -250,10 +250,9 @@ function closeModal() {
 settingsCloseBtn.onclick = closeModal;
 // Close modal when the 'f' key is pressed, but not in an input field
 document.addEventListener('keydown', function(event) {
-    // Check if the 'f' key is pressed
     if (event.key.toLowerCase() === 'f') {
         // Check if the event target is an input element, and if not close the modal
-        if (document.activeElement.tagName.toLowerCase() !== 'input') {s
+        if (document.activeElement.tagName.toLowerCase() !== 'input') {
             closeModal();
         }
     }
