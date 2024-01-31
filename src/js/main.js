@@ -6,18 +6,7 @@ const authScreenPresent = () => {
     return contentSection.querySelector(".auth-header");
 };
 
-const setNavbar = (isVisible) => {
-    const navbar = document.querySelector(".navbar");
-    if (navbar) {
-        if (isVisible) navbar.style.display = "block";
-        else navbar.style.display = "none";
-    }
-};
-
 const authScreen = () => {
-    // Hide the navbar when creating the authentication screen
-    setNavbar(false);
-
     const authHeader = document.createElement("span");
     authHeader.setAttribute("class", "auth-header");
     authHeader.innerHTML = "Sam's Twitch ";
@@ -35,7 +24,12 @@ const authScreen = () => {
     const authButton = document.createElement("button");
     authButton.setAttribute("id", "auth-button");
     authButton.setAttribute("class", "auth-button");
-    authButton.innerHTML = "Login with Twitch";
+
+    const authButtonIcon = document.createElement("i");
+    authButtonIcon.setAttribute("class", "fa-brands fa-twitch");
+    authButton.appendChild(authButtonIcon);
+    authButton.innerHTML += "&nbsp;&nbsp;Login with Twitch";
+
     authButton.onclick = () => chrome.runtime.sendMessage({ message: "fetch-twitch-auth-token", popup: true });
     contentSection.appendChild(authButton);
 };
@@ -78,8 +72,12 @@ const openStream = (stream) => {
 };
 
 const loadTwitchContent = async () => {
-    const storageItems = ["twitchIsValidated", "twitchAccessToken", "twitchStreams"];
+    const storageItems = ["twitchIsValidated", "twitchAccessToken", "twitchStreams", "showRaidButtonToggle"];
     const res = await chrome.storage.local.get(storageItems);
+
+    // Check if Simple view is enabled
+    const simpleViewToggle = document.getElementById("simpleViewToggle");
+    const simpleViewEnabled = simpleViewToggle ? simpleViewToggle.checked : false;
 
     // Always refresh Twitch streams when the popup is opened
     await refreshTwitchStreams();
@@ -148,17 +146,16 @@ const loadTwitchContent = async () => {
         if (filteredStreams.length > 0) {
             const streamList = filteredStreams.map((stream) => {
                 const streamContainer = document.createElement("div");
-                streamContainer.setAttribute("class", "stream-container");
-                streamContainer.onclick = () => openStream(stream);
+                streamContainer.setAttribute("class", `stream-container ${simpleViewEnabled ? 'simpleview-stream-container' : ''}`);
 
                 const streamThumbnail = document.createElement("div");
-                streamThumbnail.setAttribute("class", "stream-thumbnail");
+                streamThumbnail.setAttribute("class", `stream-thumbnail ${simpleViewEnabled ? 'simpleview-stream-thumbnail' : ''}`);
                 streamContainer.appendChild(streamThumbnail);
 
                 const uptime = document.createElement("div");
                 uptime.setAttribute("class", "stream-uptime");
                 uptime.innerHTML = `${stream.liveTime}`;
-                uptime.setAttribute("title", `${stream.startedAt}`);
+                uptime.setAttribute("title", `Live since ${stream.startedAt}`);
                 streamThumbnail.appendChild(uptime);
 
                 const thumbnail = document.createElement("img");
@@ -168,13 +165,82 @@ const loadTwitchContent = async () => {
                 streamThumbnail.appendChild(thumbnail);
 
                 const streamDetails = document.createElement("div");
-                streamDetails.setAttribute("class", "stream-details");
+                streamDetails.setAttribute("class", `stream-details ${simpleViewEnabled ? 'simpleview-stream-details' : ''}`);
                 streamContainer.appendChild(streamDetails);
+
+                const channelContainer = document.createElement("div");
+                channelContainer.setAttribute("class", "channel-container")
+                streamDetails.appendChild(channelContainer);
 
                 const channel = document.createElement("span");
                 channel.setAttribute("class", "stream-channel-name");
                 channel.innerHTML = stream.channelName;
-                streamDetails.appendChild(channel);
+                channelContainer.appendChild(channel);
+
+                const raidButton = document.createElement("button");
+                raidButton.setAttribute("class", "channel-raid-button");
+                raidButton.setAttribute("title", "Click to copy raid command");
+
+                // Add the "hidden" class if the showRaidButtonToggle is disabled
+                if (!res.showRaidButtonToggle) {
+                    raidButton.classList.add("hidden");
+                }
+
+                // Function to show and hide timedAlert
+                const showTimedAlert = (message) => {
+                    const timedAlert = document.querySelector('.timed-alert');
+
+                    // Check if the timedAlert is currently visible
+                    if (timedAlert) {
+                        // Remove the timedAlert from the DOM
+                        document.body.removeChild(timedAlert);
+                    }
+
+                    // Create a new timedAlert
+                    const newTimedAlert = document.createElement("div");
+                    newTimedAlert.classList.add("timed-alert");
+                    newTimedAlert.innerHTML = message;
+
+                    document.body.appendChild(newTimedAlert);
+
+                    // Set a timeout to remove the alert after 2 seconds
+                    setTimeout(() => {
+                        // Check if the newTimedAlert is still a child of document.body before attempting to remove it
+                        if (document.body.contains(newTimedAlert)) {
+                            document.body.removeChild(newTimedAlert);
+                        }
+                    }, 2500);
+                };
+
+                // Inside the raidButton.addEventListener callback
+                raidButton.addEventListener("click", async (event) => {
+                    event.stopPropagation();
+                    // Handle raid button click - copy channel name with raid command
+                    const raidCommand = `/raid ${stream.channelName}`;
+
+                    // Create a temporary textarea to copy text to clipboard
+                    const textArea = document.createElement("textarea");
+                    textArea.value = raidCommand;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+
+                    // Copy text to clipboard
+                    document.execCommand("copy");
+
+                    // Remove the temporary textarea
+                    document.body.removeChild(textArea);
+
+                    console.log(`Raid command copied to clipboard: ${raidCommand}`);
+
+                    // Call the helper function to show and hide the timedAlert
+                    showTimedAlert(`Copied "${raidCommand}"`);
+                });
+
+                channelContainer.appendChild(raidButton);
+
+                const raidButtonIcon = document.createElement("i");
+                raidButtonIcon.setAttribute("class", "fa-regular fa-copy");
+                raidButton.appendChild(raidButtonIcon);
 
                 const categoryAndViewCount = document.createElement("span");
                 categoryAndViewCount.setAttribute("class", "stream-game-and-viewers");
@@ -190,17 +256,41 @@ const loadTwitchContent = async () => {
                 title.setAttribute("title", stream.title);
                 streamDetails.appendChild(title);
 
+                // Add the click event for the entire stream container
+                streamContainer.addEventListener("click", () => openStream(stream));
+
                 return streamContainer;
             });
 
             contentSection.replaceChildren(...streamList);
         } else {
+            const searchTerm = filterInput.value.trim();
+
             // Display a message when no matching results are found
             const noResultsMessage = document.createElement("div");
             noResultsMessage.setAttribute("class", "no-search-results");
-            noResultsMessage.innerHTML = "No matching Search results found.";
+
+            const noResultsMessageText = document.createElement("p")
+            noResultsMessageText.innerHTML = "No matching Search results found.";
+            noResultsMessage.appendChild(noResultsMessageText)
+
+            const searchOnTwitch = document.createElement("a")
+            searchOnTwitch.setAttribute("class", "search-on-twitch-link")
+            searchOnTwitch.setAttribute("href", `https://www.twitch.tv/search?term=${searchTerm}`)
+            searchOnTwitch.setAttribute("target", "_blank")
+            noResultsMessage.appendChild(searchOnTwitch)
+
+            const searchOnTwitchIcon = document.createElement("i");
+            searchOnTwitchIcon.setAttribute("class", "fa-solid fa-arrow-up-right-from-square search-on-twitch-link-icon");
+            searchOnTwitch.innerHTML += "Search on Twitch&nbsp;";
+            searchOnTwitch.appendChild(searchOnTwitchIcon);
+
             contentSection.replaceChildren(noResultsMessage);
         }
+
+        // Show logout button after login/when logged in
+        document.getElementById("logoutBtn").style.display = "block";
+
     } else if (!res.twitchIsValidated || !res.twitchAccessToken) {
         authScreen();
     }
@@ -215,6 +305,14 @@ const handleRefreshButtonClick = () => {
     filterInput.value = ""; // Clear the search input
     loadTwitchContent();
 };
+
+// Raid command button toggle
+document.getElementById("showRaidButtonToggle").addEventListener("change", async function() {
+    await chrome.storage.local.set({ showRaidButtonToggle: this.checked });
+
+    // Refresh Twitch streams immediately upon toggling the raid button visibility
+    await loadTwitchContent();
+});
 
 // Function to get the selected filter option
 const getSelectedFilterOption = () => {
@@ -291,9 +389,6 @@ chrome.runtime.onMessage.addListener(async (request) => {
         // Remove all elements that have class starting with "auth"
         const authElements = document.querySelectorAll("[class^=auth]");
         authElements.forEach((element) => element.remove());
-
-        // Show the navbar
-        setNavbar(true);
 
         await loadTwitchContent();
         setupAutoRefresh();

@@ -17,8 +17,21 @@ const getExtensionVersion = () => {
 
 // Retrieve the stored settings on popup load
 chrome.storage.local.get(
-    ["openInPlayerToggle", "openInNewWindowToggle", "customBadgeColor", "extensionVersion", "backgroundUpdateRateMin"],
+    [
+        "simpleViewToggle",
+        "openInPlayerToggle",
+        "openInNewWindowToggle",
+        "showRaidButtonToggle",
+        "customBadgeColor",
+        "extensionVersion",
+        "backgroundUpdateRateMin",
+        "twitchAccessToken"
+    ],
     (result) => {
+        setToggleSwitchStatus(
+            "simpleViewToggle",
+            result.simpleViewToggle !== undefined ? result.simpleViewToggle : false
+        );
         setToggleSwitchStatus(
             "openInPlayerToggle",
             result.openInPlayerToggle !== undefined ? result.openInPlayerToggle : false
@@ -26,6 +39,10 @@ chrome.storage.local.get(
         setToggleSwitchStatus(
             "openInNewWindowToggle",
             result.openInNewWindowToggle !== undefined ? result.openInNewWindowToggle : false
+        );
+        setToggleSwitchStatus(
+            "showRaidButtonToggle",
+            result.showRaidButtonToggle !== undefined ? result.showRaidButtonToggle : false
         );
         document.getElementById("colorInput").value = result.customBadgeColor || "";
 
@@ -37,16 +54,34 @@ chrome.storage.local.get(
             versionElement.textContent = `v${getExtensionVersion()}`;
         }
         // console.log(`%cSam's Twitch Live v${getExtensionVersion()}`, "color: #a855f7");
+
+        // Check if the user is logged in
+        if (result.twitchAccessToken) {
+            // User is logged in
+            return
+        } else {
+            // User is not logged in, hide the button
+            document.getElementById("logoutBtn").style.display = "none";
+        }
     }
 );
 
 // Listen for changes in the toggle switches and store the settings
+document.getElementById("simpleViewToggle").addEventListener("change", function() {
+    setToggleSwitchStatus("simpleViewToggle", this.checked);
+    loadTwitchContent(); // Reload content based on the Simple view toggle
+});
+
 document.getElementById("openInPlayerToggle").addEventListener("change", function() {
     setToggleSwitchStatus("openInPlayerToggle", this.checked);
 });
 
 document.getElementById("openInNewWindowToggle").addEventListener("change", function() {
     setToggleSwitchStatus("openInNewWindowToggle", this.checked);
+});
+
+document.getElementById("showRaidButtonToggle").addEventListener("change", function() {
+    setToggleSwitchStatus("showRaidButtonToggle", this.checked);
 });
 
 // Listen for changes in storage and update the toggle switches accordingly
@@ -56,6 +91,12 @@ chrome.storage.onChanged.addListener((changes) => {
     }
     if (changes.openInNewWindowToggle !== undefined) {
         setToggleSwitchStatus("openInNewWindowToggle", changes.openInNewWindowToggle.newValue);
+    }
+    if (changes.showRaidButtonToggle !== undefined) {
+        setToggleSwitchStatus("showRaidButtonToggle", changes.showRaidButtonToggle.newValue);
+    }
+    if (changes.simpleViewToggle !== undefined) {
+        setToggleSwitchStatus("simpleViewToggle", changes.simpleViewToggle.newValue);
     }
     if (changes.backgroundUpdateRateMin !== undefined) {
         backgroundRefreshSelect.value = changes.backgroundUpdateRateMin.newValue;
@@ -110,9 +151,8 @@ const handleLogoutButtonClick = () => {
         twitchStreams: null,
     });
 
-    // Remove the extension badge
+    // Remove the extension badge, and close the popup
     chrome.action.setBadgeText({ text: "" });
-    // Close the popup
     window.close();
 };
 
@@ -208,9 +248,12 @@ function closeModal() {
 
 // Close modal when the close button is clicked
 settingsCloseBtn.onclick = closeModal;
-// Close modal when the 'f' key is pressed
+// Close modal when the 'f' key is pressed, but not in an input field
 document.addEventListener('keydown', function(event) {
     if (event.key.toLowerCase() === 'f') {
-        closeModal();
+        // Check if the event target is an input element, and if not close the modal
+        if (document.activeElement.tagName.toLowerCase() !== 'input') {
+            closeModal();
+        }
     }
 });

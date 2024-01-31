@@ -38,12 +38,12 @@ body {
 }
 
 .search-container input[type="text"] {
-    width: 145px;
+    width: 148px;
     background-color: #242429;
     color: #fff;
     border: 2px solid #242429;
     border-radius: 5px 0 0 5px;
-    padding: 0 8px;
+    padding: 0 5px 0 8px;
     margin: 10px 0 10px 10px;
     font-size: 1rem;
     font-weight: bold;
@@ -188,17 +188,19 @@ body {
 
 .content {
     flex-direction: column;
-    width: 430px;
+    width: 420px;
     display: flex;
 }
 
 /*  STREAM "CARD" CLASSES */
 .stream-container {
     width: 100%;
+    height: 65px;
     cursor: pointer;
     border-top: 1px solid #242429;
     border-bottom: 1px solid #000;
     display: flex;
+    padding-left: 10px;
 }
 
 .stream-container:hover {
@@ -214,7 +216,7 @@ body {
     position: relative;
     width: 80px;
     height: 45px;
-    margin: 10px;
+    margin: 10px 10px 10px 0;
 }
 
 .stream-thumbnail img {
@@ -243,10 +245,15 @@ body {
 }
 
 .stream-details {
-    width: calc(100% - 7rem);
+    width: calc(100% - 6.25rem);
     display: flex;
     flex-direction: column;
     justify-content: center;
+}
+
+.channel-container {
+    display: flex;
+    flex-direction: row;
 }
 
 .stream-channel-name {
@@ -255,6 +262,36 @@ body {
     white-space: nowrap;
     text-overflow: ellipsis;
     color: #fff;
+}
+
+.channel-raid-button {
+    background-color: transparent;
+    color: #787878;
+    display: flex;
+    justify-content: center;
+    height: 17px;
+    width: 17px;
+    border: 0;
+    border-radius: 3px;
+    margin-left: 8px;
+    cursor: pointer;
+    visibility: hidden;
+}
+
+.channel-raid-button:hover {
+    color: #fff;
+}
+
+.channel-raid-button:active {
+    color: #9146ff;
+}
+
+.stream-container:hover .channel-raid-button {
+    visibility: visible;
+}
+
+.channel-raid-button.hidden {
+    display: none;
 }
 
 .stream-game-and-viewers,
@@ -352,5 +389,61 @@ body {
     text-align: center;
     font-weight: bold;
     font-size: 1.1rem;
-    padding: 20px 0 0 0;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.no-search-results p {
+    margin-bottom: 10px;
+}
+
+.search-on-twitch-link {
+    color: #9146ff;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+.search-on-twitch-link:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 2.25px;
+}
+
+.search-on-twitch-link-icon {
+    color: #999999;
+    font-size: 0.8rem;
+}
+
+p {
+    margin: 0;
+}
+
+.timed-alert {
+    position: fixed;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #9146ff;
+    color: #fff;
+    padding: 8px;
+    border-radius: 5px;
+    font-weight: bold;
+    white-space:nowrap;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+}
+
+/*  SIMPLE VIEW OPTION STYLES  */
+.simpleview-stream-container {
+    height: 59.2px;
+}
+
+.simpleview-stream-thumbnail {
+    display: none;
+}
+
+.simpleview-stream-details {
+    width: calc(100% - 0.65rem);
 }

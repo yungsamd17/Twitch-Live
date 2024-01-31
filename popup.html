@@ -86,6 +86,21 @@
                 <!-- Settings options -->
                 <div class="option-container">
                     <div class="text-container">
+                        <label for="simpleViewToggle">Simple view
+                            <span info-label-3="Hides thumbnails and uptimes">
+                                <i class="fa-solid fa-circle-info"></i>
+                            </span>
+                        </label>
+                    </div>
+                    <div class="slider-container">
+                        <label class="switch">
+                            <input type="checkbox" id="simpleViewToggle">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="option-container">
+                    <div class="text-container">
                         <label for="openInNewWindowToggle">Open in a new window</label>
                     </div>
                     <div class="slider-container">
@@ -102,6 +117,21 @@
                     <div class="slider-container">
                         <label class="switch">
                             <input type="checkbox" id="openInPlayerToggle">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="option-container">
+                    <div class="text-container">
+                        <label for="showRaidButtonToggle">Copy raid command button 
+                            <span info-label-2="Adds a copy button next to channel name">
+                                <i class="fa-solid fa-circle-info"></i>
+                            </span>
+                        </label>
+                    </div>
+                    <div class="slider-container">
+                        <label class="switch">
+                            <input type="checkbox" id="showRaidButtonToggle">
                             <span class="slider"></span>
                         </label>
                     </div>
@@ -133,15 +163,15 @@
                 <!-- Settings footer link -->
                 <div class="settings-footer">
                     <div class="footer-container">
-                        <a class="settings-link" href="https://github.com/yungsamd17/Twitch-Live" target="_blank">
+                        <a class="settings-link github" href="https://github.com/yungsamd17/Twitch-Live" target="_blank">
                             <i class="fab fa-github"></i> GitHub</a>
-                        <a class="settings-link" href="https://ko-fi.com/yungsamd17" target="_blank">
+                        <a class="settings-link donate" href="https://ko-fi.com/yungsamd17" target="_blank">
                             <i class="fa-solid fa-heart"></i> Donate</a>
                         <button id="logoutBtn" class="logout-button"><i class="fa-solid fa-power-off"></i> Logout</button>
                     </div>
                 </div>
                 <div class="version-container">
-                    <span id="extensionVersion">Loading extension version...</span>
+                    <a id="extensionVersion" href="https://github.com/yungsamd17/Twitch-Live/releases/latest" target="_blank" title="Click to view release notes">Loading extension version...</a>
                 </div>
             </div>
         </div>
