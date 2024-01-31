@@ -16,7 +16,8 @@
         "storage",
         "identity"
     ],
-    "background": {
+    "background":
+    {
         "service_worker": "src/js/background.js"
     },
     "action":
