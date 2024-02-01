@@ -2,17 +2,16 @@
 	<img width="960" alt="Sam's Twitch Live" src="https://github.com/yungsamd17/Twitch-Live/assets/64147848/949efb02-8478-41f7-b65b-c72188db168f">
 </a>
 
-> Your Following Channels, Constantly in View.
+> Your ultimate companion for staying connected with your favorite Twitch streams.
 
-**Sam's Twitch Live** is your ultimate companion for staying connected with your favorite Twitch streams.
-This extension brings the channels you follow to the forefront, providing a seamless viewing experience right from your browser.
+This extension brings the channels you follow to the forefront, providing a seamless viewing experience right from your Chrome browser.
 
 ### Key Features
-- **Live Following Channels:** Keep track of the live channels you follow on Twitch with ease.
-- **Customizable Viewing Options:** Tailor your viewing experience by choosing to open streams in a new window or in the player. Customize background update intervals and badge colors according to your preferences.
-- **Quick Search:** Effortlessly find your preferred streams with the built-in search functionality.
-- **Sort Streams:** Sort streams based on various criteria, including Viewers (High to Low or Low to High), Broadcasters, Categories, Recently Started, and Longest Running.
-- **Context Menu:** Enhance your browsing experience with a right-click context menu that allows you to open streams in the channel, player, or chat. Additionally, you can directly access channels' about, videos, and clips pages. Explore streams by category with ease using context menu.
+- _**Live Following Channels:**_ Keep track of the live channels you follow on Twitch with ease.
+- _**Customizable Viewing Options:**_ Tailor your viewing experience by choosing to open streams in a new window or in the player. Customize background update intervals, badge color, layout options and more.
+- _**Quick Search:**_ Effortlessly find your preferred streams with the built-in search functionality.
+- _**Sort Streams:**_ Sort streams based on various criteria, including Viewers (High to Low or Low to High), Broadcasters, Categories, Recently Started, and Longest Running.
+- _**Context Menu:**_ Enhance your browsing experience with a right-click context menu that allows you to open streams in the channel, player, or chat. Additionally, you can directly access channels' about, videos, and clips pages. Explore streams by category with ease using context menu.
 
 ## Install
 
