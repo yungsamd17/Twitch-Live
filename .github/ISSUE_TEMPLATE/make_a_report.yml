@@ -37,16 +37,18 @@ body:
     attributes:
       label: Screenshots
       description: While optional, it's highly encouraged to include screenshots or videos to illustrate what you mean.
-      placeholder: You can upload them using the text editor's dedicated button.
+      placeholder: |
+        You can upload them using the text editor's dedicated button.
 
   - type: input
     id: extensionversion
     validations:
       required: true
     attributes:
-      label: "Sam's Twitch Live" Version
+      label: Sam's Twitch Live Extension Version
       description: The name of your extension version is shown in the settings (under settings modal).
-      placeholder: example: v1.3.1
+      placeholder: |
+        example: v1.3.1
 
   - type: input
     id: browserversion
@@ -54,8 +56,10 @@ body:
       required: true
     attributes:
       label: Browser, and it's Version
-      description: The name of your Browser and it's version shown in Browser's about settings page (chromium: chrome://settings/help ; firefox: Click on the "hamburger" menu button, click "Help" and select "About Firefox".)
-      placeholder: example: Brave v1.62.156
+      description: |
+        The name of your Browser and it's version shown in Browser's about settings page (chromium: chrome://settings/help ; firefox: Click on the "hamburger" menu button, click "Help" and select "About Firefox".)
+      placeholder: |
+        example: Brave v1.62.156
 
   - type: input
     id: osversion
@@ -64,4 +68,5 @@ body:
     attributes:
       label: Operating System
       description: The name of your Operating System.
-      placeholder: example: Windowns 11
+      placeholder: |
+        example: Windowns 11
