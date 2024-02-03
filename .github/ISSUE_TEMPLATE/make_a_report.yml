@@ -44,7 +44,7 @@ body:
     validations:
       required: true
     attributes:
-      label: "Sam's Twitch Live" Version
+      label: Sam's Twitch Live Extension Version
       description: The name of your extension version is shown in the settings (under settings modal).
       placeholder: example: v1.3.1
 
