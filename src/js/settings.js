@@ -257,3 +257,10 @@ document.addEventListener('keydown', function(event) {
         }
     }
 });
+
+// Close modal when clicking outside of modal content
+modal.addEventListener("click", function(event) {
+    if (event.target === modal) {
+        closeModal();
+    }
+});
