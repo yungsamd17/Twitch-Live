@@ -306,6 +306,11 @@ const handleRefreshButtonClick = () => {
     loadTwitchContent();
 };
 
+// Open "Twitch Live Following" navbar button link
+document.getElementById('openTwitchLiveFollowing').addEventListener('click', function() {
+    chrome.tabs.create({ url: 'https://www.twitch.tv/directory/following/live' });
+});
+
 // Raid command button toggle
 document.getElementById("showRaidButtonToggle").addEventListener("change", async function() {
     await chrome.storage.local.set({ showRaidButtonToggle: this.checked });
