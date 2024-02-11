@@ -28,13 +28,13 @@
     animation: settings-background-anim-in 0.2s linear forwards;
 }
 .settings-background-anim-out {
-    animation: settings-background-anim-out 0.2s linear forwards;
+    animation: settings-background-anim-out 0.120s linear forwards;
 }
 .popup-anim-in {
-    animation: popup-anim-in 333ms cubic-bezier(0.35, 0.55, 0, 1) forwards;
+    animation: popup-anim-in 200ms cubic-bezier(0.35, 0.55, 0, 1) forwards;
 }
 .popup-anim-out {
-    animation: popup-anim-out 111ms cubic-bezier(0.35, 0.55, 0, 1) forwards;
+    animation: popup-anim-out 120ms cubic-bezier(0.35, 0.55, 0, 1) forwards;
 }
 
 .settings-modal-body {

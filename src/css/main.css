@@ -330,10 +330,10 @@ body {
 }
 
 .popup-anim-in {
-    animation: popup-anim-in 333ms cubic-bezier(0.35, 0.55, 0, 1) forwards;
+    animation: popup-anim-in 200ms cubic-bezier(0.35, 0.55, 0, 1) forwards;
 }
 .popup-anim-out {
-    animation: popup-anim-out 222ms cubic-bezier(0.35, 0.55, 0, 1) forwards;
+    animation: popup-anim-out 120ms cubic-bezier(0.35, 0.55, 0, 1) forwards;
 }
 
 /*  CONTEXT MENU  */
