@@ -378,7 +378,7 @@ const setupAutoRefresh = () => {
     // Automatically refresh streams every minute (when popup is "open")
     window.setInterval(async () => {
         await loadTwitchContent();
-    }, 1000 * 60);
+    }, 1000 * 30);
 
     return true;
 };
