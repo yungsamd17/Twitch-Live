@@ -199,7 +199,24 @@ filterBtn.addEventListener('mouseenter', function() {
 });
 
 window.onmousedown = function(event) {
-    if (!event.target.matches('.dropdown-content') && dropdown.style.visibility === "visible") {
+    const filterButton = document.getElementById('filterButton');
+    const isFilterDropdownVisible = dropdown.style.visibility === "visible";
+
+    // Check if the clicked target is not within the filter dropdown or its buttons
+    if (!event.target.matches('.dropdown-content') &&
+        !event.target.matches('.filter-button') &&
+        !filterButton.contains(event.target) &&
+        isFilterDropdownVisible) {
+        animatePopup(dropdown, false);
+    }
+}
+
+window.onmouseup = function(event) {
+    const filterButton = document.getElementById('filterButton');
+    const isFilterDropdownVisible = dropdown.style.visibility === "visible";
+
+    // Check if the clicked target is one of the filter buttons and the dropdown is visible
+    if (event.target.matches('.filter-button') && isFilterDropdownVisible) {
         animatePopup(dropdown, false);
     }
 }
@@ -255,5 +272,12 @@ document.addEventListener('keydown', function(event) {
         if (document.activeElement.tagName.toLowerCase() !== 'input') {
             closeModal();
         }
+    }
+});
+
+// Close modal when clicking outside of modal content
+modal.addEventListener("click", function(event) {
+    if (event.target === modal) {
+        closeModal();
     }
 });

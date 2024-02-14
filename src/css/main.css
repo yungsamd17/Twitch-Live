@@ -43,10 +43,11 @@ body {
     color: #fff;
     border: 2px solid #242429;
     border-radius: 5px 0 0 5px;
-    padding: 0 5px 0 8px;
     margin: 10px 0 10px 10px;
+    padding-top: 2px;
     font-size: 1rem;
     font-weight: bold;
+    text-indent: 6px;
 }
 
 .search-container input[type="text"]:focus {
@@ -330,10 +331,10 @@ body {
 }
 
 .popup-anim-in {
-    animation: popup-anim-in 333ms cubic-bezier(0.35, 0.55, 0, 1) forwards;
+    animation: popup-anim-in 200ms cubic-bezier(0.35, 0.55, 0, 1) forwards;
 }
 .popup-anim-out {
-    animation: popup-anim-out 222ms cubic-bezier(0.35, 0.55, 0, 1) forwards;
+    animation: popup-anim-out 120ms cubic-bezier(0.35, 0.55, 0, 1) forwards;
 }
 
 /*  CONTEXT MENU  */
