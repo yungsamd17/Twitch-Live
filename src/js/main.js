@@ -36,7 +36,7 @@ const authScreen = () => {
 
 const formatViewerCount = (count) => {
     // Format viewer count with space-separated thousands
-    return count.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    return count.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
 
 // Open stream in new window and player settings
@@ -242,10 +242,16 @@ const loadTwitchContent = async () => {
                 raidButtonIcon.setAttribute("class", "fa-regular fa-copy");
                 raidButton.appendChild(raidButtonIcon);
 
+                const streamViewerCount = document.createElement("div");
+                streamViewerCount.setAttribute("class", "stream-viewers");
+                streamViewerCount.innerHTML = `<i class="fa-solid fa-circle" style="color: #e74c3c;"></i> ${formatViewerCount(stream.viewerCount)}`;
+                streamViewerCount.setAttribute("title", `${formatViewerCount(stream.viewerCount)} viewers are currently watching ${stream.channelName}`);
+                channelContainer.appendChild(streamViewerCount);
+
                 const categoryAndViewCount = document.createElement("span");
-                categoryAndViewCount.setAttribute("class", "stream-game-and-viewers");
-                categoryAndViewCount.innerHTML = `${stream.gameName} - ${formatViewerCount(stream.viewerCount)} viewers`;
-                categoryAndViewCount.setAttribute("title", `${stream.gameName} - ${formatViewerCount(stream.viewerCount)} viewers`);
+                categoryAndViewCount.setAttribute("class", "stream-category");
+                categoryAndViewCount.innerHTML = `${stream.gameName}`;
+                categoryAndViewCount.setAttribute("title", `${stream.gameName}`);
                 streamDetails.appendChild(categoryAndViewCount);
 
                 const title = document.createElement("span");
@@ -410,7 +416,7 @@ document.addEventListener('contextmenu', (event) => {
     if (streamContainer) {
         event.preventDefault();
         currentChannelName = streamContainer.querySelector('.stream-channel-name').innerHTML.trim();
-        currentCategoryName = streamContainer.querySelector('.stream-game-and-viewers').innerText.split(' - ')[0].trim();
+        currentCategoryName = streamContainer.querySelector('.stream-category').innerText.split(' - ')[0].trim();
         const mouseX = event.clientX;
         const mouseY = event.clientY;
         hideContextMenu();
