@@ -24,11 +24,7 @@ const authScreen = () => {
     const authButton = document.createElement("button");
     authButton.setAttribute("id", "auth-button");
     authButton.setAttribute("class", "auth-button");
-
-    const authButtonIcon = document.createElement("i");
-    authButtonIcon.setAttribute("class", "fa-brands fa-twitch");
-    authButton.appendChild(authButtonIcon);
-    authButton.innerHTML += "&nbsp;&nbsp;Login with Twitch";
+    authButton.innerHTML = `<i class="fa-brands fa-twitch"></i>&nbsp;&nbsp;Login with Twitch`;
 
     authButton.onclick = () => chrome.runtime.sendMessage({ message: "fetch-twitch-auth-token", popup: true });
     contentSection.appendChild(authButton);
@@ -179,6 +175,7 @@ const loadTwitchContent = async () => {
 
                 const raidButton = document.createElement("button");
                 raidButton.setAttribute("class", "channel-raid-button");
+                raidButton.innerHTML = `<i class="fa-regular fa-copy"></i>`
                 raidButton.setAttribute("title", "Click to copy raid command");
 
                 // Add the "hidden" class if the showRaidButtonToggle is disabled
@@ -238,10 +235,6 @@ const loadTwitchContent = async () => {
 
                 channelContainer.appendChild(raidButton);
 
-                const raidButtonIcon = document.createElement("i");
-                raidButtonIcon.setAttribute("class", "fa-regular fa-copy");
-                raidButton.appendChild(raidButtonIcon);
-
                 const streamViewerCount = document.createElement("div");
                 streamViewerCount.setAttribute("class", "stream-viewers");
                 streamViewerCount.innerHTML = `<i class="fa-solid fa-eye" style="color: #e74c3c;"></i> ${formatViewerCount(stream.viewerCount)}`;
@@ -284,12 +277,8 @@ const loadTwitchContent = async () => {
             searchOnTwitch.setAttribute("class", "search-on-twitch-link")
             searchOnTwitch.setAttribute("href", `https://www.twitch.tv/search?term=${searchTerm}`)
             searchOnTwitch.setAttribute("target", "_blank")
+            searchOnTwitch.innerHTML = `Search on Twitch&nbsp;<i class="fa-solid fa-arrow-up-right-from-square search-on-twitch-link-icon"></i>`
             noResultsMessage.appendChild(searchOnTwitch)
-
-            const searchOnTwitchIcon = document.createElement("i");
-            searchOnTwitchIcon.setAttribute("class", "fa-solid fa-arrow-up-right-from-square search-on-twitch-link-icon");
-            searchOnTwitch.innerHTML += "Search on Twitch&nbsp;";
-            searchOnTwitch.appendChild(searchOnTwitchIcon);
 
             contentSection.replaceChildren(noResultsMessage);
         }
