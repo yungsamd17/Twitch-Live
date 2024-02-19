@@ -245,7 +245,7 @@ const loadTwitchContent = async () => {
                 const streamViewerCount = document.createElement("div");
                 streamViewerCount.setAttribute("class", "stream-viewers");
                 streamViewerCount.innerHTML = `<i class="fa-solid fa-eye" style="color: #e74c3c;"></i> ${formatViewerCount(stream.viewerCount)}`;
-                streamViewerCount.setAttribute("title", `${formatViewerCount(stream.viewerCount)} viewers watching ${stream.channelName}`);
+                streamViewerCount.setAttribute("title", `${formatViewerCount(stream.viewerCount)} Viewers`);
                 channelContainer.appendChild(streamViewerCount);
 
                 const categoryAndViewCount = document.createElement("span");
