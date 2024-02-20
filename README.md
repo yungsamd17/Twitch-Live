@@ -1,8 +1,19 @@
 <a href="https://github.com/yungsamd17/Twitch-Live">
-	<img width="960" alt="Sam's Twitch Live" src="https://github.com/yungsamd17/Twitch-Live/assets/64147848/949efb02-8478-41f7-b65b-c72188db168f">
+	<img width="960" alt="Sam's Twitch Live" src="https://github.com/yungsamd17/Twitch-Live/assets/64147848/d96de866-1e2f-4a3f-b828-dcbf21bce5bb">
 </a>
+<div align="center">
+  <h2 align="center">Sam's Twitch Live</h2>
 
-> Your ultimate companion for staying connected with your favorite Twitch streams.
+  <p align="center">
+    Your ultimate companion for staying connected with your favorite Twitch streams.
+    <br />
+    <a href="https://chromewebstore.google.com/detail/sams-twitch-live/fnaolpkjdickppbebcafdajjndmkgbei">Chrome Web Store</a>
+    ·
+    <a href="https://github.com/yungsamd17/Twitch-Live/issues">Bugs & Suggestions</a>
+    ·
+    <a href="https://github.com/yungsamd17/Twitch-Live/releases">Release Notes</a>
+  </p>
+</div>
 
 This extension brings the channels you follow to the forefront, providing a seamless viewing experience right from your Chrome browser.
 
@@ -30,13 +41,16 @@ or any chromium-based browsers (e.g. Brave, Edge, Opera)
 3. Customize your viewing preferences in the settings for an optimal experience.
 4. Enjoy uninterrupted Twitch streaming without leaving your Chrome browser.
 
+## Contributing
+To contribute, simply fork this project and create a pull request with your changes. Whether it's a new feature, bug fix, or documentation improvement, we appreciate all contributions. Thank you for your interest in helping to make this project even better!
+
 ## Credits
 
 Forked from [MatthewMoye/who-is-live](https://github.com/MatthewMoye/who-is-live)
 
-### Contributions
+### Contributors
 
-- [**xezrunner**](https://github.com/xezrunner) For helping with migration to Manifest V3 and more.
+- [**xezrunner**](https://github.com/xezrunner) For helping with migration to Manifest V3 and much more.
 
 ## License
 
