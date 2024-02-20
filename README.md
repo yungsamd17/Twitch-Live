@@ -15,7 +15,7 @@
   </p>
 </div>
 
-This extension brings the channels you follow to the forefront, providing a seamless viewing experience right from your Chrome browser.
+This extension brings the channels you follow to the forefront, providing a seamless viewing experience right from your browser.
 
 ### Key Features
 - _**Live Following Channels:**_ Keep track of the live channels you follow on Twitch with ease.
@@ -33,7 +33,7 @@ or any chromium-based browsers (e.g. Brave, Edge, Opera)
 <br>
 <br>
 
-[How to Install and setup](https://github.com/yungsamd17/Twitch-Live/blob/main/docs/INSTALL_FROM_STORAGE.md) unpacked extension (from storage)
+Guide for [how to install and test](https://github.com/yungsamd17/Twitch-Live/blob/main/docs/INSTALL_FROM_STORAGE.md)  the extension locally
 
 ### How to Use
 1. Log in with your Twitch account to authenticate the extension.
@@ -46,7 +46,7 @@ To contribute, simply fork this project and create a pull request with your chan
 
 ## Credits
 
-Forked from [MatthewMoye/who-is-live](https://github.com/MatthewMoye/who-is-live)
+Forked originally from [MatthewMoye/who-is-live](https://github.com/MatthewMoye/who-is-live)
 
 ### Contributors
 
