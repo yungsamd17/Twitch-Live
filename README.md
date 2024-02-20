@@ -48,7 +48,7 @@ To contribute, simply fork this project and create a pull request with your chan
 
 Forked originally from [MatthewMoye/who-is-live](https://github.com/MatthewMoye/who-is-live)
 
-### Contributors
+### Contributions
 
 - [**xezrunner**](https://github.com/xezrunner) For helping with migration to Manifest V3 and much more.
 
