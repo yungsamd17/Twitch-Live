@@ -436,23 +436,15 @@
 
 /*  HIDDEN LABELS  */
 [settings-label].hidden-label:after,
-[settings-label].hidden-label:before {
-    opacity: 0;
-    transition-delay: 0s;
-}
-
-[settings-label].hidden-label:hover:after,
-[settings-label].hidden-label:hover:before {
-    opacity: 0;
-    transition-delay: 0s;
-}
-
+[settings-label].hidden-label:before,
 [filter-label].filter-label-hidden:after,
 [filter-label].filter-label-hidden:before {
     opacity: 0;
     transition-delay: 0s;
 }
 
+[settings-label].hidden-label:hover:after,
+[settings-label].hidden-label:hover:before,
 [filter-label].filter-label-hidden:hover:after,
 [filter-label].filter-label-hidden:hover:before {
     opacity: 0;
