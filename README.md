@@ -1,17 +1,28 @@
-<a href="https://github.com/yungsamd17/Twitch-Live">
-	<img width="960" alt="Sam's Twitch Live" src="https://github.com/yungsamd17/Twitch-Live/assets/64147848/949efb02-8478-41f7-b65b-c72188db168f">
+<a href="https://yungsamd17.github.io/Twitch-Live/">
+	<img width="960" alt="Sam's Twitch Live" src="https://github.com/yungsamd17/Twitch-Live/assets/64147848/f6fc60ae-cbd4-417f-b2d9-b7b6fe0b54fe">
 </a>
+<div align="center">
+  <h2 align="center">Sam's Twitch Live</h2>
 
-> Your ultimate companion for staying connected with your favorite Twitch streams.
+  <p align="center">
+    Your ultimate companion for staying connected with your favorite Twitch streams.
+    <br />
+    <a href="https://chromewebstore.google.com/detail/sams-twitch-live/fnaolpkjdickppbebcafdajjndmkgbei">Chrome Web Store</a>
+    ·
+    <a href="https://github.com/yungsamd17/Twitch-Live/issues">Bugs & Suggestions</a>
+    ·
+    <a href="https://github.com/yungsamd17/Twitch-Live/releases">Release Notes</a>
+  </p>
+</div>
 
-This extension brings the channels you follow to the forefront, providing a seamless viewing experience right from your Chrome browser.
+This extension brings the channels you follow to the forefront, providing a seamless viewing experience right from your browser.
 
 ### Key Features
 - _**Live Following Channels:**_ Keep track of the live channels you follow on Twitch with ease.
 - _**Customizable Viewing Options:**_ Tailor your viewing experience by choosing to open streams in a new window or in the player. Customize background update intervals, badge color, layout options and more.
 - _**Quick Search:**_ Effortlessly find your preferred streams with the built-in search functionality.
 - _**Sort Streams:**_ Sort streams based on various criteria, including Viewers (High to Low or Low to High), Broadcasters, Categories, Recently Started, and Longest Running.
-- _**Context Menu:**_ Enhance your browsing experience with a right-click context menu that allows you to open streams in the channel, player, or chat. Additionally, you can directly access channels' about, videos, and clips pages. Explore streams by category with ease using context menu.
+- _**Context Menu:**_ Enhance your browsing experience with a right-click context menu that allows you to open streams channel, player, or chat. Additionally, you can directly access channel's about, videos, and clips pages. Explore streams by category with ease using context menu.
 
 ## Install
 
@@ -22,7 +33,7 @@ or any chromium-based browsers (e.g. Brave, Edge, Opera)
 <br>
 <br>
 
-[How to Install and setup](https://github.com/yungsamd17/Twitch-Live/blob/main/docs/INSTALL_FROM_STORAGE.md) unpacked extension (from storage)
+Guide for [how to install and test](https://github.com/yungsamd17/Twitch-Live/blob/main/docs/INSTALL_FROM_STORAGE.md)  the extension locally
 
 ### How to Use
 1. Log in with your Twitch account to authenticate the extension.
@@ -30,13 +41,16 @@ or any chromium-based browsers (e.g. Brave, Edge, Opera)
 3. Customize your viewing preferences in the settings for an optimal experience.
 4. Enjoy uninterrupted Twitch streaming without leaving your Chrome browser.
 
+## Contributing
+To contribute, simply fork this project and create a pull request with your changes. Whether it's a new feature, bug fix, or documentation improvement, we appreciate all contributions. Thank you for your interest in helping to make this project even better!
+
 ## Credits
 
-Forked from [MatthewMoye/who-is-live](https://github.com/MatthewMoye/who-is-live)
+Forked originally from [MatthewMoye/who-is-live](https://github.com/MatthewMoye/who-is-live)
 
 ### Contributions
 
-- [**xezrunner**](https://github.com/xezrunner) For helping with migration to Manifest V3 and more.
+- [**xezrunner**](https://github.com/xezrunner) For helping with migration to Manifest V3 and much more.
 
 ## License
 
