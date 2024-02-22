@@ -12,6 +12,7 @@ body {
     width: 430px;
     height: 600px;
     background-color: #18181b;
+    user-select: none;
 }
 
 ::selection {
@@ -57,7 +58,6 @@ body {
 ::placeholder {
     color: rgba(175.31, 175.31, 175.31, 0.6);
     font-weight: normal;
-    user-select: none;
 }
 
 .navbar-container {
@@ -67,7 +67,6 @@ body {
     padding: 0 10px;
     font-size: 1.4rem;
     font-weight: bold;
-    user-select: none;
 }
 
 .link-container {
@@ -85,8 +84,6 @@ body {
     text-decoration: none;
     margin: 10px 10px 10px 0;
     font-size: 1rem;
-    cursor: pointer;
-    user-select: none;
     width: 30px;
     display: flex;
     justify-content: center;
@@ -104,7 +101,6 @@ body {
 .refresh-button {
     margin-left: 0px;
     border-radius: 0 5px 5px 0;
-    cursor: pointer;
     background-color: #242429;
 }
 
@@ -126,7 +122,6 @@ body {
     border-radius: 5px;
     display: flex;
     box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2), 0 0 10px 6px rgba(0, 0, 0, 0.3);
-
     transform: translate(-118px, 50px);
 }
 
@@ -150,7 +145,6 @@ body {
     padding: 0;
     border: 0;
     border-radius: 3px;
-    cursor: pointer;
 }
 
 .filter-button:hover {
@@ -277,7 +271,6 @@ body {
     border: 0;
     border-radius: 3px;
     margin-left: 8px;
-    cursor: pointer;
     visibility: hidden;
 }
 
@@ -359,7 +352,6 @@ body {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
     font-size: 12px;
     visibility: hidden;
-    user-select: none;
     animation-fill-mode: forwards;
     transform-origin: top center;
 }
@@ -457,4 +449,8 @@ p {
 
 .simpleview-stream-details {
     width: calc(100% - 0.65rem);
+}
+
+button, label {
+    cursor: pointer;
 }
