@@ -1,5 +1,5 @@
-<a href="https://github.com/yungsamd17/Twitch-Live">
-	<img width="960" alt="Sam's Twitch Live" src="https://github.com/yungsamd17/Twitch-Live/assets/64147848/d96de866-1e2f-4a3f-b828-dcbf21bce5bb">
+<a href="https://yungsamd17.github.io/Twitch-Live/">
+	<img width="960" alt="Sam's Twitch Live" src="https://github.com/yungsamd17/Twitch-Live/assets/64147848/f6fc60ae-cbd4-417f-b2d9-b7b6fe0b54fe">
 </a>
 <div align="center">
   <h2 align="center">Sam's Twitch Live</h2>
