@@ -22,7 +22,7 @@ This extension brings the channels you follow to the forefront, providing a seam
 - _**Customizable Viewing Options:**_ Tailor your viewing experience by choosing to open streams in a new window or in the player. Customize background update intervals, badge color, layout options and more.
 - _**Quick Search:**_ Effortlessly find your preferred streams with the built-in search functionality.
 - _**Sort Streams:**_ Sort streams based on various criteria, including Viewers (High to Low or Low to High), Broadcasters, Categories, Recently Started, and Longest Running.
-- _**Context Menu:**_ Enhance your browsing experience with a right-click context menu that allows you to open streams in the channel, player, or chat. Additionally, you can directly access channels' about, videos, and clips pages. Explore streams by category with ease using context menu.
+- _**Context Menu:**_ Enhance your browsing experience with a right-click context menu that allows you to open streams channel, player, or chat. Additionally, you can directly access channel's about, videos, and clips pages. Explore streams by category with ease using context menu.
 
 ## Install
 
