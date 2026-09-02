@@ -1,0 +1,69 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate extension
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate manifest.json is valid JSON
+        run: python3 -m json.tool manifest.json > /dev/null
+
+      - name: Validate version is semver and required fields exist
+        run: |
+          python3 << 'PY'
+          import json, re, sys, pathlib
+          m = json.loads(pathlib.Path("manifest.json").read_text())
+          ver = m.get("version", "")
+          if not re.fullmatch(r"\d+\.\d+\.\d+", ver):
+              print(f"::error::manifest.json version '{ver}' is not semver x.y.z")
+              sys.exit(1)
+          for field in ("manifest_version", "name", "version", "icons", "permissions", "background", "action"):
+              if field not in m:
+                  print(f"::error::manifest.json missing required field: {field}")
+                  sys.exit(1)
+          if m.get("manifest_version") != 3:
+              print(f"::error::manifest_version must be 3, got {m.get('manifest_version')}")
+              sys.exit(1)
+          print(f"manifest ok — version {ver}")
+          PY
+
+      - name: Check required extension files exist
+        run: |
+          set -e
+          for f in manifest.json popup.html src/js/background.js src/js/main.js src/js/settings.js src/js/util.js src/css/main.css src/icons/icon-16.png src/icons/icon-48.png src/icons/icon-128.png; do
+            if [ ! -f "$f" ]; then
+              echo "::error::Missing required file: $f"
+              exit 1
+            fi
+          done
+          echo "All required files present."
+
+      - name: Build CWS zip (dry-run)
+        run: |
+          set -e
+          zip -r /tmp/Twitch-Live.zip manifest.json popup.html src/ lib/ LICENSE -x "*.DS_Store*"
+          echo "zip contents:"
+          unzip -l /tmp/Twitch-Live.zip | head -40
+          # Ensure manifest is at the zip root (CWS requirement)
+          if ! unzip -l /tmp/Twitch-Live.zip | grep -q " manifest.json"; then
+            echo "::error::manifest.json not at zip root"
+            exit 1
+          fi
+          echo "zip ok — $(du -h /tmp/Twitch-Live.zip | cut -f1)"
