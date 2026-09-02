@@ -96,8 +96,8 @@ const loadTwitchContent = async () => {
                 break;
             case "Uptime":
                 filteredStreams.sort((a, b) => {
-                    const aUptime = new Date(a.startedAt).getTime();
-                    const bUptime = new Date(b.startedAt).getTime();
+                    const aUptime = new Date(a.startedAtISO || a.startedAt).getTime() || 0;
+                    const bUptime = new Date(b.startedAtISO || b.startedAt).getTime() || 0;
                     return aUptime - bUptime;
                 });
                 break;
@@ -109,22 +109,16 @@ const loadTwitchContent = async () => {
                 break;
             case "Recently Started":
                 filteredStreams.sort((a, b) => {
-                    const aStarted = new Date(a.startedAt).getTime();
-                    const bStarted = new Date(b.startedAt).getTime();
+                    const aStarted = new Date(a.startedAtISO || a.startedAt).getTime() || 0;
+                    const bStarted = new Date(b.startedAtISO || b.startedAt).getTime() || 0;
                     return bStarted - aStarted;
                 });
                 break;
             case "Longest Running":
                 filteredStreams.sort((a, b) => {
-                    const aStarted = new Date(a.startedAt).getTime();
-                    const bStarted = new Date(b.startedAt).getTime();
-                    const aRunning = a.runningAt ? new Date(a.runningAt).getTime() : Date.now();
-                    const bRunning = b.runningAt ? new Date(b.runningAt).getTime() : Date.now();
-                    const aDuration = aRunning - aStarted;
-                    const bDuration = bRunning - bStarted;
-
-                    // console.log("aDuration:", aDuration, "bDuration:", bDuration); // debugging
-                    return bDuration - aDuration;
+                    const aStarted = new Date(a.startedAtISO || a.startedAt).getTime() || 0;
+                    const bStarted = new Date(b.startedAtISO || b.startedAt).getTime() || 0;
+                    return aStarted - bStarted;
                 });
                 break;
             default:
@@ -150,8 +144,9 @@ const loadTwitchContent = async () => {
 
                 const uptime = document.createElement("div");
                 uptime.setAttribute("class", "stream-uptime");
-                uptime.innerHTML = `${stream.liveTime}`;
-                uptime.setAttribute("title", `Live since ${stream.startedAt}`);
+                const liveTime = typeof getTimePassed === 'function' ? getTimePassed(stream.startedAtISO || stream.startedAt) : stream.liveTime;
+                uptime.textContent = liveTime;
+                uptime.setAttribute("title", `Live since ${stream.startedAtDisplay || stream.startedAt}`);
                 streamThumbnail.appendChild(uptime);
 
                 const thumbnail = document.createElement("img");

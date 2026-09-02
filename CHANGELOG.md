@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Fix time sorting broken for non-US locales by storing raw ISO (`startedAt`/`startedAtISO`) and sorting on it; recompute `liveTime` in popup via `getTimePassed` so uptime ticks correctly (B1)
+- Fix badge count reset to 0 on every service-worker wake by removing unconditional `set({liveChannelsCount:0})` and using fallback `get({liveChannelsCount:0})` (B2)
+- Fix `ReferenceError: error is not defined` in token validation and prevent transient 429/500 from wiping auth — only clear on 401/403 (B4)
+- Fix implicit global `value` leak in background startup alarm (B3)
+- Fix followed-streams URL typo `?&first` → `?first` (B5)
+
 ## [1.3.3] - 2024-02-22
 
 ### Enhancements
