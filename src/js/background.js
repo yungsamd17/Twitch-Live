@@ -70,7 +70,7 @@ const createUpdateStreamsAlarm = (updateRateMin) => {
 };
 
 chrome.storage.local.get({ backgroundUpdateRateMin: 5 }, (data) => {
-    value = data.backgroundUpdateRateMin;
+    const value = data.backgroundUpdateRateMin;
     console.log(`[startup] Background update rate: ${value} minutes`);
     createUpdateStreamsAlarm(value);
 });
@@ -95,11 +95,11 @@ chrome.runtime.onInstalled.addListener(async () => launch());
 
 // Store the number of live channels
 // In Manifest V3, we have to use storage for this, as the service worker is not persistent
-chrome.storage.local.set({ liveChannelsCount: 0 });
+// Initial value is set only on install; fallback to 0 otherwise (avoid clobber on every SW wake)
 
 // Function that returns the number of live channels
 const getLiveChannelsCount = async () => {
-    let result = await chrome.storage.local.get("liveChannelsCount");
+    let result = await chrome.storage.local.get({ liveChannelsCount: 0 });
     return result.liveChannelsCount;
 };
 
@@ -179,7 +179,7 @@ const validateTwitchToken = async () => {
             headers: { Authorization: `Bearer ${accessToken}` },
         });
         if (response.status !== 200) {
-            throw new Error(error);
+            throw new Error('validate failed: ' + response.status);
         }
         response = await response.json();
 
@@ -193,7 +193,10 @@ const validateTwitchToken = async () => {
             });
         }
     } catch (error) {
-        handleTwitchUnauthorized();
+        const msg = String(error && error.message || '');
+        if (msg.includes('401') || msg.includes('403') || msg.includes('Token expiry')) {
+            handleTwitchUnauthorized();
+        }
         console.error(error);
     }
 };
@@ -209,7 +212,7 @@ const getLiveTwitchStreams = async () => {
     const res = await chrome.storage.local.get(storageItems);
     if (!res.twitchIsValidated) return;
 
-    const followUrl = "https://api.twitch.tv/helix/streams/followed" + `?&first=100&user_id=${res.twitchUserId}`;
+    const followUrl = "https://api.twitch.tv/helix/streams/followed" + `?first=100&user_id=${res.twitchUserId}`;
     try {
         let response = await fetch(followUrl, {
             headers: {
@@ -232,7 +235,9 @@ const getLiveTwitchStreams = async () => {
                 channelName: stream["user_name"],
                 viewerCount: stream["viewer_count"],
                 liveTime: getTimePassed(stream["started_at"]),
-                startedAt: getStartedAtTime(stream["started_at"]),
+                startedAt: stream["started_at"],
+                startedAtDisplay: getStartedAtTime(stream["started_at"]),
+                startedAtISO: stream["started_at"],
             })),
         });
 
