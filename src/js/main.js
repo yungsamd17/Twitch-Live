@@ -85,6 +85,22 @@ const loadTwitchContent = async () => {
     }
 
     if (res.twitchStreams) {
+        if (res.twitchStreams.length === 0) {
+            const empty = document.createElement("div");
+            empty.setAttribute("class", "no-search-results");
+            const emptyText = document.createElement("p");
+            emptyText.textContent = "No live channels — follow more on Twitch.";
+            empty.appendChild(emptyText);
+            const browseLink = document.createElement("a");
+            browseLink.setAttribute("class", "search-on-twitch-link");
+            browseLink.setAttribute("href", "https://www.twitch.tv/directory/following/live");
+            browseLink.setAttribute("target", "_blank");
+            browseLink.innerHTML = `Browse Following&nbsp;<i class="fa-solid fa-arrow-up-right-from-square search-on-twitch-link-icon"></i>`;
+            empty.appendChild(browseLink);
+            contentSection.replaceChildren(empty);
+            document.getElementById("logoutBtn").style.display = "block";
+            return;
+        }
         let filteredStreams = [...res.twitchStreams];
 
         // Filter/Sort options
@@ -155,6 +171,15 @@ const loadTwitchContent = async () => {
                 thumbnail.src = stream.thumbnail
                     .replace("{width}", "128")
                     .replace("{height}", "72");
+                thumbnail.alt = `${stream.channelName} thumbnail`;
+                thumbnail.loading = "lazy";
+                thumbnail.onerror = () => {
+                    thumbnail.onerror = null;
+                    thumbnail.src = "src/icons/icon-128.png";
+                    thumbnail.style.objectFit = "contain";
+                    thumbnail.style.padding = "6px";
+                    thumbnail.style.backgroundColor = "#242429";
+                };
                 streamThumbnail.appendChild(thumbnail);
 
                 const streamDetails = document.createElement("div");
@@ -315,6 +340,24 @@ document.getElementById("showRaidButtonToggle").addEventListener("change", async
     await loadTwitchContent();
 });
 
+// Persisted sort filter handling
+const filterToButtonId = {
+    "Broadcaster": "broadcasterButton",
+    "Category": "categoryButton",
+    "Viewers (High to Low)": "viewersHighToLowButton",
+    "Viewers (Low to High)": "viewersLowToHighButton",
+    "Recently Started": "startedButton",
+    "Longest Running": "runningButton"
+};
+const buttonIdToFilter = {
+    "broadcasterButton": "Broadcaster",
+    "categoryButton": "Category",
+    "viewersHighToLowButton": "Viewers (High to Low)",
+    "viewersLowToHighButton": "Viewers (Low to High)",
+    "startedButton": "Recently Started",
+    "runningButton": "Longest Running"
+};
+
 // Function to get the selected filter option
 const getSelectedFilterOption = () => {
     const broadcasterButton = document.getElementById("broadcasterButton");
@@ -338,7 +381,7 @@ const getSelectedFilterOption = () => {
         return "Longest Running";
     }
 
-    return "viewersHighToLowButton"; // Default filter option
+    return "Viewers (High to Low)"; // Default filter option
 };
 
 // Function to set the selected filter option
@@ -352,6 +395,18 @@ const setSelectedFilterOption = (buttonId) => {
     if (selectedButton) {
         selectedButton.classList.add('active');
     }
+    // Persist choice
+    const filterName = buttonIdToFilter[buttonId];
+    if (filterName) {
+        chrome.storage.local.set({ selectedFilter: filterName });
+    }
+};
+
+// Restore persisted sort filter on load
+const restoreSelectedFilter = async () => {
+    const res = await chrome.storage.local.get({ selectedFilter: "Viewers (High to Low)" });
+    const buttonId = filterToButtonId[res.selectedFilter] || "viewersHighToLowButton";
+    setSelectedFilterOption(buttonId);
 };
 
 // Event listeners for the filter buttons
@@ -373,6 +428,7 @@ refreshButton.addEventListener("click", handleRefreshButtonClick);
 
 // Initial load
 addEventListener("DOMContentLoaded", async () => {
+    await restoreSelectedFilter();
     await loadTwitchContent();
     if (authScreenPresent()) return;
     setupAutoRefresh();
