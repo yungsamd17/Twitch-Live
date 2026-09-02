@@ -85,18 +85,23 @@ document.getElementById("showRaidButtonToggle").addEventListener("change", funct
 });
 
 // Listen for changes in storage and update the toggle switches accordingly
+// (update DOM directly to avoid triggering another storage write loop)
 chrome.storage.onChanged.addListener((changes) => {
     if (changes.openInPlayerToggle !== undefined) {
-        setToggleSwitchStatus("openInPlayerToggle", changes.openInPlayerToggle.newValue);
+        const el = document.getElementById("openInPlayerToggle");
+        if (el) el.checked = changes.openInPlayerToggle.newValue;
     }
     if (changes.openInNewWindowToggle !== undefined) {
-        setToggleSwitchStatus("openInNewWindowToggle", changes.openInNewWindowToggle.newValue);
+        const el = document.getElementById("openInNewWindowToggle");
+        if (el) el.checked = changes.openInNewWindowToggle.newValue;
     }
     if (changes.showRaidButtonToggle !== undefined) {
-        setToggleSwitchStatus("showRaidButtonToggle", changes.showRaidButtonToggle.newValue);
+        const el = document.getElementById("showRaidButtonToggle");
+        if (el) el.checked = changes.showRaidButtonToggle.newValue;
     }
     if (changes.simpleViewToggle !== undefined) {
-        setToggleSwitchStatus("simpleViewToggle", changes.simpleViewToggle.newValue);
+        const el = document.getElementById("simpleViewToggle");
+        if (el) el.checked = changes.simpleViewToggle.newValue;
     }
     if (changes.backgroundUpdateRateMin !== undefined) {
         backgroundRefreshSelect.value = changes.backgroundUpdateRateMin.newValue;

@@ -1,6 +1,8 @@
 const contentSection = document.getElementById("content");
 const filterInput = document.getElementById("searchStreams");
 const refreshButton = document.getElementById("refreshButton");
+let autoRefreshId = null;
+let searchDebounce = null;
 
 const authScreenPresent = () => {
     return contentSection.querySelector(".auth-header");
@@ -359,7 +361,10 @@ filterButtons.forEach(button => {
 });
 
 // Event listeners for the search input and refresh button
-filterInput.addEventListener("input", loadTwitchContent);
+filterInput.addEventListener("input", () => {
+    clearTimeout(searchDebounce);
+    searchDebounce = setTimeout(() => loadTwitchContent(), 150);
+});
 refreshButton.addEventListener("click", handleRefreshButtonClick);
 
 // Initial load
@@ -370,8 +375,9 @@ addEventListener("DOMContentLoaded", async () => {
 });
 
 const setupAutoRefresh = () => {
-    // Automatically refresh streams every minute (when popup is "open")
-    window.setInterval(async () => {
+    if (autoRefreshId) clearInterval(autoRefreshId);
+    // Automatically refresh streams every 30s while popup is open
+    autoRefreshId = window.setInterval(async () => {
         await loadTwitchContent();
     }, 1000 * 30);
 
