@@ -28,6 +28,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Eliminate storage write loop in settings sync by updating DOM directly on `storage.onChanged` (P2)
 - Make background alarm recreation use promise API (`clear`/`create`) instead of callback soup (P4)
 - Make periodic badge update await fresh fetch before updating badge (P3)
+- Deduplicate popup animations to `src/css/animations.css` + `src/js/ui.js` and remove duplicates from `main.css`/`settings.css`/`main.js`/`settings.js` (A1)
+- Deduplicate tooltip CSS (was 452 lines) to shared base + per-label overrides (A7)
+- Fix `rgba(175.31,…)` invalid placeholder color to `rgba(175,175,175,0.6)` (A7)
+
+### Fixed
+
+- Fix `window.onmousedown/onmouseup` overwrite clobber by using `addEventListener` (A2)
+- Fix context-menu listener leak — bind 7 items once instead of per right-click (A3)
+- Fix `document.execCommand('copy')` deprecation by using `navigator.clipboard.writeText` with fallback (P5)
 
 ## [1.3.3] - 2024-02-22
 
