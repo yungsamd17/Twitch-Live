@@ -1,398 +1,45 @@
-/*  SETTINGS TOOLTIPS  */
+/*  TOOLTIPS — deduplicated */
 
 :root {
     --tooltip-background: #fff;
     --tooltip-text: #000;
 }
 
-
-/*  REFRESH BUTTON TOOLTIP  */
-[refresh-label] {
-    position: relative;
-}
-
-[refresh-label]:after,
-[refresh-label]:before {
-    content: "";
-    position: absolute;
-    z-index: 500;
-    pointer-events: none;
-}
-
-[refresh-label]:after {
-    content: attr(refresh-label);
-    display: block;
-    position: absolute;
-    top: 133%;
-    left: -134%;
-    z-index: 500;
-    pointer-events: none;
-    padding: 5px;
-    line-height: 15px;
-    white-space: nowrap;
-    text-decoration: none;
-    text-indent: 0;
-    overflow: visible;
-    font-size: .8em;
-    font-weight: bold;
-    color: var(--tooltip-text);
-    background-color: var(--tooltip-background);
-    border-radius: 5px;
-    opacity: 0;
-}
-
-[refresh-label]:before {
-    content: "";
-    border-style: solid;
-    border-width: 0 8px 10px 8px;
-    border-color: transparent transparent var(--tooltip-background) transparent;
-    top: 35px;
-    right: 50%;
-    transform: translateX(50%);
-    opacity: 0;
-}
-
-[refresh-label]:hover:after {
-    opacity: 1;
-    transition-delay: 0.3s;
-}
-
-[refresh-label]:hover:before {
-    opacity: 1;
-    transition-delay: 0.3s;
-}
-
-[refresh-label]:not(:hover):after,
-[refresh-label]:not(:hover):before {
-    transition-delay: 0s;
-}
-
-/*  FILTER BUTTON TOOLTIP  */
-[filter-label] {
-    position: relative;
-}
-
-[filter-label]:after,
-[filter-label]:before {
-    content: "";
-    position: absolute;
-    z-index: 500;
-    pointer-events: none;
-}
-
-[filter-label]:after {
-    content: attr(filter-label);
-    display: block;
-    position: absolute;
-    top: 133%;
-    left: -99.5%;
-    z-index: 500;
-    pointer-events: none;
-    padding: 5px;
-    line-height: 15px;
-    white-space: nowrap;
-    text-decoration: none;
-    text-indent: 0;
-    overflow: visible;
-    font-size: .8em;
-    font-weight: bold;
-    color: var(--tooltip-text);
-    background-color: var(--tooltip-background);
-    border-radius: 5px;
-    opacity: 0;
-}
-
-[filter-label]:before {
-    content: "";
-    border-style: solid;
-    border-width: 0 8px 10px 8px;
-    border-color: transparent transparent var(--tooltip-background) transparent;
-    top: 35px;
-    right: 50%;
-    transform: translateX(50%);
-    opacity: 0;
-}
-
-[filter-label]:hover:after {
-    opacity: 1;
-    transition-delay: 0.3s;
-}
-
-[filter-label]:hover:before {
-    opacity: 1;
-    transition-delay: 0.3s;
-}
-
-[filter-label]:not(:hover):after,
-[filter-label]:not(:hover):before {
-    transition-delay: 0s;
-}
-
-/*  TWITCH LIVE FOLLOWING TOOLTIP  */
-[twitch-label] {
-    position: relative;
-}
-
-[twitch-label]:after,
-[twitch-label]:before {
-    content: "";
-    position: absolute;
-    z-index: 500;
-    pointer-events: none;
-}
-
-[twitch-label]:after {
-    content: attr(twitch-label);
-    display: block;
-    position: absolute;
-    top: 133%;
-    right: -132%;
-    z-index: 500;
-    pointer-events: none;
-    padding: 5px;
-    line-height: 15px;
-    white-space: nowrap;
-    text-decoration: none;
-    text-indent: 0;
-    overflow: visible;
-    font-size: .8em;
-    font-weight: bold;
-    color: var(--tooltip-text);
-    background-color: var(--tooltip-background);
-    border-radius: 5px;
-    opacity: 0;
-}
-
-[twitch-label]:before {
-    content: "";
-    border-style: solid;
-    border-width: 0 8px 10px 8px;
-    border-color: transparent transparent var(--tooltip-background) transparent;
-    top: 35px;
-    right: 50%;
-    transform: translateX(50%);
-    opacity: 0;
-}
-
-[twitch-label]:hover:after {
-    opacity: 1;
-    transition-delay: 0.3s;
-}
-
-[twitch-label]:hover:before {
-    opacity: 1;
-    transition-delay: 0.3s;
-}
-
-[twitch-label]:not(:hover):after,
-[twitch-label]:not(:hover):before {
-    transition-delay: 0s;
-}
-
-/*  SETTINGS TOOLTIP*/
-[settings-label] {
-    position: relative;
-}
-
-[settings-label]:after,
-[settings-label]:before {
-    content: "";
-    position: absolute;
-    z-index: 500;
-    pointer-events: none;
-}
-
-[settings-label]:after {
-    content: attr(settings-label);
-    display: block;
-    position: absolute;
-    top: 133%;
-    right: 0%;
-    z-index: 500;
-    pointer-events: none;
-    padding: 5px;
-    line-height: 15px;
-    white-space: nowrap;
-    text-decoration: none;
-    text-indent: 0;
-    overflow: visible;
-    font-size: .8em;
-    font-weight: bold;
-    color: var(--tooltip-text);
-    background-color: var(--tooltip-background);
-    border-radius: 5px;
-    opacity: 0;
-}
-
-[settings-label]:before {
-    content: "";
-    border-style: solid;
-    border-width: 0 8px 10px 8px;
-    border-color: transparent transparent var(--tooltip-background) transparent;
-    top: 35px;
-    right: 50%;
-    transform: translateX(50%);
-    opacity: 0;
-}
-
-[settings-label]:hover:after {
-    opacity: 1;
-    transition-delay: 0.3s;
-}
-
-[settings-label]:hover:before {
-    opacity: 1;
-    transition-delay: 0.3s;
-}
-
-[settings-label]:not(:hover):after,
-[settings-label]:not(:hover):before {
-    transition-delay: 0s;
-}
-
-/*  "Open streams in Player" SETTINGS OPTION INFO LINK TOOLTIP  */
-[info-label] {
-    position: relative;
-}
-
-[info-label]:after,
-[info-label]:before {
-    content: "";
-    position: absolute;
-    z-index: 500;
-    pointer-events: none;
-}
-
-[info-label]:after {
-    content: attr(info-label);
-    display: block;
-    position: absolute;
-    top: 174%;
-    left: -450%;
-    z-index: 500;
-    pointer-events: none;
-    padding: 5px;
-    line-height: 15px;
-    white-space: nowrap;
-    text-decoration: none;
-    text-indent: 0;
-    overflow: visible;
-    font-size: .8em;
-    font-weight: bold;
-    color: var(--tooltip-text);
-    background-color: var(--tooltip-background);
-    border-radius: 5px;
-    opacity: 0;
-}
-
-[info-label]:before {
-    content: "";
-    border-style: solid;
-    border-width: 0 8px 10px 8px;
-    border-color: transparent transparent var(--tooltip-background) transparent;
-    top: 23px;
-    right: 50%;
-    transform: translateX(50%);
-    opacity: 0;
-}
-
-[info-label]:hover:after {
-    opacity: 1;
-    transition-delay: 0.3s;
-}
-
-[info-label]:hover:before {
-    opacity: 1;
-    transition-delay: 0.3s;
-}
-
-[info-label]:not(:hover):after,
-[info-label]:not(:hover):before {
-    transition-delay: 0s;
-}
-
-/*  "Copy raid command button" SETTINGS OPTION INFO TOOLTIP  */
-[info-label-2] {
-    position: relative;
-}
-
-[info-label-2]:after,
-[info-label-2]:before {
-    content: "";
-    position: absolute;
-    z-index: 500;
-    pointer-events: none;
-}
-
-[info-label-2]:after {
-    content: attr(info-label-2);
-    display: block;
-    position: absolute;
-    top: 174%;
-    left: -790%;
-    z-index: 500;
-    pointer-events: none;
-    padding: 5px;
-    line-height: 15px;
-    white-space: nowrap;
-    text-decoration: none;
-    text-indent: 0;
-    overflow: visible;
-    font-size: .8em;
-    font-weight: bold;
-    color: var(--tooltip-text);
-    background-color: var(--tooltip-background);
-    border-radius: 5px;
-    opacity: 0;
-}
-
-[info-label-2]:before {
-    content: "";
-    border-style: solid;
-    border-width: 0 8px 10px 8px;
-    border-color: transparent transparent var(--tooltip-background) transparent;
-    top: 23px;
-    right: 50%;
-    transform: translateX(50%);
-    opacity: 0;
-}
-
-[info-label-2]:hover:after {
-    opacity: 1;
-    transition-delay: 0.3s;
-}
-
-[info-label-2]:hover:before {
-    opacity: 1;
-    transition-delay: 0.3s;
-}
-
-[info-label-2]:not(:hover):after,
-[info-label-2]:not(:hover):before {
-    transition-delay: 0s;
-}
-
-/*  "Simple view" SETTINGS OPTION INFO TOOLTIP  */
+/* Common base for all tooltip hosts */
+[refresh-label],
+[filter-label],
+[twitch-label],
+[settings-label],
+[info-label],
+[info-label-2],
 [info-label-3] {
     position: relative;
 }
 
-[info-label-3]:after,
-[info-label-3]:before {
+/* Shared pseudo-element reset */
+[refresh-label]:after, [refresh-label]:before,
+[filter-label]:after, [filter-label]:before,
+[twitch-label]:after, [twitch-label]:before,
+[settings-label]:after, [settings-label]:before,
+[info-label]:after, [info-label]:before,
+[info-label-2]:after, [info-label-2]:before,
+[info-label-3]:after, [info-label-3]:before {
     content: "";
     position: absolute;
     z-index: 500;
     pointer-events: none;
+    opacity: 0;
 }
 
+/* Shared bubble style */
+[refresh-label]:after,
+[filter-label]:after,
+[twitch-label]:after,
+[settings-label]:after,
+[info-label]:after,
+[info-label-2]:after,
 [info-label-3]:after {
-    content: attr(info-label-3);
     display: block;
-    position: absolute;
-    top: 174%;
-    left: -560%;
-    z-index: 500;
-    pointer-events: none;
     padding: 5px;
     line-height: 15px;
     white-space: nowrap;
@@ -404,35 +51,63 @@
     color: var(--tooltip-text);
     background-color: var(--tooltip-background);
     border-radius: 5px;
-    opacity: 0;
 }
 
+/* Shared arrow style */
+[refresh-label]:before,
+[filter-label]:before,
+[twitch-label]:before,
+[settings-label]:before,
+[info-label]:before,
+[info-label-2]:before,
 [info-label-3]:before {
-    content: "";
     border-style: solid;
     border-width: 0 8px 10px 8px;
     border-color: transparent transparent var(--tooltip-background) transparent;
-    top: 23px;
-    right: 50%;
-    transform: translateX(50%);
-    opacity: 0;
 }
 
-[info-label-3]:hover:after {
+/* Position overrides — keep original offsets */
+[refresh-label]:after { content: attr(refresh-label); top: 133%; left: -134%; }
+[refresh-label]:before { top: 35px; right: 50%; transform: translateX(50%); }
+
+[filter-label]:after { content: attr(filter-label); top: 133%; left: -99.5%; }
+[filter-label]:before { top: 35px; right: 50%; transform: translateX(50%); }
+
+[twitch-label]:after { content: attr(twitch-label); top: 133%; right: -132%; }
+[twitch-label]:before { top: 35px; right: 50%; transform: translateX(50%); }
+
+[settings-label]:after { content: attr(settings-label); top: 133%; right: 0%; }
+[settings-label]:before { top: 35px; right: 50%; transform: translateX(50%); }
+
+[info-label]:after { content: attr(info-label); top: 174%; left: -450%; }
+[info-label]:before { top: 23px; right: 50%; transform: translateX(50%); }
+
+[info-label-2]:after { content: attr(info-label-2); top: 174%; left: -790%; }
+[info-label-2]:before { top: 23px; right: 50%; transform: translateX(50%); }
+
+[info-label-3]:after { content: attr(info-label-3); top: 174%; left: -560%; }
+[info-label-3]:before { top: 23px; right: 50%; transform: translateX(50%); }
+
+/* Hover behaviour */
+[refresh-label]:hover:after, [refresh-label]:hover:before,
+[filter-label]:hover:after, [filter-label]:hover:before,
+[twitch-label]:hover:after, [twitch-label]:hover:before,
+[settings-label]:hover:after, [settings-label]:hover:before,
+[info-label]:hover:after, [info-label]:hover:before,
+[info-label-2]:hover:after, [info-label-2]:hover:before,
+[info-label-3]:hover:after, [info-label-3]:hover:before {
     opacity: 1;
     transition-delay: 0.3s;
 }
-
-[info-label-3]:hover:before {
-    opacity: 1;
-    transition-delay: 0.3s;
-}
-
-[info-label-3]:not(:hover):after,
-[info-label-3]:not(:hover):before {
+[refresh-label]:not(:hover):after, [refresh-label]:not(:hover):before,
+[filter-label]:not(:hover):after, [filter-label]:not(:hover):before,
+[twitch-label]:not(:hover):after, [twitch-label]:not(:hover):before,
+[settings-label]:not(:hover):after, [settings-label]:not(:hover):before,
+[info-label]:not(:hover):after, [info-label]:not(:hover):before,
+[info-label-2]:not(:hover):after, [info-label-2]:not(:hover):before,
+[info-label-3]:not(:hover):after, [info-label-3]:not(:hover):before {
     transition-delay: 0s;
 }
-
 
 /*  HIDDEN LABELS  */
 [settings-label].hidden-label:after,
@@ -442,7 +117,6 @@
     opacity: 0;
     transition-delay: 0s;
 }
-
 [settings-label].hidden-label:hover:after,
 [settings-label].hidden-label:hover:before,
 [filter-label].filter-label-hidden:hover:after,

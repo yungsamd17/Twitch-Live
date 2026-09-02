@@ -212,17 +212,21 @@ const loadTwitchContent = async () => {
                     // Handle raid button click - copy channel name with raid command
                     const raidCommand = `/raid ${stream.channelName}`;
 
-                    // Create a temporary textarea to copy text to clipboard
-                    const textArea = document.createElement("textarea");
-                    textArea.value = raidCommand;
-                    document.body.appendChild(textArea);
-                    textArea.select();
-
-                    // Copy text to clipboard
-                    document.execCommand("copy");
-
-                    // Remove the temporary textarea
-                    document.body.removeChild(textArea);
+                    try {
+                        if (navigator.clipboard && navigator.clipboard.writeText) {
+                            await navigator.clipboard.writeText(raidCommand);
+                        } else {
+                            throw new Error('no clipboard');
+                        }
+                    } catch {
+                        // Fallback for older Chromium
+                        const textArea = document.createElement("textarea");
+                        textArea.value = raidCommand;
+                        document.body.appendChild(textArea);
+                        textArea.select();
+                        document.execCommand("copy");
+                        document.body.removeChild(textArea);
+                    }
 
                     console.log(`Raid command copied to clipboard: ${raidCommand}`);
 
@@ -414,17 +418,6 @@ document.addEventListener('contextmenu', (event) => {
     }
 });
 
-function animatePopup(element, targetState) {
-    if (targetState === true) {
-        element.style.visibility = 'visible';
-        element.classList.remove('popup-anim-out');
-        element.classList.add('popup-anim-in');
-    } else {
-        element.classList.remove('popup-anim-in');
-        element.classList.add('popup-anim-out');
-    }
-}
-
 const showContextMenu = (x, y) => {
     const menuWidth = contextMenu.getBoundingClientRect().width;
     const menuHeight = contextMenu.getBoundingClientRect().height;
@@ -445,22 +438,6 @@ const showContextMenu = (x, y) => {
     contextMenu.style.top = `${menuY}px`;
 
     animatePopup(contextMenu, true);
-
-    const openChannelItem = contextMenu.querySelector('.context-item-open-channel');
-    const openPlayerItem = contextMenu.querySelector('.context-item-open-player');
-    const chatItem = contextMenu.querySelector('.context-item-open-chat');
-    const aboutItem = contextMenu.querySelector('.context-item-about');
-    const videosItem = contextMenu.querySelector('.context-item-videos');
-    const clipsItem = contextMenu.querySelector('.context-item-clips');
-    const goToCategoryItem = contextMenu.querySelector('.context-item-go-to-category');
-
-    openChannelItem.addEventListener('click', handleOpenChannel);
-    openPlayerItem.addEventListener('click', handleOpenPlayer);
-    chatItem.addEventListener('click', handleOpenChat);
-    aboutItem.addEventListener('click', handleOpenAbout);
-    videosItem.addEventListener('click', handleOpenVideos);
-    clipsItem.addEventListener('click', handleOpenClips);
-    goToCategoryItem.addEventListener('click', handleGoToCategory);
 };
 
 // Function to hide the context menu and remove the class from the stream container
@@ -510,6 +487,33 @@ const handleGoToCategory = () => {
     const formattedCategory = encodeURIComponent(currentCategoryName.toLowerCase().replace(/\s/g, '-'));
     openLink(`https://www.twitch.tv/directory/category/${formattedCategory}`);
 };
+
+// Bind context menu items once (avoid re-adding on every right-click)
+(() => {
+    const bind = (sel, fn) => {
+        const el = contextMenu && contextMenu.querySelector(sel);
+        if (el) el.addEventListener('click', fn);
+    };
+    if (contextMenu) {
+        bind('.context-item-open-channel', handleOpenChannel);
+        bind('.context-item-open-player', handleOpenPlayer);
+        bind('.context-item-open-chat', handleOpenChat);
+        bind('.context-item-about', handleOpenAbout);
+        bind('.context-item-videos', handleOpenVideos);
+        bind('.context-item-clips', handleOpenClips);
+        bind('.context-item-go-to-category', handleGoToCategory);
+    } else {
+        document.addEventListener('DOMContentLoaded', () => {
+            bind('.context-item-open-channel', handleOpenChannel);
+            bind('.context-item-open-player', handleOpenPlayer);
+            bind('.context-item-open-chat', handleOpenChat);
+            bind('.context-item-about', handleOpenAbout);
+            bind('.context-item-videos', handleOpenVideos);
+            bind('.context-item-clips', handleOpenClips);
+            bind('.context-item-go-to-category', handleGoToCategory);
+        });
+    }
+})();
 
 // Function to escape HTML tags
 const escapeHTML = (unsafe) => {

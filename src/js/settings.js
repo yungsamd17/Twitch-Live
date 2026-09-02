@@ -168,17 +168,6 @@ if (logoutButton) {
 }
 
 // Filter dropdown
-function animatePopup(element, targetState) {
-    if (targetState === true) {
-        element.style.visibility = 'visible';
-        element.classList.remove('popup-anim-out');
-        element.classList.add('popup-anim-in');
-    } else {
-        element.classList.remove('popup-anim-in');
-        element.classList.add('popup-anim-out');
-    }
-}
-
 var dropdown = document.getElementById("filterDropdown");
 var filterBtn = document.getElementById("filterButton");
 var filterLabel = document.querySelector('[filter-label]');
@@ -203,7 +192,7 @@ filterBtn.addEventListener('mouseenter', function() {
     filterLabel.classList.remove('filter-label-hidden');
 });
 
-window.onmousedown = function(event) {
+window.addEventListener('mousedown', function(event) {
     const filterButton = document.getElementById('filterButton');
     const isFilterDropdownVisible = dropdown.style.visibility === "visible";
 
@@ -214,9 +203,9 @@ window.onmousedown = function(event) {
         isFilterDropdownVisible) {
         animatePopup(dropdown, false);
     }
-}
+});
 
-window.onmouseup = function(event) {
+window.addEventListener('mouseup', function(event) {
     const filterButton = document.getElementById('filterButton');
     const isFilterDropdownVisible = dropdown.style.visibility === "visible";
 
@@ -224,18 +213,7 @@ window.onmouseup = function(event) {
     if (event.target.matches('.filter-button') && isFilterDropdownVisible) {
         animatePopup(dropdown, false);
     }
-}
-
-function animateSettingsBackground(element, targetState) {
-    if (targetState === true) {
-        element.style.visibility = 'visible';
-        element.classList.remove('settings-background-anim-out');
-        element.classList.add('settings-background-anim-in');
-    } else {
-        element.classList.remove('settings-background-anim-in');
-        element.classList.add('settings-background-anim-out');
-    }
-}
+});
 
 // Background update refresh dropdown
 var backgroundRefreshSelect = document.getElementById("backgroundRefreshSelect");
