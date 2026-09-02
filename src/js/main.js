@@ -44,11 +44,11 @@ const openStream = (stream) => {
         const openInPlayer = openInPlayerToggle.checked;
         const openInNewWindow = openInNewWindowToggle.checked;
 
-        const baseStreamUrl = `https://www.twitch.tv/${stream.channelName}`;
+        const baseStreamUrl = `https://www.twitch.tv/${encodeURIComponent(stream.channelName)}`;
         let url;
 
         if (openInPlayer) {
-            url = `https://player.twitch.tv/?channel=${stream.channelName}&parent=twitch-live`;
+            url = `https://player.twitch.tv/?channel=${encodeURIComponent(stream.channelName)}&parent=twitch-live`;
         } else {
             url = baseStreamUrl;
         }
@@ -165,7 +165,7 @@ const loadTwitchContent = async () => {
 
                 const channel = document.createElement("span");
                 channel.setAttribute("class", "stream-channel-name");
-                channel.innerHTML = stream.channelName;
+                channel.textContent = stream.channelName;
                 channelContainer.appendChild(channel);
 
                 const raidButton = document.createElement("button");
@@ -191,7 +191,7 @@ const loadTwitchContent = async () => {
                     // Create a new timedAlert
                     const newTimedAlert = document.createElement("div");
                     newTimedAlert.classList.add("timed-alert");
-                    newTimedAlert.innerHTML = message;
+                    newTimedAlert.textContent = message;
 
                     document.body.appendChild(newTimedAlert);
 
@@ -238,8 +238,8 @@ const loadTwitchContent = async () => {
 
                 const categoryAndViewCount = document.createElement("span");
                 categoryAndViewCount.setAttribute("class", "stream-category");
-                categoryAndViewCount.innerHTML = `${stream.gameName}`;
-                categoryAndViewCount.setAttribute("title", `${stream.gameName}`);
+                categoryAndViewCount.textContent = stream.gameName;
+                categoryAndViewCount.setAttribute("title", stream.gameName);
                 streamDetails.appendChild(categoryAndViewCount);
 
                 const title = document.createElement("span");
@@ -270,7 +270,7 @@ const loadTwitchContent = async () => {
 
             const searchOnTwitch = document.createElement("a")
             searchOnTwitch.setAttribute("class", "search-on-twitch-link")
-            searchOnTwitch.setAttribute("href", `https://www.twitch.tv/search?term=${searchTerm}`)
+            searchOnTwitch.setAttribute("href", `https://www.twitch.tv/search?term=${encodeURIComponent(searchTerm)}`)
             searchOnTwitch.setAttribute("target", "_blank")
             searchOnTwitch.innerHTML = `Search on Twitch&nbsp;<i class="fa-solid fa-arrow-up-right-from-square search-on-twitch-link-icon"></i>`
             noResultsMessage.appendChild(searchOnTwitch)
@@ -399,8 +399,8 @@ document.addEventListener('contextmenu', (event) => {
     const streamContainer = event.target.closest('.stream-container');
     if (streamContainer) {
         event.preventDefault();
-        currentChannelName = streamContainer.querySelector('.stream-channel-name').innerHTML.trim();
-        currentCategoryName = streamContainer.querySelector('.stream-category').innerText.split(' - ')[0].trim();
+        currentChannelName = streamContainer.querySelector('.stream-channel-name').textContent.trim();
+        currentCategoryName = streamContainer.querySelector('.stream-category').textContent.split(' - ')[0].trim();
         const mouseX = event.clientX;
         const mouseY = event.clientY;
         hideContextMenu();
@@ -494,12 +494,12 @@ document.addEventListener('mousedown', (event) => {
 });
 
 // Defined separate functions to handle each context menu item click
-const handleOpenChannel = () => openLink(`https://www.twitch.tv/${currentChannelName}`);
-const handleOpenPlayer = () => openLinkInPopup(`https://player.twitch.tv/?channel=${currentChannelName}&parent=twitch-live`);
-const handleOpenChat = () => openLink(`https://www.twitch.tv/popout/${currentChannelName}/chat`);
-const handleOpenAbout = () => openLink(`https://www.twitch.tv/${currentChannelName}/about`);
-const handleOpenVideos = () => openLink(`https://www.twitch.tv/${currentChannelName}/videos`);
-const handleOpenClips = () => openLink(`https://www.twitch.tv/${currentChannelName}/clips?filter=clips&range=7d`);
+const handleOpenChannel = () => openLink(`https://www.twitch.tv/${encodeURIComponent(currentChannelName)}`);
+const handleOpenPlayer = () => openLinkInPopup(`https://player.twitch.tv/?channel=${encodeURIComponent(currentChannelName)}&parent=twitch-live`);
+const handleOpenChat = () => openLink(`https://www.twitch.tv/popout/${encodeURIComponent(currentChannelName)}/chat`);
+const handleOpenAbout = () => openLink(`https://www.twitch.tv/${encodeURIComponent(currentChannelName)}/about`);
+const handleOpenVideos = () => openLink(`https://www.twitch.tv/${encodeURIComponent(currentChannelName)}/videos`);
+const handleOpenClips = () => openLink(`https://www.twitch.tv/${encodeURIComponent(currentChannelName)}/clips?filter=clips&range=7d`);
 const handleGoToCategory = () => {
     const formattedCategory = encodeURIComponent(currentCategoryName.toLowerCase().replace(/\s/g, '-'));
     openLink(`https://www.twitch.tv/directory/category/${formattedCategory}`);
