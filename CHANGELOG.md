@@ -22,6 +22,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Add `host_permissions` for `https://api.twitch.tv/*` and `https://id.twitch.tv/*` (S1)
 
+### Changed
+
+- Debounce search input (150ms) and make auto-refresh interval idempotent to prevent duplicate 30s polls and per-keystroke fetches (P1)
+- Eliminate storage write loop in settings sync by updating DOM directly on `storage.onChanged` (P2)
+- Make background alarm recreation use promise API (`clear`/`create`) instead of callback soup (P4)
+- Make periodic badge update await fresh fetch before updating badge (P3)
+
 ## [1.3.3] - 2024-02-22
 
 ### Enhancements

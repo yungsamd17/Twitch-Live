@@ -37,25 +37,9 @@ chrome.alarms.onAlarm.addListener((alarm) => {
     }
 });
 
-const createUpdateStreamsAlarm = (updateRateMin) => {
-    chrome.alarms.get("updateStreamsAlarm", (alarm) => {
-        // console.log(`[debug] creating background refresh alarm:`)
-        // console.log("  - before clear: updateStreamsAlarm get: ", alarm);
-    });
-
-    chrome.alarms.clear("updateStreamsAlarm", (wasCleared) => {
-        // console.log("    | updateStreamsAlarm wasCleared: ", wasCleared);
-    });
-
-    chrome.alarms.get("updateStreamsAlarm", (alarm) => {
-        // console.log("  - after clear: updateStreamsAlarm get: ", alarm);
-    });
-
-    chrome.alarms.create("updateStreamsAlarm", { periodInMinutes: updateRateMin });
-
-    chrome.alarms.get("updateStreamsAlarm", (alarm) => {
-        // console.log("[debug] new alarm: updateStreamsAlarm get: ", alarm);
-    });
+const createUpdateStreamsAlarm = async (updateRateMin) => {
+    await chrome.alarms.clear("updateStreamsAlarm");
+    await chrome.alarms.create("updateStreamsAlarm", { periodInMinutes: updateRateMin });
 };
 
 chrome.storage.local.get({ backgroundUpdateRateMin: 5 }, (data) => {
@@ -244,15 +228,7 @@ const getLiveTwitchStreams = async () => {
 };
 
 // Function to handle the periodic update of streams
-const updateStreamsPeriodically = () => {
-    // Refresh Twitch streams in the background
-    getLiveTwitchStreams();
-
-    // Update the badge count based on the latest data
-    chrome.storage.local.get("twitchStreams", (res) => {
-        if (res.twitchStreams) {
-            chrome.storage.local.set({ liveChannelsCount: res.twitchStreams.length });
-            updateBadge();
-        }
-    });
+const updateStreamsPeriodically = async () => {
+    await getLiveTwitchStreams();
+    await updateBadge();
 };
