@@ -28,5 +28,8 @@
     {
         "default_title": "Sam's Twitch Live",
         "default_popup": "popup.html"
+    },
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; object-src 'none'"
     }
 }

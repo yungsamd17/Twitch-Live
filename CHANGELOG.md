@@ -37,6 +37,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix `window.onmousedown/onmouseup` overwrite clobber by using `addEventListener` (A2)
 - Fix context-menu listener leak — bind 7 items once instead of per right-click (A3)
 - Fix `document.execCommand('copy')` deprecation by using `navigator.clipboard.writeText` with fallback (P5)
+- Fix empty live-list shows misleading “No matching Search” — now shows “No live channels” with Browse Following (L2)
+- Fix thumbnail broken image by adding `alt`, `loading=lazy` and fallback to extension icon (L2)
+- Fix badge color/text race by awaiting storage and `chrome.action` atomically (L2)
+
+### Added
+
+- Persist sort filter choice (`selectedFilter`) in storage and restore on popup open; fix default filter string (L1)
+
+### Security
+
+- Add SRI `integrity` + `crossorigin` for Font Awesome CDN and `content_security_policy` for extension pages (S2)
 
 ## [1.3.3] - 2024-02-22
 
