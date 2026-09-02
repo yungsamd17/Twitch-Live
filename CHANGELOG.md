@@ -14,6 +14,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix `ReferenceError: error is not defined` in token validation and prevent transient 429/500 from wiping auth — only clear on 401/403 (B4)
 - Fix implicit global `value` leak in background startup alarm (B3)
 - Fix followed-streams URL typo `?&first` → `?first` (B5)
+- Fix XSS via unsanitized channel/category/search — use `textContent` and `encodeURIComponent` for URLs and messages (B6)
+- Fix brittle token extraction via `split` by using `URL` + `URLSearchParams` (S3)
+- Fix duplicate `onMessage`/`onAlarm` listeners and unhandled `Receiving end does not exist` by merging handlers and guarding `sendMessage` (S4)
+
+### Added
+
+- Add `host_permissions` for `https://api.twitch.tv/*` and `https://id.twitch.tv/*` (S1)
 
 ## [1.3.3] - 2024-02-22
 

@@ -1,41 +1,30 @@
 importScripts('util.js');
 
-// Set up listeners and alarms: 
-//
-// Listen for messages to fetch Twitch auth token
-chrome.runtime.onMessage.addListener(async (request) => {
-    if (request.message === "fetch-twitch-auth-token") {
-        const result = await getTwitchAuth();
-        if (result === true && request.popup === true) {
+// Set up listeners and alarms
+chrome.runtime.onMessage.addListener((request) => {
+    (async () => {
+        if (request.message === "fetch-twitch-auth-token") {
+            const result = await getTwitchAuth();
+            if (result === true && request.popup === true) {
+                await getLiveTwitchStreams();
+                chrome.runtime.sendMessage({ message: "popup-auth-success" }).catch(() => {});
+            }
+        } else if (request.message === "refresh-twitch-streams") {
+            console.log("Refreshing Twitch streams...");
             await getLiveTwitchStreams();
-            await chrome.runtime.sendMessage({ message: "popup-auth-success" });
         }
-    }
+    })();
     return true;
 });
 
-// Listen for messages to refresh Twitch streams
-chrome.runtime.onMessage.addListener(async (request) => {
-    if (request.message === "refresh-twitch-streams") {
-        console.log("Refreshing Twitch streams...");
-        await getLiveTwitchStreams();
-    }
-    return true;
-});
-
-// Create an alarm to validate Twitch token every hour
-chrome.alarms.onAlarm.addListener((alarm) => {
-    if (alarm.name === "validateTwitchTokenAlarm") {
-        validateTwitchToken();
-    }
-});
 chrome.alarms.create("validateTwitchTokenAlarm", { periodInMinutes: 60 });
 
 let lastUpdate = new Date();
 
-// Update streams (badge) in background, periodically
 chrome.alarms.onAlarm.addListener((alarm) => {
-    if (alarm.name === "updateStreamsAlarm") {
+    if (alarm.name === "validateTwitchTokenAlarm") {
+        validateTwitchToken();
+    } else if (alarm.name === "updateStreamsAlarm") {
         const updateTime = new Date();
         const diff = Math.abs(updateTime - lastUpdate);
         const diffSeconds = diff / 1000;
@@ -132,19 +121,23 @@ const handleTwitchUnauthorized = () => {
 
 // Function to store the Twitch access token
 const storeTwitchToken = async (url) => {
-    if (url) {
-        const tokenParam = url.split("#")[1];
-        if (tokenParam) {
-            const token = tokenParam.split("=")[1].split("&")[0];
+    if (!url) {
+        console.error("URL is undefined");
+        return false;
+    }
+    try {
+        const hash = new URL(url).hash.slice(1);
+        const token = new URLSearchParams(hash).get("access_token");
+        if (token) {
             chrome.storage.local.set({ twitchAccessToken: token });
             await validateTwitchToken();
-        } else {
-            console.error("Token parameter not found in the URL");
+            return true;
         }
-    } else {
-        console.error("URL is undefined");
+        console.error("Token parameter not found in the URL");
+    } catch (e) {
+        console.error(e);
     }
-    return true;
+    return false;
 };
 
 // Function to initiate Twitch authentication
