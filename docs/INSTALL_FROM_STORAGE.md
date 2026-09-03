@@ -32,9 +32,15 @@ This is done for security reasons from Twitch's side. Not registering your local
 
 4. Under **Category**, select **Browser Extension**.  
    Under **Client Type**, select **Confidential**, then press **Create**.
-5. After creating the Application, copy the **Client ID**.
-6. Open `background.js` in any text/code editor and replace existing `TWITCH_APP_TOKEN` value with the copied value.
+5. After creating the Application, copy the **Client ID** (a public application identifier, not a secret).
+6. Open `src/js/background.js` in any text/code editor and replace the existing `TWITCH_APP_TOKEN` value with the copied value.
 7. Refresh the extension on the Extensions page with the refresh button.
 8. Open the extension and log in with your account.
 
 Happy testing!
+
+## Troubleshooting
+
+- **Login fails or loops back to the login screen:** your extension ID most likely isn't registered, or it changed after reinstalling the extension. Re-check step 3 — the redirect URL must exactly match `https://YOUR-EXTENSION-ID.chromiumapp.org/`.
+- **Logged out unexpectedly:** Twitch tokens expire or get revoked. The extension re-checks your login hourly and signs you out if Twitch rejects it — just log in again.
+- **No live channels showing:** make sure you're logged in and follow channels that are currently live. Press the popup's refresh button; fresh data otherwise arrives on the background schedule (every 5 minutes by default, configurable in the extension settings).
