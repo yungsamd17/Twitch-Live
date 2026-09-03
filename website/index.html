@@ -44,11 +44,19 @@
             </div>
         </div>
     </div>
-    <div class="footer">
-        <a href="https://github.com/yungsamd17/Twitch-Live" target="_blank" rel="noopener">Source Code</a>
-        <a href="https://github.com/yungsamd17/Twitch-Live/issues" target="_blank" rel="noopener">Bugs &amp; Suggestions</a>
-        <a href="https://github.com/yungsamd17/Twitch-Live/releases" target="_blank" rel="noopener">Release Notes</a>
-    </div>
+    <footer class="footer">
+        <div class="footer-inner">
+            <p class="footer-brand">© 2024–<span id="currentYear">2026</span> <a href="https://yungsamd17.github.io" target="_blank" rel="noopener">yungsamd17</a></p>
+            <nav class="footer-links" aria-label="Footer">
+                <a href="https://github.com/yungsamd17/Twitch-Live" target="_blank" rel="noopener"><i class="fa-solid fa-code" aria-hidden="true"></i><span>Source Code</span></a>
+                <a href="https://github.com/yungsamd17/Twitch-Live/issues" target="_blank" rel="noopener"><i class="fa-solid fa-bug" aria-hidden="true"></i><span>Bugs &amp; Suggestions</span></a>
+                <a href="https://github.com/yungsamd17/Twitch-Live/releases" target="_blank" rel="noopener"><i class="fa-solid fa-tag" aria-hidden="true"></i><span>Release Notes</span></a>
+            </nav>
+        </div>
+    </footer>
+    <script>
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+    </script>
 </body>
 
 </html>

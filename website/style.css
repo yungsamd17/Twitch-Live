@@ -101,6 +101,7 @@ h1.header {
     font-size: clamp(1rem, 1.2vw + 0.7rem, 1.35rem);
     line-height: 1.5;
     text-align: center;
+    text-wrap: balance;
     max-width: 42ch;
 }
 
@@ -163,27 +164,65 @@ h1.header {
 }
 
 .footer {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 8px 20px;
-    padding: 16px 20px 22px;
     width: 100%;
-    color: var(--footer-text);
-    opacity: 0.7;
-    font-size: 0.88rem;
-    text-align: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    background-color: #0b0b0d;
 }
 
-.footer a {
-    text-decoration: none;
+.footer-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px 24px;
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 18px 20px 20px;
+}
+
+.footer-brand {
+    margin: 0;
     color: var(--footer-text);
+    font-size: 0.88rem;
+}
+
+.footer-brand a {
+    color: var(--text);
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.footer-brand a:hover {
+    text-decoration: underline;
+}
+
+.footer-links {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px 20px;
+}
+
+.footer-links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--footer-text);
+    font-size: 0.88rem;
+    text-decoration: none;
     transition: color 0.15s ease;
 }
 
-.footer a:hover {
+.footer-links a i {
+    color: var(--accent);
+    font-size: 0.85em;
+}
+
+.footer-links a:hover {
     color: var(--text);
+}
+
+.footer-links a:hover span {
     text-decoration: underline;
 }
 
@@ -234,7 +273,7 @@ h1.header {
     .content p {
         font-size: 1rem;
         line-height: 1.5;
-        max-width: 28ch;
+        max-width: none;
     }
 
     .install-button {
@@ -248,16 +287,21 @@ h1.header {
         max-width: 300px;
     }
 
-    .footer {
+    .footer-inner {
         flex-direction: column;
-        align-items: center;
-        gap: 10px;
+        justify-content: center;
+        text-align: center;
+        gap: 14px;
         padding-bottom: 24px;
-        opacity: 0.65;
     }
 
-    .footer a {
-        margin: 0;
+    .footer-links {
+        order: 1;
+        justify-content: center;
+    }
+
+    .footer-brand {
+        order: 2;
     }
 }
 
