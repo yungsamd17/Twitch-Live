@@ -1,3 +1,4 @@
 # Documentation
 
-- [Guide to install and test the extension locally](https://github.com/yungsamd17/Twitch-Live/blob/main/docs/INSTALL_FROM_STORAGE.md)
+- [Installing and testing the extension locally](INSTALL_FROM_STORAGE.md) — load the unpacked extension, register your extension ID with Twitch, and log in.
+- [Changelog](../CHANGELOG.md) — release history and what changed in each version.
