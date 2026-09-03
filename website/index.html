@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset="UTF-8" />
@@ -16,6 +16,9 @@
     <meta name="twitter:image" content="https://yungsamd17.github.io/Twitch-Live/assets/link-preview.png">
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="assets/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@800&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <script data-goatcounter="https://yungsamd17.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
     <!--<script type="text/javascript" src="https://livejs.com/live.js"></script>-->
@@ -26,26 +29,34 @@
         <div class="wrapper">
             <div class="content">
                 <div>
-                    <span class="header">Sam's Twitch 
-                    	<span class="accent-color">Live</span>
-                    </span>
-                    <p>Your ultimate companion for staying connected<br>with your favorite Twitch streams.</p>
+                    <h1 class="header">Sam's Twitch
+                        <span class="accent-color">Live</span>
+                    </h1>
+                    <p>Your ultimate companion for staying connected with your favorite Twitch streams.</p>
                     <div class="install-button-container">
                         <a href="https://chromewebstore.google.com/detail/sams-twitch-live/fnaolpkjdickppbebcafdajjndmkgbei" class="install-button">
-                            <i class="fa-brands fa-chrome"></i> Install from Chrome Web Store</a>
+                            <i class="fa-brands fa-chrome" aria-hidden="true"></i> Install from Chrome Web Store</a>
                     </div>
                 </div>
             </div>
             <div class="previewImage">
-                <img src="assets/preview.png">
+                <img src="assets/preview.png" alt="Preview of Sam's Twitch Live extension popup" width="430" height="600" loading="eager">
             </div>
         </div>
     </div>
-    <div class="footer">
-        <a href="https://github.com/yungsamd17/Twitch-Live" target="_blank">Source Code</a>
-        <a href="https://github.com/yungsamd17/Twitch-Live/issues" target="_blank">Bugs & Suggestions</a>
-        <a href="https://github.com/yungsamd17/Twitch-Live/releases" target="_blank">Release Notes</a>
-    </div>
+    <footer class="footer">
+        <div class="footer-inner">
+            <p class="footer-brand">© 2024–<span id="currentYear">2026</span> <a href="https://yungsamd17.github.io" target="_blank" rel="noopener">yungsamd17</a></p>
+            <nav class="footer-links" aria-label="Footer">
+                <a href="https://github.com/yungsamd17/Twitch-Live" target="_blank" rel="noopener"><i class="fa-solid fa-code" aria-hidden="true"></i><span>Source Code</span></a>
+                <a href="https://github.com/yungsamd17/Twitch-Live/issues" target="_blank" rel="noopener"><i class="fa-solid fa-bug" aria-hidden="true"></i><span>Bugs &amp; Suggestions</span></a>
+                <a href="https://github.com/yungsamd17/Twitch-Live/releases" target="_blank" rel="noopener"><i class="fa-solid fa-tag" aria-hidden="true"></i><span>Release Notes</span></a>
+            </nav>
+        </div>
+    </footer>
+    <script>
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+    </script>
 </body>
 
 </html>
