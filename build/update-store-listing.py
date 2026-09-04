@@ -19,9 +19,29 @@ END = "<!-- WHATS-NEW-END -->"
 BLOCK = re.compile(r"<!-- WHATS-NEW-START -->.*?<!-- WHATS-NEW-END -->", re.DOTALL)
 
 
+def to_plain(notes: str) -> str:
+    """Convert CHANGELOG markdown to the plain text the CWS description needs.
+
+    Rules: `# Head` -> `HEAD`, `- item` -> `• item` (indent kept),
+    `**b**`/`` `code` `` unwrapped, `[text](url)` -> `text (url)`.
+    """
+    out = []
+    for line in notes.strip().splitlines():
+        m = re.match(r"^#{1,6}\s+(.*)$", line)
+        if m:
+            out.append(m.group(1).strip().upper())
+            continue
+        line = re.sub(r"^(\s*)-\s+", r"\1• ", line)
+        line = re.sub(r"\*\*(.+?)\*\*", r"\1", line)
+        line = re.sub(r"`(.+?)`", r"\1", line)
+        line = re.sub(r"\[([^\]]+)\]\(([^)]+)\)", r"\1 (\2)", line)
+        out.append(line.rstrip())
+    return "\n".join(out).strip() + "\n"
+
+
 def render(version: str, notes: str) -> str:
-    body = notes.strip() + "\n" if notes.strip() else "(see release notes)\n"
-    return f"{START}\n## What's new in v{version}\n\n{body}{END}"
+    body = to_plain(notes)
+    return f"{START}\nWHAT'S NEW IN v{version}\n\n{body}{END}"
 
 
 def main() -> int:
