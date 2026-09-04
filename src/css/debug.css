@@ -56,6 +56,36 @@
     background: #4b4b68;
 }
 
+#debug-preview {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    padding: 8px;
+    background: #242434;
+    border-bottom: 1px solid #44445c;
+}
+
+#debug-preview-label {
+    font-size: 11px;
+    color: #9d9db5;
+}
+
+#debug-preview button {
+    flex: 1 1 28%;
+    padding: 6px 4px;
+    border: 1px solid #6d6d8a;
+    border-radius: 6px;
+    background: #3b3b52;
+    color: #fff;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+#debug-preview button:active {
+    background: #4b4b68;
+}
+
 #debug-report {
     flex: 1;
     margin: 0;

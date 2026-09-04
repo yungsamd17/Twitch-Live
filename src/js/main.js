@@ -79,6 +79,23 @@ const openStream = (stream) => {
     }
 };
 
+const renderEmptyState = () => {
+    const empty = document.createElement("div");
+    empty.setAttribute("class", "no-search-results");
+    const emptyText = document.createElement("p");
+    emptyText.textContent = "No live channels — follow more on Twitch.";
+    empty.appendChild(emptyText);
+    const browseLink = document.createElement("a");
+    browseLink.setAttribute("class", "search-on-twitch-link");
+    browseLink.setAttribute("href", "https://www.twitch.tv/directory/following/live");
+    browseLink.setAttribute("target", "_blank");
+    browseLink.innerHTML = `Browse Following&nbsp;<i class="fa-solid fa-arrow-up-right-from-square search-on-twitch-link-icon"></i>`;
+    empty.appendChild(browseLink);
+    contentSection.replaceChildren(empty);
+    document.getElementById("logoutBtn").style.display = "block";
+    dbg("render: empty state (nobody live)");
+};
+
 const loadTwitchContent = async () => {
     const storageItems = ["twitchIsValidated", "twitchAccessToken", "twitchStreams", "showRaidButtonToggle"];
     const res = await chrome.storage.local.get(storageItems);
@@ -102,22 +119,43 @@ const loadTwitchContent = async () => {
 
     if (res.twitchStreams) {
         if (res.twitchStreams.length === 0) {
-            const empty = document.createElement("div");
-            empty.setAttribute("class", "no-search-results");
-            const emptyText = document.createElement("p");
-            emptyText.textContent = "No live channels — follow more on Twitch.";
-            empty.appendChild(emptyText);
-            const browseLink = document.createElement("a");
-            browseLink.setAttribute("class", "search-on-twitch-link");
-            browseLink.setAttribute("href", "https://www.twitch.tv/directory/following/live");
-            browseLink.setAttribute("target", "_blank");
-            browseLink.innerHTML = `Browse Following&nbsp;<i class="fa-solid fa-arrow-up-right-from-square search-on-twitch-link-icon"></i>`;
-            empty.appendChild(browseLink);
-            contentSection.replaceChildren(empty);
-            document.getElementById("logoutBtn").style.display = "block";
+            renderEmptyState();
             return;
         }
-        let filteredStreams = [...res.twitchStreams];
+        renderStreamList(res.twitchStreams, simpleViewEnabled, res.showRaidButtonToggle);
+
+        // Show logout button after login/when logged in
+        document.getElementById("logoutBtn").style.display = "block";
+
+    } else if (!res.twitchIsValidated || !res.twitchAccessToken) {
+        dbg("render: auth screen");
+        authScreen();
+    } else {
+        dbg("render: skipped (streams present but empty branch not taken?)");
+    }
+};
+
+const renderNoResults = (searchTerm) => {
+    // Display a message when no matching results are found
+    const noResultsMessage = document.createElement("div");
+    noResultsMessage.setAttribute("class", "no-search-results");
+
+    const noResultsMessageText = document.createElement("p")
+    noResultsMessageText.innerHTML = "No matching Search results found.";
+    noResultsMessage.appendChild(noResultsMessageText)
+
+    const searchOnTwitch = document.createElement("a")
+    searchOnTwitch.setAttribute("class", "search-on-twitch-link")
+    searchOnTwitch.setAttribute("href", `https://www.twitch.tv/search?term=${encodeURIComponent(searchTerm)}`)
+    searchOnTwitch.setAttribute("target", "_blank")
+    searchOnTwitch.innerHTML = `Search on Twitch&nbsp;<i class="fa-solid fa-arrow-up-right-from-square search-on-twitch-link-icon"></i>`
+    noResultsMessage.appendChild(searchOnTwitch)
+
+    contentSection.replaceChildren(noResultsMessage);
+};
+
+const renderStreamList = (streams, simpleViewEnabled, showRaidButton) => {
+        let filteredStreams = [...streams];
 
         // Filter/Sort options
         const selectedFilter = getSelectedFilterOption();
@@ -217,7 +255,7 @@ const loadTwitchContent = async () => {
                 raidButton.setAttribute("title", "Click to copy raid command");
 
                 // Add the "hidden" class if the showRaidButtonToggle is disabled
-                if (!res.showRaidButtonToggle) {
+                if (!showRaidButton) {
                     raidButton.classList.add("hidden");
                 }
 
@@ -306,35 +344,8 @@ const loadTwitchContent = async () => {
             contentSection.replaceChildren(...streamList);
             dbg(`render: ${streamList.length} streams`);
         } else {
-            const searchTerm = filterInput.value.trim();
-
-            // Display a message when no matching results are found
-            const noResultsMessage = document.createElement("div");
-            noResultsMessage.setAttribute("class", "no-search-results");
-
-            const noResultsMessageText = document.createElement("p")
-            noResultsMessageText.innerHTML = "No matching Search results found.";
-            noResultsMessage.appendChild(noResultsMessageText)
-
-            const searchOnTwitch = document.createElement("a")
-            searchOnTwitch.setAttribute("class", "search-on-twitch-link")
-            searchOnTwitch.setAttribute("href", `https://www.twitch.tv/search?term=${encodeURIComponent(searchTerm)}`)
-            searchOnTwitch.setAttribute("target", "_blank")
-            searchOnTwitch.innerHTML = `Search on Twitch&nbsp;<i class="fa-solid fa-arrow-up-right-from-square search-on-twitch-link-icon"></i>`
-            noResultsMessage.appendChild(searchOnTwitch)
-
-            contentSection.replaceChildren(noResultsMessage);
+            renderNoResults(filterInput.value.trim());
         }
-
-        // Show logout button after login/when logged in
-        document.getElementById("logoutBtn").style.display = "block";
-
-    } else if (!res.twitchIsValidated || !res.twitchAccessToken) {
-        dbg("render: auth screen");
-        authScreen();
-    } else {
-        dbg("render: skipped (streams present but empty branch not taken?)");
-    }
 };
 
 const refreshTwitchStreams = async () => {
