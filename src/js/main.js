@@ -336,7 +336,14 @@ const loadTwitchContent = async () => {
 };
 
 const refreshTwitchStreams = async () => {
-    await chrome.runtime.sendMessage({ message: "refresh-twitch-streams" });
+    // Backstop: never let a missing/slow background reply blank the popup.
+    const timeout = new Promise((_, reject) =>
+        setTimeout(() => reject(new Error("refresh-twitch-streams timed out after 8000ms")), 8000)
+    );
+    await Promise.race([
+        chrome.runtime.sendMessage({ message: "refresh-twitch-streams" }),
+        timeout,
+    ]);
 };
 
 // Function to handle the refresh button click

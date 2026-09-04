@@ -9,15 +9,23 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         return false;
     }
     (async () => {
-        if (request.message === "fetch-twitch-auth-token") {
-            const result = await getTwitchAuth();
-            if (result === true && request.popup === true) {
+        try {
+            if (request.message === "fetch-twitch-auth-token") {
+                const result = await getTwitchAuth();
+                if (result === true && request.popup === true) {
+                    await getLiveTwitchStreams();
+                    chrome.runtime.sendMessage({ message: "popup-auth-success" }).catch(() => {});
+                }
+            } else if (request.message === "refresh-twitch-streams") {
+                console.log("Refreshing Twitch streams...");
                 await getLiveTwitchStreams();
-                chrome.runtime.sendMessage({ message: "popup-auth-success" }).catch(() => {});
             }
-        } else if (request.message === "refresh-twitch-streams") {
-            console.log("Refreshing Twitch streams...");
-            await getLiveTwitchStreams();
+        } finally {
+            // Always reply: without this, senders awaiting this message hang
+            // forever (blank popup) on browsers that keep the port open.
+            try {
+                sendResponse({ ok: true });
+            } catch (e) { /* port already closed */ }
         }
     })();
     return true;
