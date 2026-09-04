@@ -5,7 +5,6 @@ name: Release
 #
 # Produces a GitHub Release containing:
 #   - Twitch-Live.zip        (minimal CWS zip: manifest.json at root + popup.html, src/, lib/, LICENSE)
-#   - checksums.txt          (SHA-256)
 # Release notes are extracted from the matching ## [X.Y.Z] section in CHANGELOG.md
 # and published with generate_release_notes: true appended.
 
@@ -79,7 +78,7 @@ jobs:
       - name: Build CWS zip (debug code stripped)
         run: |
           set -e
-          rm -f Twitch-Live.zip checksums.txt
+          rm -f Twitch-Live.zip
           rm -rf /tmp/store-build
           # Stage a store-ready copy: drops src/js/debug.js + src/css/debug.css
           # and strips DEBUG-START/END blocks and dbg() call sites (build/strip-debug.py).
@@ -104,11 +103,6 @@ jobs:
             echo "::error::debug-only files present in store zip"
             exit 1
           fi
-
-      - name: Write SHA-256 checksums
-        run: |
-          sha256sum Twitch-Live.zip > checksums.txt
-          cat checksums.txt
 
       - name: Extract release notes from CHANGELOG
         env:
@@ -137,4 +131,3 @@ jobs:
           make_latest: true
           files: |
             Twitch-Live.zip
-            checksums.txt

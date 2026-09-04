@@ -30,7 +30,7 @@ zip -r /tmp/Twitch-Live.zip manifest.json popup.html src/ lib/ LICENSE && unzip 
 ```
 
 - CI (`.github/workflows/ci.yml`) runs on every push to `main` and on PRs: validates `manifest.json` is valid JSON, `version` is semver, required extension files exist, and a CWS-compatible zip can be produced. It does not deploy.
-- `.github/workflows/release.yml` runs on `v*` tags and on `workflow_dispatch`: validates the tag matches `manifest.json` version, stages a store-ready copy via `build/strip-debug.py` (drops all debug code — see Gotchas), builds the minimal CWS zip (`manifest.json` at zip root, plus `popup.html`, `src/`, `lib/`, `LICENSE`), writes `checksums.txt`, extracts the matching `CHANGELOG.md` section as release notes, and creates the GitHub Release with `generate_release_notes: true`.
+- `.github/workflows/release.yml` runs on `v*` tags and on `workflow_dispatch`: validates the tag matches `manifest.json` version, stages a store-ready copy via `build/strip-debug.py` (drops all debug code — see Gotchas), builds the minimal CWS zip (`manifest.json` at zip root, plus `popup.html`, `src/`, `lib/`, `LICENSE`), extracts the matching `CHANGELOG.md` section as release notes, and creates the GitHub Release with `generate_release_notes: true`.
 - `.github/workflows/pages.yml` deploys the Pages site from `website/` on pushes to `main` (plus `workflow_dispatch`).
 - Local sandboxes have no Chrome; rely on JSON/lint checks and careful review. Let CI verify.
 
@@ -95,7 +95,7 @@ release: v1.3.4
 - Never open a PR unless the developer explicitly asks for it.
 - One concern per change. If the description says "also", split it into another branch/PR.
 - Do not commit secrets, keystores, or local-only files (e.g. `.and-code/`, `dev-token.txt`, unpacked zips).
-- Do not hand-edit release zips or `checksums.txt` — they are CI artifacts.
+- Do not hand-edit release zips — they are CI artifacts.
 - Do not move/rename `manifest.json`, `popup.html`, `src/`, `lib/` without updating the release zip paths in both workflows.
 - When watching CI/bot feedback on your PRs: poll checks and comments newer than the last push, verify each bot finding against the source before "fixing" it, dismiss false positives with a written reason, and stop when checks are green on the latest commit.
 
@@ -129,7 +129,7 @@ PR rules:
 1. Ensure version metadata is correct (`version` in `manifest.json:5`) and add a matching `## [X.Y.Z] - YYYY-MM-DD` section to `CHANGELOG.md` (see `pebbledo` pattern).
 2. Commit those changes to `main` (via PR) — do not tag before merging.
 3. Tag on `main`: `git tag vX.Y.Z && git push origin vX.Y.Z`.
-4. The `release.yml` workflow validates the tag matches `manifest.json`, builds the minimal CWS zip (`Twitch-Live.zip` containing `manifest.json` at root + `popup.html`, `src/`, `lib/`, `LICENSE`), writes `checksums.txt`, extracts the matching `CHANGELOG.md` section as the release notes (`generate_release_notes: true` appended), and creates the GitHub Release (`make_latest: true`) with both files attached.
+4. The `release.yml` workflow validates the tag matches `manifest.json`, builds the minimal CWS zip (`Twitch-Live.zip` containing `manifest.json` at root + `popup.html`, `src/`, `lib/`, `LICENSE`), extracts the matching `CHANGELOG.md` section as the release notes (`generate_release_notes: true` appended), and creates the GitHub Release (`make_latest: true`) with the zip attached.
 5. Download `Twitch-Live.zip` from the Release assets and upload it manually to the Chrome Web Store Developer Dashboard; paste the `CHANGELOG.md` section as the store's "What's new" description.
 6. Keep release notes short — the CHANGELOG section is published verbatim, so write it user-facing in the classic style (`Added` / `Enhancements` / `Bug Fixes` / `Miscellaneous`, plain language, no dev codes; dev-only tooling gets at most one `Miscellaneous` line). Roll the bottom compare links forward too (`[Unreleased]` → `vX.Y.Z...HEAD`, add `[X.Y.Z]`).
 
