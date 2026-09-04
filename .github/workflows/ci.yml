@@ -66,6 +66,27 @@ jobs:
           done
           echo "store build clean — no debug code, all scripts parse"
 
+      - name: Verify store listing updater
+        run: |
+          set -e
+          python3 build/update-store-listing.py --check store/listing.md
+          # Dry-run render on a temp copy with the current manifest version
+          cp store/listing.md /tmp/listing-check.md
+          VER=$(python3 -c "import json; print(json.load(open('manifest.json'))['version'])")
+          python3 - <<'PY' > /tmp/check-notes.md
+          import re, pathlib
+          text = pathlib.Path("CHANGELOG.md").read_text()
+          notes = "check notes"
+          for m in re.finditer(r"^## \[[^\]]+\][^\n]*\n(.*?)(?=^## \[|\Z)", text, re.M | re.S):
+              if m.group(1).strip():
+                  notes = m.group(1).strip()
+                  break
+          print(notes)
+          PY
+          python3 build/update-store-listing.py "$VER" /tmp/check-notes.md /tmp/listing-check.md
+          grep -q "What's new in v$VER" /tmp/listing-check.md
+          echo "store listing updater ok"
+
       - name: Build CWS zip (dry-run)
         run: |
           set -e

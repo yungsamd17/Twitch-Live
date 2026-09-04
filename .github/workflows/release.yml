@@ -121,6 +121,36 @@ jobs:
           cat release-notes.md
           echo "---------------------"
 
+      - name: Update store listing What's-new
+        env:
+          VERSION: ${{ steps.ver.outputs.version }}
+        run: |
+          set -e
+          # Refresh the What's-new block in store/listing.md and push it to
+          # main (releases are cut from main, so checkout may be a tag).
+          # Runs BEFORE the GitHub Release is created: if the push fails,
+          # re-run the workflow instead of shipping a half-done release.
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git fetch origin main
+          git checkout -B main origin/main
+          python3 build/update-store-listing.py "$VERSION" release-notes.md store/listing.md
+          git add store/listing.md
+          if git diff --cached --quiet; then
+            echo "store listing already current for v$VERSION"
+          else
+            git commit -m "docs(store): update What's new for v$VERSION"
+            for i in 1 2 3; do
+              if git pull --rebase origin main && git push origin main; then
+                break
+              elif [ "$i" = 3 ]; then
+                echo "::error::failed to push store listing update to main"
+                exit 1
+              fi
+              sleep 5
+            done
+          fi
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
