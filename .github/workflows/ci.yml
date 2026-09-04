@@ -84,7 +84,7 @@ jobs:
           print(notes)
           PY
           python3 build/update-store-listing.py "$VER" /tmp/check-notes.md /tmp/listing-check.md
-          grep -q "What's new in v$VER" /tmp/listing-check.md
+          grep -q "WHAT'S NEW IN v$VER" /tmp/listing-check.md
           echo "store listing updater ok"
 
       - name: Build CWS zip (dry-run)

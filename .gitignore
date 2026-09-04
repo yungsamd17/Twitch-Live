@@ -12,3 +12,6 @@ Thumbs.db
 
 # Local tooling
 .and-code/
+
+# Python bytecode
+__pycache__/
