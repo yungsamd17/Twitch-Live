@@ -47,7 +47,7 @@ jobs:
       - name: Check required extension files exist
         run: |
           set -e
-          for f in manifest.json popup.html src/js/background.js src/js/main.js src/js/settings.js src/js/util.js src/css/main.css src/icons/icon-16.png src/icons/icon-48.png src/icons/icon-128.png; do
+          for f in manifest.json popup.html src/js/background.js src/js/main.js src/js/settings.js src/js/util.js src/js/debug.js src/css/main.css src/css/debug.css src/icons/icon-16.png src/icons/icon-48.png src/icons/icon-128.png; do
             if [ ! -f "$f" ]; then
               echo "::error::Missing required file: $f"
               exit 1

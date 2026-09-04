@@ -1,0 +1,47 @@
+/* Diagnostics overlay (src/js/debug.js). Hidden unless the blank-screen
+   detector fires or the panel is opened via 5x version tap. */
+
+#debug-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    background: #1e1e2e;
+    color: #e6e6e6;
+}
+
+#debug-bar {
+    display: flex;
+    gap: 8px;
+    padding: 8px;
+    background: #2a2a3c;
+    border-bottom: 1px solid #44445c;
+}
+
+#debug-bar button {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #6d6d8a;
+    border-radius: 6px;
+    background: #3b3b52;
+    color: #fff;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+#debug-bar button:active {
+    background: #4b4b68;
+}
+
+#debug-report {
+    flex: 1;
+    margin: 0;
+    padding: 10px;
+    overflow: auto;
+    white-space: pre-wrap;
+    word-break: break-word;
+    font-family: monospace;
+    font-size: 11px;
+    line-height: 1.5;
+}
