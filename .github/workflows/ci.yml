@@ -69,9 +69,9 @@ jobs:
       - name: Verify store listing updater
         run: |
           set -e
-          python3 build/update-store-listing.py --check store/listing.md
+          python3 build/update-store-listing.py --check store/listing.txt
           # Dry-run render on a temp copy with the current manifest version
-          cp store/listing.md /tmp/listing-check.md
+          cp store/listing.txt /tmp/listing-check.md
           VER=$(python3 -c "import json; print(json.load(open('manifest.json'))['version'])")
           python3 - <<'PY' > /tmp/check-notes.md
           import re, pathlib

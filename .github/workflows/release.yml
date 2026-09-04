@@ -126,7 +126,7 @@ jobs:
           VERSION: ${{ steps.ver.outputs.version }}
         run: |
           set -e
-          # Refresh the What's-new block in store/listing.md and push it to
+          # Refresh the What's-new block in store/listing.txt and push it to
           # main (releases are cut from main, so checkout may be a tag).
           # Runs BEFORE the GitHub Release is created: if the push fails,
           # re-run the workflow instead of shipping a half-done release.
@@ -134,8 +134,8 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git fetch origin main
           git checkout -B main origin/main
-          python3 build/update-store-listing.py "$VERSION" release-notes.md store/listing.md
-          git add store/listing.md
+          python3 build/update-store-listing.py "$VERSION" release-notes.md store/listing.txt
+          git add store/listing.txt
           if git diff --cached --quiet; then
             echo "store listing already current for v$VERSION"
           else
