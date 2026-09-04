@@ -24,6 +24,8 @@ def to_plain(notes: str) -> str:
 
     Rules: `# Head` -> `HEAD`, `- item` -> `• item` (indent kept),
     `**b**`/`` `code` `` unwrapped, `[text](url)` -> `text (url)`.
+    Every bullet is separated by a blank line: the CWS description
+    collapses single newlines, so items would run together otherwise.
     """
     out = []
     for line in notes.strip().splitlines():
@@ -35,7 +37,10 @@ def to_plain(notes: str) -> str:
         line = re.sub(r"\*\*(.+?)\*\*", r"\1", line)
         line = re.sub(r"`(.+?)`", r"\1", line)
         line = re.sub(r"\[([^\]]+)\]\(([^)]+)\)", r"\1 (\2)", line)
-        out.append(line.rstrip())
+        line = line.rstrip()
+        if line.lstrip().startswith("•") and out and out[-1].strip():
+            out.append("")
+        out.append(line)
     return "\n".join(out).strip() + "\n"
 
 
