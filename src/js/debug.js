@@ -152,6 +152,130 @@
     };
 
     let panelOpen = false;
+
+    // Sample data for the "Sample streams" preview (same shape as cached streams).
+    const mockStreams = () => {
+        const now = Date.now();
+        return [
+            {
+                channelName: "preview_channel",
+                title: "Debug preview — sample stream one",
+                gameName: "Preview Category",
+                viewerCount: 1234,
+                thumbnail: "https://picsum.photos/seed/twitchlive1/{width}/{height}",
+                startedAtISO: new Date(now - 42 * 60000).toISOString(),
+                startedAtDisplay: "preview",
+            },
+            {
+                channelName: "another_channel",
+                title: "Second sample with a much longer title to check wrapping behavior",
+                gameName: "Just Chatting",
+                viewerCount: 56789,
+                thumbnail: "https://picsum.photos/seed/twitchlive2/{width}/{height}",
+                startedAtISO: new Date(now - 5 * 60000).toISOString(),
+                startedAtDisplay: "preview",
+            },
+        ];
+    };
+
+    // Call a main.js render function defensively (main.js loads after this
+    // file; bare identifiers resolve at call time). No eval — CSP forbids it.
+    const callMain = (label, getFn, ...args) => {
+        try {
+            const fn = getFn();
+            if (typeof fn !== "function") {
+                push("error", [`preview failed: ${label} is not available`]);
+                return false;
+            }
+            const result = fn(...args);
+            if (result && typeof result.catch === "function") {
+                result.catch((err) => push("error", [`preview failed (${label}): ${(err && err.message) || String(err)}`]));
+            }
+            return true;
+        } catch (err) {
+            push("error", [`preview failed (${label}): ${(err && err.message) || String(err)}`]);
+            return false;
+        }
+    };
+
+    const clearContent = () => {
+        try {
+            document.getElementById("content").replaceChildren();
+            return true;
+        } catch (err) {
+            push("error", [`preview failed (clear content): ${(err && err.message) || String(err)}`]);
+            return false;
+        }
+    };
+
+    const toggleStates = () => {
+        try {
+            const simple = document.getElementById("simpleViewToggle");
+            const raid = document.getElementById("showRaidButtonToggle");
+            return [simple ? simple.checked : false, raid ? raid.checked : true];
+        } catch (err) {
+            return [false, true];
+        }
+    };
+
+    const showLogout = () => {
+        try {
+            document.getElementById("logoutBtn").style.display = "block";
+        } catch (err) { /* ignore */ }
+    };
+
+    // Buttons that render hard-to-reproduce states using the real render code.
+    // "Restore" re-runs the normal load path, so previews never stick.
+    const previewActions = [
+        ["Nobody live", () => {
+            if (!clearContent()) return false;
+            const ok = callMain("renderEmptyState", () => renderEmptyState);
+            if (ok) push("step", ["preview: empty state (nobody live)"]);
+            return ok;
+        }],
+        ["Sample streams", () => {
+            if (!clearContent()) return false;
+            const [simple, raid] = toggleStates();
+            const ok = callMain("renderStreamList", () => renderStreamList, mockStreams(), simple, raid);
+            if (ok) {
+                showLogout();
+                push("step", ["preview: sample streams"]);
+            }
+            return ok;
+        }],
+        ["No results", () => {
+            if (!clearContent()) return false;
+            const ok = callMain("renderNoResults", () => renderNoResults, "zzzz-preview");
+            if (ok) push("step", ["preview: no search results"]);
+            return ok;
+        }],
+        ["Auth screen", () => {
+            if (!clearContent()) return false;
+            const ok = callMain("authScreen", () => authScreen);
+            if (ok) push("step", ["preview: auth screen (login button is live)"]);
+            return ok;
+        }],
+        ["Context menu", () => {
+            let ok = true;
+            try {
+                // main.js globals: channel/category used by menu actions on click.
+                currentChannelName = "preview_channel";
+                currentCategoryName = "Preview Category";
+                hideContextMenu();
+                showContextMenu(Math.floor(window.innerWidth / 2), Math.floor(window.innerHeight / 3));
+            } catch (err) {
+                push("error", [`preview failed (context menu): ${(err && err.message) || String(err)}`]);
+                ok = false;
+            }
+            if (ok) push("step", ["preview: context menu"]);
+            return ok;
+        }],
+        ["\u21A9 Restore", () => {
+            const ok = callMain("loadTwitchContent", () => loadTwitchContent);
+            if (ok) push("step", ["preview restored: live view reloading"]);
+            return ok;
+        }],
+    ];
     const showPanel = async (note) => {
         if (panelOpen) return;
         panelOpen = true;
@@ -166,16 +290,18 @@
             copyBtn.id = "debug-copy-btn";
             copyBtn.textContent = "Copy";
             copyBtn.addEventListener("click", async () => {
+                // Read live from the panel so previews are included.
+                const liveReport = pre.textContent;
                 try {
                     if (navigator.clipboard && navigator.clipboard.writeText) {
-                        await navigator.clipboard.writeText(report);
+                        await navigator.clipboard.writeText(liveReport);
                     } else {
                         throw new Error("no clipboard API");
                     }
                     copyBtn.textContent = "Copied!";
                 } catch (e) {
                     const ta = document.createElement("textarea");
-                    ta.value = report;
+                    ta.value = liveReport;
                     document.body.appendChild(ta);
                     ta.select();
                     try {
@@ -196,10 +322,35 @@
                 panelOpen = false;
             });
             bar.append(copyBtn, closeBtn);
+            // Preview row: render hard-to-reproduce states with the real
+            // render code. Refresh the shown report afterwards so it
+            // includes the preview step. Previews reset on auto-refresh.
+            const prevWrap = document.createElement("div");
+            prevWrap.id = "debug-preview";
+            const prevLabel = document.createElement("span");
+            prevLabel.id = "debug-preview-label";
+            prevLabel.textContent = "Preview:";
+            prevWrap.appendChild(prevLabel);
+            previewActions.forEach(([label, action]) => {
+                const btn = document.createElement("button");
+                btn.textContent = label;
+                btn.addEventListener("click", async () => {
+                    let ok = false;
+                    try {
+                        ok = await action();
+                    } catch (e) {
+                        push("error", [`preview failed (${label}): ${(e && e.message) || String(e)}`]);
+                    }
+                    try {
+                        pre.textContent = await buildReport(ok ? `preview: ${label}` : `preview failed: ${label}`);
+                    } catch (e) { /* keep stale report */ }
+                });
+                prevWrap.appendChild(btn);
+            });
             const pre = document.createElement("pre");
             pre.id = "debug-report";
             pre.textContent = report;
-            overlay.append(bar, pre);
+            overlay.append(bar, prevWrap, pre);
             document.body.appendChild(overlay);
         } catch (e) {
             panelOpen = false;
