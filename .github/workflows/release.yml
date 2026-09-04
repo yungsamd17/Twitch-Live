@@ -76,17 +76,32 @@ jobs:
           fi
           echo "CHANGELOG entry found for $VERSION"
 
-      - name: Build CWS zip
+      - name: Build CWS zip (debug code stripped)
         run: |
           set -e
           rm -f Twitch-Live.zip checksums.txt
-          zip -r Twitch-Live.zip manifest.json popup.html src/ lib/ LICENSE -x "*.DS_Store*"
+          rm -rf /tmp/store-build
+          # Stage a store-ready copy: drops src/js/debug.js + src/css/debug.css
+          # and strips DEBUG-START/END blocks and dbg() call sites (build/strip-debug.py).
+          python3 build/strip-debug.py . /tmp/store-build
+          # Sanity: every staged script must still parse
+          for js in $(cd /tmp/store-build && find src lib -name "*.js"); do
+            node --check "/tmp/store-build/$js"
+          done
+          cd /tmp/store-build
+          zip -r "$OLDPWD/Twitch-Live.zip" manifest.json popup.html src/ lib/ LICENSE -x "*.DS_Store*"
+          cd "$OLDPWD"
           echo "zip contents:"
           unzip -l Twitch-Live.zip | head -40
           ls -lh Twitch-Live.zip
           # Verify manifest is at zip root (CWS will reject otherwise)
           if ! unzip -l Twitch-Live.zip | grep -q " manifest.json"; then
             echo "::error::manifest.json not at zip root — check zip paths"
+            exit 1
+          fi
+          # Verify no debug code shipped in the store build
+          if unzip -l Twitch-Live.zip | grep -q "debug\.js\|debug\.css"; then
+            echo "::error::debug-only files present in store zip"
             exit 1
           fi
 

@@ -4,6 +4,16 @@ const refreshButton = document.getElementById("refreshButton");
 let autoRefreshId = null;
 let searchDebounce = null;
 
+// DEBUG-START
+// Diagnostics hook (no-op when src/js/debug.js is absent). Never throws.
+const dbg = (msg) => {
+    try {
+        if (window.DebugLog) window.DebugLog.step(msg);
+    } catch (e) { /* ignore */ }
+};
+dbg("main.js start");
+// DEBUG-END
+
 const authScreenPresent = () => {
     return contentSection.querySelector(".auth-header");
 };
@@ -72,13 +82,19 @@ const openStream = (stream) => {
 const loadTwitchContent = async () => {
     const storageItems = ["twitchIsValidated", "twitchAccessToken", "twitchStreams", "showRaidButtonToggle"];
     const res = await chrome.storage.local.get(storageItems);
+    dbg(`storage: validated=${!!res.twitchIsValidated} token=${res.twitchAccessToken ? "set" : "unset"} streams=${Array.isArray(res.twitchStreams) ? `array[${res.twitchStreams.length}]` : typeof res.twitchStreams}`);
 
     // Check if Simple view is enabled
     const simpleViewToggle = document.getElementById("simpleViewToggle");
     const simpleViewEnabled = simpleViewToggle ? simpleViewToggle.checked : false;
 
-    // Always refresh Twitch streams when the popup is opened
-    await refreshTwitchStreams();
+    // Always refresh Twitch streams when the popup is opened.
+    // Failures must not blank the popup: log and fall through to cached storage.
+    try {
+        await refreshTwitchStreams();
+    } catch (err) {
+        dbg(`refreshTwitchStreams failed, continuing with cached storage: ${(err && err.message) || String(err)}`);
+    }
 
     if (authScreenPresent()) {
         return; // Skip refreshing streams when authScreen is present
@@ -288,6 +304,7 @@ const loadTwitchContent = async () => {
             });
 
             contentSection.replaceChildren(...streamList);
+            dbg(`render: ${streamList.length} streams`);
         } else {
             const searchTerm = filterInput.value.trim();
 
@@ -313,12 +330,22 @@ const loadTwitchContent = async () => {
         document.getElementById("logoutBtn").style.display = "block";
 
     } else if (!res.twitchIsValidated || !res.twitchAccessToken) {
+        dbg("render: auth screen");
         authScreen();
+    } else {
+        dbg("render: skipped (streams present but empty branch not taken?)");
     }
 };
 
 const refreshTwitchStreams = async () => {
-    await chrome.runtime.sendMessage({ message: "refresh-twitch-streams" });
+    // Backstop: never let a missing/slow background reply blank the popup.
+    const timeout = new Promise((_, reject) =>
+        setTimeout(() => reject(new Error("refresh-twitch-streams timed out after 8000ms")), 8000)
+    );
+    await Promise.race([
+        chrome.runtime.sendMessage({ message: "refresh-twitch-streams" }),
+        timeout,
+    ]);
 };
 
 // Function to handle the refresh button click
@@ -428,8 +455,11 @@ refreshButton.addEventListener("click", handleRefreshButtonClick);
 
 // Initial load
 addEventListener("DOMContentLoaded", async () => {
+    dbg("DOMContentLoaded: init start");
     await restoreSelectedFilter();
+    dbg("DOMContentLoaded: filter restored");
     await loadTwitchContent();
+    dbg("DOMContentLoaded: content loaded");
     if (authScreenPresent()) return;
     setupAutoRefresh();
 });

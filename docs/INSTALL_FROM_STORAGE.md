@@ -33,7 +33,19 @@ This is done for security reasons from Twitch's side. Not registering your local
 4. Under **Category**, select **Browser Extension**.  
    Under **Client Type**, select **Confidential**, then press **Create**.
 5. After creating the Application, copy the **Client ID** (a public application identifier, not a secret).
-6. Open `src/js/background.js` in any text/code editor and replace the existing `TWITCH_APP_TOKEN` value with the copied value.
+6. Open `src/js/background.js` in any text/code editor and find the line near the top that declares the token:
+
+   ```js
+   const TWITCH_APP_TOKEN = "veho7ytn25l8a9dpgfkk79sqgey43j";
+   ```
+
+   Replace **only the text between the quotes** with your copied Client ID, keeping the quotes:
+
+   ```js
+   const TWITCH_APP_TOKEN = "YOUR-COPIED-CLIENT-ID";
+   ```
+
+   Do not edit the `` `?client_id=${TWITCH_APP_TOKEN}` `` line inside `getTwitchAuth()` — that `${...}` placeholder must stay as-is, otherwise the file breaks with `Uncaught SyntaxError: Invalid or unexpected token`.
 7. Refresh the extension on the Extensions page with the refresh button.
 8. Open the extension and log in with your account.
 
@@ -41,6 +53,8 @@ Happy testing!
 
 ## Troubleshooting
 
+- **`Uncaught SyntaxError: Invalid or unexpected token` in `background.js` + blank popup:** the Client ID was pasted over the `${TWITCH_APP_TOKEN}` placeholder (or without its surrounding quotes). Undo that edit and follow step 6 exactly — only the quoted value on the `const TWITCH_APP_TOKEN = "...";` line changes.
 - **Login fails or loops back to the login screen:** your extension ID most likely isn't registered, or it changed after reinstalling the extension. Re-check step 3 — the redirect URL must exactly match `https://YOUR-EXTENSION-ID.chromiumapp.org/`.
+- **Popup opens but stays blank (no login screen, no errors):** on mobile or other browsers without popup DevTools, open the extension's Settings (gear icon) and tap the version number at the bottom 5 times — a diagnostics panel appears with a Copy button. (If the content area stays empty, the panel also opens by itself after a few seconds.) Paste the report into a GitHub issue. Your access token is never included (shown as `set`/`unset` only).
 - **Logged out unexpectedly:** Twitch tokens expire or get revoked. The extension re-checks your login hourly and signs you out if Twitch rejects it — just log in again.
 - **No live channels showing:** make sure you're logged in and follow channels that are currently live. Press the popup's refresh button; fresh data otherwise arrives on the background schedule (every 5 minutes by default, configurable in the extension settings).

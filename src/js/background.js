@@ -1,17 +1,33 @@
 importScripts('util.js');
 
 // Set up listeners and alarms
-chrome.runtime.onMessage.addListener((request) => {
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    // DEBUG-START
+    // Diagnostics ping (used by the popup debug report). Answered
+    // synchronously so it also works while the worker is waking up.
+    if (request.message === "debug-ping") {
+        sendResponse({ pong: true, time: new Date().toISOString() });
+        return false;
+    }
+    // DEBUG-END
     (async () => {
-        if (request.message === "fetch-twitch-auth-token") {
-            const result = await getTwitchAuth();
-            if (result === true && request.popup === true) {
+        try {
+            if (request.message === "fetch-twitch-auth-token") {
+                const result = await getTwitchAuth();
+                if (result === true && request.popup === true) {
+                    await getLiveTwitchStreams();
+                    chrome.runtime.sendMessage({ message: "popup-auth-success" }).catch(() => {});
+                }
+            } else if (request.message === "refresh-twitch-streams") {
+                console.log("Refreshing Twitch streams...");
                 await getLiveTwitchStreams();
-                chrome.runtime.sendMessage({ message: "popup-auth-success" }).catch(() => {});
             }
-        } else if (request.message === "refresh-twitch-streams") {
-            console.log("Refreshing Twitch streams...");
-            await getLiveTwitchStreams();
+        } finally {
+            // Always reply: without this, senders awaiting this message hang
+            // forever (blank popup) on browsers that keep the port open.
+            try {
+                sendResponse({ ok: true });
+            } catch (e) { /* port already closed */ }
         }
     })();
     return true;
@@ -59,9 +75,22 @@ chrome.storage.onChanged.addListener((changes) => {
 // Set up message listeners and refresh data on browser startup and extension reload (dev/unpacked)
 const launch = async () => {
     // NOTE: it is necessary to await these, otherwise the functions would run in parallel, before the streams are fetched.
-    await validateTwitchToken();
-    await getLiveTwitchStreams();
-    await updateBadge();
+    // Each step is guarded so one failure can't silently abort the rest (errors stay visible on chrome://extensions).
+    try {
+        await validateTwitchToken();
+    } catch (e) {
+        console.error("[launch] validateTwitchToken failed:", e);
+    }
+    try {
+        await getLiveTwitchStreams();
+    } catch (e) {
+        console.error("[launch] getLiveTwitchStreams failed:", e);
+    }
+    try {
+        await updateBadge();
+    } catch (e) {
+        console.error("[launch] updateBadge failed:", e);
+    }
 }
 chrome.runtime.onStartup.addListener(async () => launch());
 chrome.runtime.onInstalled.addListener(async () => launch());

@@ -12,6 +12,9 @@ name: Debug Build
 # - Same file set as the store zip (manifest.json at zip root + popup.html,
 #   src/, lib/, LICENSE). Only manifest "name" gets a " (DEBUG)" suffix so
 #   the test install is distinguishable next to the store version.
+# - Unlike the store build (release.yml runs build/strip-debug.py), debug
+#   builds intentionally ship everything, including the diagnostics panel
+#   (src/js/debug.js + src/css/debug.css).
 # - Unpacked installs need a personal Twitch Client ID + redirect allowlist.
 #   See docs/INSTALL_FROM_STORAGE.md.
 
