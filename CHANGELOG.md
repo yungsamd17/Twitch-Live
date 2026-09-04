@@ -7,7 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.3.4] - 2026-09-04
+
 ### Fixed
+
+- Fix blank popup hang on browsers that keep message ports open: the background worker now always replies to runtime messages, the popup refresh has an 8s timeout backstop with fallback to cached data, and `launch()` steps are guarded individually so one failure can't abort the rest
 
 - Fix time sorting broken for non-US locales by storing raw ISO (`startedAt`/`startedAtISO`) and sorting on it; recompute `liveTime` in popup via `getTimePassed` so uptime ticks correctly (B1)
 - Fix badge count reset to 0 on every service-worker wake by removing unconditional `set({liveChannelsCount:0})` and using fallback `get({liveChannelsCount:0})` (B2)
@@ -20,6 +24,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Add manual Debug Build workflow producing a downloadable `artifact.zip` for Load-unpacked testing (no tag required)
+- Add debug-build-only diagnostics panel with copyable report and one-tap previews of rare states (empty list, no results, auth screen, context menu) — stripped from store builds via `build/strip-debug.py`
 - Add `host_permissions` for `https://api.twitch.tv/*` and `https://id.twitch.tv/*` (S1)
 
 ### Changed
@@ -31,6 +37,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Deduplicate popup animations to `src/css/animations.css` + `src/js/ui.js` and remove duplicates from `main.css`/`settings.css`/`main.js`/`settings.js` (A1)
 - Deduplicate tooltip CSS (was 452 lines) to shared base + per-label overrides (A7)
 - Fix `rgba(175.31,…)` invalid placeholder color to `rgba(175,175,175,0.6)` (A7)
+- Clarify local Client ID setup in `docs/INSTALL_FROM_STORAGE.md` with exact paste instructions and blank-popup troubleshooting
 
 ### Fixed
 
