@@ -55,6 +55,17 @@ jobs:
           done
           echo "All required files present."
 
+      - name: Verify store build strips debug code
+        run: |
+          set -e
+          rm -rf /tmp/store-build-check
+          # Fails on unbalanced markers or leftover debug references
+          python3 build/strip-debug.py . /tmp/store-build-check
+          for js in $(cd /tmp/store-build-check && find src lib -name "*.js"); do
+            node --check "/tmp/store-build-check/$js"
+          done
+          echo "store build clean — no debug code, all scripts parse"
+
       - name: Build CWS zip (dry-run)
         run: |
           set -e

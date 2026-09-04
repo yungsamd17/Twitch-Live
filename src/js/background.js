@@ -2,12 +2,14 @@ importScripts('util.js');
 
 // Set up listeners and alarms
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    // DEBUG-START
     // Diagnostics ping (used by the popup debug report). Answered
     // synchronously so it also works while the worker is waking up.
     if (request.message === "debug-ping") {
         sendResponse({ pong: true, time: new Date().toISOString() });
         return false;
     }
+    // DEBUG-END
     (async () => {
         try {
             if (request.message === "fetch-twitch-auth-token") {

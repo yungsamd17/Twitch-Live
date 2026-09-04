@@ -4,6 +4,7 @@ const refreshButton = document.getElementById("refreshButton");
 let autoRefreshId = null;
 let searchDebounce = null;
 
+// DEBUG-START
 // Diagnostics hook (no-op when src/js/debug.js is absent). Never throws.
 const dbg = (msg) => {
     try {
@@ -11,6 +12,7 @@ const dbg = (msg) => {
     } catch (e) { /* ignore */ }
 };
 dbg("main.js start");
+// DEBUG-END
 
 const authScreenPresent = () => {
     return contentSection.querySelector(".auth-header");

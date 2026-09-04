@@ -30,7 +30,7 @@ zip -r /tmp/Twitch-Live.zip manifest.json popup.html src/ lib/ LICENSE && unzip 
 ```
 
 - CI (`.github/workflows/ci.yml`) runs on every push to `main` and on PRs: validates `manifest.json` is valid JSON, `version` is semver, required extension files exist, and a CWS-compatible zip can be produced. It does not deploy.
-- `.github/workflows/release.yml` runs on `v*` tags and on `workflow_dispatch`: validates the tag matches `manifest.json` version, builds the minimal CWS zip (`manifest.json` at zip root, plus `popup.html`, `src/`, `lib/`, `LICENSE`), writes `checksums.txt`, extracts the matching `CHANGELOG.md` section as release notes, and creates the GitHub Release with `generate_release_notes: true`.
+- `.github/workflows/release.yml` runs on `v*` tags and on `workflow_dispatch`: validates the tag matches `manifest.json` version, stages a store-ready copy via `build/strip-debug.py` (drops all debug code — see Gotchas), builds the minimal CWS zip (`manifest.json` at zip root, plus `popup.html`, `src/`, `lib/`, `LICENSE`), writes `checksums.txt`, extracts the matching `CHANGELOG.md` section as release notes, and creates the GitHub Release with `generate_release_notes: true`.
 - `.github/workflows/pages.yml` deploys the Pages site from `website/` on pushes to `main` (plus `workflow_dispatch`).
 - Local sandboxes have no Chrome; rely on JSON/lint checks and careful review. Let CI verify.
 
@@ -143,3 +143,4 @@ Delete the test tag/release if you trigger a dry-run: `git push --delete origin 
 - `src/js/main.js:503-510` category URLs slugify via `encodeURIComponent(name.toLowerCase().replace(/\s/g,'-'))` — Twitch category slugs must keep that form.
 - `src/css/main.css:1-3` imports are order-sensitive (`settings` → `tooltips` → `auth`).
 - The `updateStreamsAlarm` is recreated on `backgroundUpdateRateMin` changes (`src/js/background.js:51`); don't add a second alarm with the same name.
+- Debug-only code ships exclusively in Debug Build zips (`debug.yml` skips stripping). Mark it with `<!-- DEBUG-START -->/<!-- DEBUG-END -->` (HTML), `// DEBUG-START`/`// DEBUG-END` full-line markers (JS blocks), or a `dbg(` line prefix (JS call sites); `src/js/debug.js` + `src/css/debug.css` are debug-only files. `build/strip-debug.py` enforces all of this for store builds and fails on unbalanced markers or leftovers — `ci.yml` runs the same check, so keep markers well-formed.
