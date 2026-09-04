@@ -131,6 +131,7 @@ PR rules:
 3. Tag on `main`: `git tag vX.Y.Z && git push origin vX.Y.Z`.
 4. The `release.yml` workflow validates the tag matches `manifest.json`, builds the minimal CWS zip (`Twitch-Live.zip` containing `manifest.json` at root + `popup.html`, `src/`, `lib/`, `LICENSE`), writes `checksums.txt`, extracts the matching `CHANGELOG.md` section as the release notes (`generate_release_notes: true` appended), and creates the GitHub Release (`make_latest: true`) with both files attached.
 5. Download `Twitch-Live.zip` from the Release assets and upload it manually to the Chrome Web Store Developer Dashboard; paste the `CHANGELOG.md` section as the store's "What's new" description.
+6. Keep release notes short — the CHANGELOG section is published verbatim, so write it user-facing in the classic style (`Added` / `Enhancements` / `Bug Fixes` / `Miscellaneous`, plain language, no dev codes; dev-only tooling gets at most one `Miscellaneous` line). Roll the bottom compare links forward too (`[Unreleased]` → `vX.Y.Z...HEAD`, add `[X.Y.Z]`).
 
 Delete the test tag/release if you trigger a dry-run: `git push --delete origin v0.0.0-test && git tag -d v0.0.0-test && gh release delete v0.0.0-test --yes`.
 
