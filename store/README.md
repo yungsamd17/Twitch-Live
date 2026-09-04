@@ -4,9 +4,9 @@ Publishing helper for the Chrome Web Store listing. Nothing here ships inside th
 
 ## Files
 
-- [`listing.md`](listing.md) — copy-paste source for the CWS **description** field (pitch, features, privacy, What's new, links).
+- [`listing.txt`](listing.txt) — copy-paste source for the CWS **description** field (pitch, features, privacy, What's new, links).
   Plain text only: the CWS description does not render markdown, so keep this file free of `#`, `*`, backticks, and `[text](url)` links (bare URLs are auto-linked).
-  When pasting into the dashboard, delete the two `<!-- WHATS-NEW-... -->` marker lines — they are only there for automation.
+  Lines starting with `#` are automation markers — delete them before pasting into the dashboard.
   The `What's new` block itself is rewritten automatically by `release.yml` via `build/update-store-listing.py` on every release (markdown notes are converted to plain text) — don't edit that block by hand.
 - [`screenshots/`](screenshots) — listing screenshots.
 - [`promo/`](promo) — promo/banner art.
@@ -14,7 +14,7 @@ Publishing helper for the Chrome Web Store listing. Nothing here ships inside th
 ## Publishing checklist (manual, in the CWS Developer Dashboard)
 
 1. Upload the new `Twitch-Live.zip` from the GitHub Release assets.
-2. Paste `store/listing.md` into the description field (minus the two marker lines).
+2. Paste `store/listing.txt` into the description field (minus the `#` marker lines).
 3. Upload/refresh screenshots and promo images as needed (see inventory below).
 
 ## Asset inventory

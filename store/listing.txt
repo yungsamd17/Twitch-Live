@@ -1,53 +1,42 @@
-Your ultimate companion for staying connected with your favorite Twitch streams.
-
+# NOTE: lines starting with '#' are automation markers — delete them before pasting into CWS.
 See every channel you follow that's live right now — with title, game, viewers, and uptime — right from your toolbar.
 
+Key Features:
 • Search by channel, title, or game
-
 • Sort by viewers, broadcaster, game, or stream age — your choice is remembered
-
 • Right-click any stream for quick links: channel, player, chat, clips, and more
-
 • Optional raid-command copy button, Simple view, custom badge color, and more
-
 • Live-count badge updates in the background, even with the popup closed
 
+How to Use:
 Log in with Twitch (read-only access to your follows) and you're set. No analytics, no tracking — everything stays in your browser.
 
-<!-- WHATS-NEW-START -->
+——————————––
+
+# WHATS-NEW-START -- automation marker, DELETE this line before pasting to CWS
 WHAT'S NEW IN v1.3.4
 
-BUG FIXES
-
+BUG FIXES:
 • Fix popup sometimes opening completely blank (no login screen) on some browsers
-
 • Fix badge count resetting to 0 and other small badge update races
-
 • Fix stream uptime sorting for non-US locales
-
 • Fix misleading "No matching Search results" message when nobody you follow is live — now shows "No live channels" with a Browse Following link
-
 • Fix broken thumbnails showing as broken images (falls back to the extension icon)
-
 • Stay logged in through temporary Twitch errors — only signs out when Twitch rejects the token
 
-ENHANCEMENTS
-
+ENHANCEMENTS:
 • Remember the selected sort filter between popup opens
-
 • Clearer local-install guide with exact Client ID steps and troubleshooting
 
-MISCELLANEOUS
-
+MISCELLANEOUS:
 • A lot of HTML/CSS and JS cleanup
-
 • Internal test tooling (manual debug builds, on-device diagnostics) — not included in the store version
-<!-- WHATS-NEW-END -->
+# WHATS-NEW-END -- automation marker, DELETE this line before pasting to CWS
 
-OLDER RELEASES
+————————————
 
-Full history with release notes for every version:
-https://github.com/yungsamd17/Twitch-Live/releases
+OLDER RELEASES:
 
-Found a bug or have an idea?
-https://github.com/yungsamd17/Twitch-Live/issues
+Full history with release notes for every version: https://github.com/yungsamd17/Twitch-Live/releases
+
+Found a bug or have an idea? https://github.com/yungsamd17/Twitch-Live/issues
