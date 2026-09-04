@@ -246,6 +246,31 @@
         } catch (e) { /* ignore */ }
     };
 
+    // Floating action button (bottom-right) that opens the diagnostics panel.
+    const addFab = () => {
+        try {
+            if (document.getElementById("debug-fab")) return;
+            const btn = document.createElement("button");
+            btn.id = "debug-fab";
+            btn.title = "Open diagnostics";
+            btn.setAttribute("aria-label", "Open diagnostics");
+            const icon = document.createElement("i");
+            icon.className = "fa-solid fa-bug";
+            btn.appendChild(icon);
+            btn.addEventListener("click", () => showPanel("opened via debug button"));
+            const mount = () => {
+                try {
+                    document.body.appendChild(btn);
+                } catch (e) { /* ignore */ }
+            };
+            if (document.readyState === "loading") {
+                document.addEventListener("DOMContentLoaded", mount);
+            } else {
+                mount();
+            }
+        } catch (e) { /* ignore */ }
+    };
+
     window.DebugLog = {
         step: (msg) => push("step", [msg]),
         show: (note) => showPanel(note),
@@ -254,4 +279,5 @@
     push("step", ["debug.js loaded"]);
     armBlankDetector();
     armManualTrigger();
+    addFab();
 })();

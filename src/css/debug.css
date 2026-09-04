@@ -1,5 +1,27 @@
 /* Diagnostics overlay (src/js/debug.js). Hidden unless the blank-screen
-   detector fires or the panel is opened via 5x version tap. */
+   detector fires or the panel is opened via the debug button / 5x version tap. */
+
+#debug-fab {
+    position: fixed;
+    right: 8px;
+    bottom: 8px;
+    z-index: 9000;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1px solid #6d6d8a;
+    background: #2a2a3c;
+    color: #c4b5fd;
+    font-size: 13px;
+    line-height: 1;
+    cursor: pointer;
+    opacity: 0.6;
+}
+
+#debug-fab:hover,
+#debug-fab:active {
+    opacity: 1;
+}
 
 #debug-overlay {
     position: fixed;
