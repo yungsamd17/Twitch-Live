@@ -1,0 +1,106 @@
+name: Debug Build
+
+# Manual snapshot build for testing — no tag, no release, no store upload.
+#
+# Run:      Actions → Debug Build → Run workflow (works from any branch).
+# Download: run page → Artifacts → artifact.zip → unzip to get
+#           Twitch-Live-debug.zip + build-info.txt + checksums-debug.txt.
+# Load:     unzip Twitch-Live-debug.zip → chrome://extensions →
+#           Developer mode → Load unpacked → select the unzipped folder.
+#
+# Notes:
+# - Same file set as the store zip (manifest.json at zip root + popup.html,
+#   src/, lib/, LICENSE). Only manifest "name" gets a " (DEBUG)" suffix so
+#   the test install is distinguishable next to the store version.
+# - Unpacked installs need a personal Twitch Client ID + redirect allowlist.
+#   See docs/INSTALL_FROM_STORAGE.md.
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: debug-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  debug:
+    name: Build debug zip
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate manifest.json is valid JSON
+        run: python3 -m json.tool manifest.json > /dev/null
+
+      - name: Stage debug files (tag name with DEBUG)
+        run: |
+          set -e
+          rm -rf debug-dist Twitch-Live-debug.zip build-info.txt checksums-debug.txt
+          mkdir -p debug-dist
+          cp manifest.json popup.html LICENSE debug-dist/
+          cp -r src lib debug-dist/
+          python3 << 'PY'
+          import json, pathlib
+          p = pathlib.Path("debug-dist/manifest.json")
+          m = json.loads(p.read_text())
+          name = m.get("name", "Extension")
+          if "(DEBUG)" not in name:
+              m["name"] = f"{name} (DEBUG)"
+          p.write_text(json.dumps(m, indent=4) + "\n")
+          print(f"debug name: {m['name']} | version: {m.get('version')}")
+          PY
+
+      - name: Build Twitch-Live-debug.zip
+        run: |
+          set -e
+          cd debug-dist
+          zip -r ../Twitch-Live-debug.zip manifest.json popup.html src/ lib/ LICENSE -x "*.DS_Store*"
+          cd ..
+          echo "zip contents:"
+          unzip -l Twitch-Live-debug.zip | head -40
+          ls -lh Twitch-Live-debug.zip
+          # manifest.json must sit at the zip root or Chrome rejects the load
+          if ! unzip -l Twitch-Live-debug.zip | grep -q " manifest.json"; then
+            echo "::error::manifest.json not at zip root — check zip paths"
+            exit 1
+          fi
+
+      - name: Write build info and checksums
+        run: |
+          set -e
+          {
+            echo "repo: ${{ github.repository }}"
+            echo "ref: ${{ github.ref_name }}"
+            echo "sha: ${{ github.sha }}"
+            echo "run: #${{ github.run_number }} (${{ github.run_id }})"
+            echo "actor: ${{ github.actor }}"
+            echo "date: $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            echo "manifest: $(python3 -c "import json; print(json.load(open('debug-dist/manifest.json'))['name'] + ' ' + json.load(open('debug-dist/manifest.json'))['version'])")"
+          } > build-info.txt
+          sha256sum Twitch-Live-debug.zip > checksums-debug.txt
+          cat build-info.txt checksums-debug.txt
+          {
+            echo "## Debug build ready"
+            echo ""
+            echo 'Download **artifact.zip** from this run, unzip it, then load \`Twitch-Live-debug.zip\` (unzipped) via \`chrome://extensions\` → Developer mode → Load unpacked.'
+            echo ""
+            echo '```'
+            cat build-info.txt checksums-debug.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload debug artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: artifact
+          path: |
+            Twitch-Live-debug.zip
+            build-info.txt
+            checksums-debug.txt
+          retention-days: 14
+          if-no-files-found: error
