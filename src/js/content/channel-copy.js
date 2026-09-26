@@ -39,7 +39,7 @@
         const style = document.createElement('style');
         style.id = 'tl-channel-copy-style';
         style.textContent = [
-            '.tl-channel-copy-btn{border:none;border-radius:0.4rem;padding:2px;cursor:pointer;',
+            '.tl-channel-copy-btn{border:none;border-radius:50%;padding:2px;cursor:pointer;',
             'width:30px;height:30px;display:flex;align-items:center;justify-content:center;background:transparent;}',
             '.tl-channel-copy-btn:hover{background-color:rgba(255,255,255,.13);}',
             '.tl-channel-copy-btn:active{background-color:rgba(255,255,255,.16);}',
