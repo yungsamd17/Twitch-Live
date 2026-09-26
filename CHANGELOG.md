@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Opt-in Twitch player extras (all off by default, toggle in Settings): channel name in `player.twitch.tv` tab title, copy-channel button on the player (Alt+T, now also works on `www.twitch.tv` pages), chat-popout button on the player
+
 ### Miscellaneous
 
 - Internal zero-dependency unit tests (`node --test test/*.test.js`, also run in CI)
