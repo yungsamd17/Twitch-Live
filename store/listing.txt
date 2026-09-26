@@ -6,6 +6,7 @@ Key Features:
 • Sort by viewers, broadcaster, game, or stream age — your choice is remembered
 • Right-click any stream for quick links: channel, player, chat, clips, and more
 • Optional raid-command copy button, Simple view, custom badge color, and more
+• Optional Player extras on Twitch player pages: tab title, copy-channel and chat-popout buttons
 • Live-count badge updates in the background, even with the popup closed
 
 How to Use:
