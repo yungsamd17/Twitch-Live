@@ -22,6 +22,7 @@ chrome.storage.local.get(
         "openInPlayerToggle",
         "openInNewWindowToggle",
         "showRaidButtonToggle",
+        "playerExtrasToggle",
         "customBadgeColor",
         "extensionVersion",
         "backgroundUpdateRateMin",
@@ -43,6 +44,10 @@ chrome.storage.local.get(
         setToggleSwitchStatus(
             "showRaidButtonToggle",
             result.showRaidButtonToggle !== undefined ? result.showRaidButtonToggle : false
+        );
+        setToggleSwitchStatus(
+            "playerExtrasToggle",
+            result.playerExtrasToggle !== undefined ? result.playerExtrasToggle : false
         );
         document.getElementById("colorInput").value = result.customBadgeColor || "";
 
@@ -84,6 +89,10 @@ document.getElementById("showRaidButtonToggle").addEventListener("change", funct
     setToggleSwitchStatus("showRaidButtonToggle", this.checked);
 });
 
+document.getElementById("playerExtrasToggle").addEventListener("change", function() {
+    setToggleSwitchStatus("playerExtrasToggle", this.checked);
+});
+
 // Listen for changes in storage and update the toggle switches accordingly
 // (update DOM directly to avoid triggering another storage write loop)
 chrome.storage.onChanged.addListener((changes) => {
@@ -98,6 +107,10 @@ chrome.storage.onChanged.addListener((changes) => {
     if (changes.showRaidButtonToggle !== undefined) {
         const el = document.getElementById("showRaidButtonToggle");
         if (el) el.checked = changes.showRaidButtonToggle.newValue;
+    }
+    if (changes.playerExtrasToggle !== undefined) {
+        const el = document.getElementById("playerExtrasToggle");
+        if (el) el.checked = changes.playerExtrasToggle.newValue;
     }
     if (changes.simpleViewToggle !== undefined) {
         const el = document.getElementById("simpleViewToggle");

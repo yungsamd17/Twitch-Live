@@ -23,6 +23,7 @@ Sam's Twitch Live surfaces the channels you follow that are currently live — s
 - **Sorting:** Broadcaster, Category, Viewers (High to Low or Low to High), Recently Started, and Longest Running. Your choice is remembered between sessions.
 - **Context menu:** right-click a stream to open its channel, player, or chat; jump to its About, Videos, or Clips pages; or browse more streams in its category.
 - **Raid helper:** optional one-click button copies the `/raid` command for a channel.
+- **Player extras:** optional Twitch player-page enhancements — channel name in the player tab title, a copy-channel button (`Alt+T`), and a chat-popout button. See [Player extras scripts](docs/PLAYER-EXTRAS-SCRIPTS.md).
 - **Customizable:** Simple view (hides thumbnails and uptime), open-in-player, open-in-new-window, background refresh interval, custom badge color, and more.
 - **Background updates:** the toolbar badge keeps count of live channels on your schedule, even while the popup is closed. The open popup refreshes every 30 seconds.
 
@@ -48,12 +49,14 @@ See the [local install and testing guide](docs/INSTALL_FROM_STORAGE.md) to run t
 - Sign-in uses Twitch OAuth with read-only access to your follows (`user:read:follows`). Nothing is ever posted to or changed on your account.
 - Your access token and cached stream list are stored only in the extension's local browser storage. There is no analytics, tracking, or external server — the extension talks directly to the Twitch API.
 - Logging out clears the token and cached data from local storage.
+- Optional Player extras run entirely on-device: content scripts only read the Twitch page to place buttons and titles, and copied text goes straight to your clipboard. Nothing is sent anywhere.
 
 ## Permissions
 
 - `alarms` — refresh live streams in the background and re-check your login hourly.
 - `storage` — remember your settings, cached streams, and login token locally.
 - `identity` — sign you in with Twitch via OAuth.
+- `clipboardWrite` + content scripts on Twitch player pages — power the optional Player extras (tab title, copy-channel and chat-popout buttons). Only active when you enable the setting.
 - Host access to `api.twitch.tv` and `id.twitch.tv` — fetch live streams and validate your login. Nothing else.
 
 ## Contributing

@@ -14,11 +14,29 @@
     "permissions": [
         "alarms",
         "storage",
-        "identity"
+        "identity",
+        "clipboardWrite"
     ],
     "host_permissions": [
         "https://api.twitch.tv/*",
         "https://id.twitch.tv/*"
+    ],
+    "content_scripts": [
+        {
+            "matches": ["https://player.twitch.tv/*"],
+            "js": ["src/js/content/player-title.js"],
+            "run_at": "document_idle"
+        },
+        {
+            "matches": ["https://www.twitch.tv/*", "https://player.twitch.tv/*", "https://embed.twitch.tv/*"],
+            "js": ["src/js/content/channel-copy.js"],
+            "run_at": "document_idle"
+        },
+        {
+            "matches": ["https://www.twitch.tv/*", "https://player.twitch.tv/*", "https://embed.twitch.tv/*"],
+            "js": ["src/js/content/chat-popout.js"],
+            "run_at": "document_idle"
+        }
     ],
     "background":
     {

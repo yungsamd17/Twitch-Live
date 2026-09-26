@@ -1,0 +1,51 @@
+(() => {
+    'use strict';
+
+    const TITLE_SUFFIX = ' - Twitch Player';
+
+    const getChannelFromUrl = () => {
+        try {
+            return new URLSearchParams(window.location.search).get('channel');
+        } catch (e) {
+            return null;
+        }
+    };
+
+    const applyTitle = (name) => {
+        if (name) document.title = `${name}${TITLE_SUFFIX}`;
+    };
+
+    // Case-sensitive name from the embed info card (URL param casing can be off).
+    const updateFromInfoCard = (observer) => {
+        const el = document.querySelector('[data-test-selector="stream-info-card-component__title-link"]');
+        if (el && el.textContent.trim()) {
+            applyTitle(el.textContent.trim());
+            if (observer) observer.disconnect();
+            return true;
+        }
+        return false;
+    };
+
+    chrome.storage.local.get({ playerExtrasToggle: false }, (res) => {
+        if (!res.playerExtrasToggle) return;
+
+        const initial = getChannelFromUrl();
+        if (initial) applyTitle(initial);
+
+        const run = () => updateFromInfoCard(observer);
+        const observer = new MutationObserver(run);
+        observer.observe(document.documentElement, { childList: true, subtree: true });
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', run, { once: true });
+        } else {
+            run();
+        }
+    });
+
+    // Exposed for zero-dependency unit tests (node --test test/).
+    // Inert in the browser: `module` is undefined in classic extension scripts.
+    if (typeof module !== 'undefined' && module.exports) {
+        module.exports = { getChannelFromUrl, applyTitle, TITLE_SUFFIX };
+    }
+})();
