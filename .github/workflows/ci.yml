@@ -55,6 +55,9 @@ jobs:
           done
           echo "All required files present."
 
+      - name: Run unit tests (zero-dependency, no install needed)
+        run: node --test test/*.test.js
+
       - name: Verify store build strips debug code
         run: |
           set -e

@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Miscellaneous
+
+- Internal zero-dependency unit tests (`node --test test/*.test.js`, also run in CI)
+
 ## [1.3.4] - 2026-09-04
 
 ### Bug Fixes
