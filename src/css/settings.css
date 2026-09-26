@@ -17,10 +17,13 @@
     position: relative;
     background-color: #18181b;
     margin: 20px;
-    height: 390px;
+    height: auto;
+    min-height: 390px;
+    max-height: 500px;
     border: 1px solid #242429;
     border-radius: 5px;
     display: flex;
+    flex-direction: column;
 }
 
 .settings-background-anim-in {
@@ -39,6 +42,10 @@
 .settings-modal-body {
     color: #fff;
     width: 100%;
+    min-height: 0;
+    overflow-y: auto;
+    /* Keep scrolled-to-bottom rows clear of the pinned footer */
+    padding-bottom: 56px;
 }
 
 .settings-header {
