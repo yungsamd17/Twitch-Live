@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Opt-in Twitch player extras (all off by default, toggle in Settings): channel name in `player.twitch.tv` tab title, copy-channel button on the player (Alt+T, now also works on `www.twitch.tv` pages), chat-popout button on the player
+- Opt-in "Player extras" setting (off by default): channel name in `player.twitch.tv` tab title, copy-channel button on the player (Alt+T, also works on `www.twitch.tv` pages), chat-popout button on the player — see `docs/PLAYER-EXTRAS-SCRIPTS.md`
 
 ### Miscellaneous
 

@@ -94,8 +94,8 @@
         }
     };
 
-    chrome.storage.local.get({ chatPopoutToggle: false }, (res) => {
-        if (!res.chatPopoutToggle) return;
+    chrome.storage.local.get({ playerExtrasToggle: false }, (res) => {
+        if (!res.playerExtrasToggle) return;
         const observer = new MutationObserver(createButton);
         observer.observe(document.body, { childList: true, subtree: true });
         createButton();

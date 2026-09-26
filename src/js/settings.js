@@ -22,9 +22,7 @@ chrome.storage.local.get(
         "openInPlayerToggle",
         "openInNewWindowToggle",
         "showRaidButtonToggle",
-        "playerTitleToggle",
-        "channelCopyToggle",
-        "chatPopoutToggle",
+        "playerExtrasToggle",
         "customBadgeColor",
         "extensionVersion",
         "backgroundUpdateRateMin",
@@ -48,16 +46,8 @@ chrome.storage.local.get(
             result.showRaidButtonToggle !== undefined ? result.showRaidButtonToggle : false
         );
         setToggleSwitchStatus(
-            "playerTitleToggle",
-            result.playerTitleToggle !== undefined ? result.playerTitleToggle : false
-        );
-        setToggleSwitchStatus(
-            "channelCopyToggle",
-            result.channelCopyToggle !== undefined ? result.channelCopyToggle : false
-        );
-        setToggleSwitchStatus(
-            "chatPopoutToggle",
-            result.chatPopoutToggle !== undefined ? result.chatPopoutToggle : false
+            "playerExtrasToggle",
+            result.playerExtrasToggle !== undefined ? result.playerExtrasToggle : false
         );
         document.getElementById("colorInput").value = result.customBadgeColor || "";
 
@@ -99,16 +89,8 @@ document.getElementById("showRaidButtonToggle").addEventListener("change", funct
     setToggleSwitchStatus("showRaidButtonToggle", this.checked);
 });
 
-document.getElementById("playerTitleToggle").addEventListener("change", function() {
-    setToggleSwitchStatus("playerTitleToggle", this.checked);
-});
-
-document.getElementById("channelCopyToggle").addEventListener("change", function() {
-    setToggleSwitchStatus("channelCopyToggle", this.checked);
-});
-
-document.getElementById("chatPopoutToggle").addEventListener("change", function() {
-    setToggleSwitchStatus("chatPopoutToggle", this.checked);
+document.getElementById("playerExtrasToggle").addEventListener("change", function() {
+    setToggleSwitchStatus("playerExtrasToggle", this.checked);
 });
 
 // Listen for changes in storage and update the toggle switches accordingly
@@ -126,17 +108,9 @@ chrome.storage.onChanged.addListener((changes) => {
         const el = document.getElementById("showRaidButtonToggle");
         if (el) el.checked = changes.showRaidButtonToggle.newValue;
     }
-    if (changes.playerTitleToggle !== undefined) {
-        const el = document.getElementById("playerTitleToggle");
-        if (el) el.checked = changes.playerTitleToggle.newValue;
-    }
-    if (changes.channelCopyToggle !== undefined) {
-        const el = document.getElementById("channelCopyToggle");
-        if (el) el.checked = changes.channelCopyToggle.newValue;
-    }
-    if (changes.chatPopoutToggle !== undefined) {
-        const el = document.getElementById("chatPopoutToggle");
-        if (el) el.checked = changes.chatPopoutToggle.newValue;
+    if (changes.playerExtrasToggle !== undefined) {
+        const el = document.getElementById("playerExtrasToggle");
+        if (el) el.checked = changes.playerExtrasToggle.newValue;
     }
     if (changes.simpleViewToggle !== undefined) {
         const el = document.getElementById("simpleViewToggle");

@@ -26,8 +26,8 @@
         return false;
     };
 
-    chrome.storage.local.get({ playerTitleToggle: false }, (res) => {
-        if (!res.playerTitleToggle) return;
+    chrome.storage.local.get({ playerExtrasToggle: false }, (res) => {
+        if (!res.playerExtrasToggle) return;
 
         const initial = getChannelFromUrl();
         if (initial) applyTitle(initial);
