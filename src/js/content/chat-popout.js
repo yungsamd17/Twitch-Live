@@ -100,4 +100,10 @@
         observer.observe(document.body, { childList: true, subtree: true });
         createButton();
     });
+
+    // Exposed for zero-dependency unit tests (node --test test/).
+    // Inert in the browser: `module` is undefined in classic extension scripts.
+    if (typeof module !== 'undefined' && module.exports) {
+        module.exports = { getChannelName, isClipPage, RESERVED };
+    }
 })();
