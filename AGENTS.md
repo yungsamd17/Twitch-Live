@@ -21,6 +21,7 @@ There is no build. Verification is manual + CI-validated:
 ```bash
 python3 -c "import json; json.load(open('manifest.json')); print('manifest ok')"
 # or: python3 -m json.tool manifest.json > /dev/null
+node --test test/*.test.js # zero-dependency unit tests (node built-in, no install)
 zip -r /tmp/Twitch-Live.zip manifest.json popup.html src/ lib/ LICENSE && unzip -l /tmp/Twitch-Live.zip | head -20
 
 # Manual Chrome test:

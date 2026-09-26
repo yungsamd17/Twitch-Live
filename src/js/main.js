@@ -47,6 +47,8 @@ const formatViewerCount = (count) => {
     return count.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
 
+const formatCategorySlug = (name) => encodeURIComponent(name.toLowerCase().replace(/\s/g, '-'));
+
 // Open stream in new window and player settings
 const openStream = (stream) => {
     const openInPlayerToggle = document.getElementById("openInPlayerToggle");
@@ -581,8 +583,7 @@ const handleOpenAbout = () => openLink(`https://www.twitch.tv/${encodeURICompone
 const handleOpenVideos = () => openLink(`https://www.twitch.tv/${encodeURIComponent(currentChannelName)}/videos`);
 const handleOpenClips = () => openLink(`https://www.twitch.tv/${encodeURIComponent(currentChannelName)}/clips?filter=clips&range=7d`);
 const handleGoToCategory = () => {
-    const formattedCategory = encodeURIComponent(currentCategoryName.toLowerCase().replace(/\s/g, '-'));
-    openLink(`https://www.twitch.tv/directory/category/${formattedCategory}`);
+    openLink(`https://www.twitch.tv/directory/category/${formatCategorySlug(currentCategoryName)}`);
 };
 
 // Bind context menu items once (avoid re-adding on every right-click)
@@ -629,3 +630,9 @@ const escapeHTML = (unsafe) => {
         }
     });
 };
+
+// Exposed for zero-dependency unit tests (node --test test/).
+// Inert in the browser: `module` is undefined in classic extension scripts.
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = { formatViewerCount, formatCategorySlug, escapeHTML, filterToButtonId, buttonIdToFilter };
+}
