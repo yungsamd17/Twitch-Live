@@ -49,6 +49,7 @@ See the [local install and testing guide](docs/INSTALL_FROM_STORAGE.md) to run t
 - Sign-in uses Twitch OAuth with read-only access to your follows (`user:read:follows`). Nothing is ever posted to or changed on your account.
 - Your access token and cached stream list are stored only in the extension's local browser storage. There is no analytics, tracking, or external server — the extension talks directly to the Twitch API.
 - Logging out clears the token and cached data from local storage.
+- Optional Player extras run entirely on-device: content scripts only read the Twitch page to place buttons and titles, and copied text goes straight to your clipboard. Nothing is sent anywhere.
 
 ## Permissions
 
