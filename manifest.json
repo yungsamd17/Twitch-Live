@@ -33,7 +33,7 @@
             "run_at": "document_idle"
         },
         {
-            "matches": ["https://www.twitch.tv/*", "https://player.twitch.tv/*", "https://embed.twitch.tv/*"],
+            "matches": ["https://player.twitch.tv/*", "https://embed.twitch.tv/*"],
             "js": ["src/js/content/chat-popout.js"],
             "run_at": "document_idle"
         }

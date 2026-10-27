@@ -1,6 +1,12 @@
 (() => {
     'use strict';
 
+    // Decide from the URL before touching the DOM: ordinary Twitch pages also
+    // have player controls, and missing site chrome during loading is ambiguous.
+    const isPlayerOnlyContext = () =>
+        window.location.hostname === 'player.twitch.tv' ||
+        window.location.hostname === 'embed.twitch.tv';
+
     const RESERVED = new Set([
         'directory', 'search', 'settings', 'subscriptions', 'drops',
         'store', 'p', 'popout', 'clip', 'clips', 'videos', 'about',
@@ -58,7 +64,7 @@
     };
 
     const createButton = () => {
-        if (isClipPage()) {
+        if (!isPlayerOnlyContext() || isClipPage()) {
             document.querySelector('.tl-chat-popout-btn')?.remove();
             return;
         }
@@ -95,7 +101,7 @@
     };
 
     chrome.storage.local.get({ playerExtrasToggle: false }, (res) => {
-        if (!res.playerExtrasToggle) return;
+        if (!res.playerExtrasToggle || !isPlayerOnlyContext()) return;
         const observer = new MutationObserver(createButton);
         observer.observe(document.body, { childList: true, subtree: true });
         createButton();
