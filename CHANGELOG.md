@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Opt-in "Player extras" setting (off by default): channel name in `player.twitch.tv` tab title, copy-channel button on the player (Alt+T, also works on `www.twitch.tv` pages), chat-popout button on the player — see `docs/PLAYER-EXTRAS-SCRIPTS.md`
 
+### Bug Fixes
+
+- Prevent the chat popout button from appearing on regular Twitch channel pages; it remains available on player-only pages.
+
 ### Miscellaneous
 
 - Internal zero-dependency unit tests (`node --test test/*.test.js`, also run in CI)

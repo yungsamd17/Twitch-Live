@@ -25,6 +25,12 @@ well as `www.twitch.tv/<channel>` pages.
 
 Adds a chat-icon button to the player's control bar that opens the channel's
 chat popout (`twitch.tv/popout/<channel>/chat`) in a small window.
+Only runs on `player.twitch.tv` and `embed.twitch.tv` with a `?channel=`
+parameter, never on regular `twitch.tv` pages (including theater/fullscreen).
+The hostname check runs before observing or inserting controls, so loading or
+navigation on the main site cannot briefly show the button. Player URLs without
+a channel (such as video-only URLs) do not get a button. New Twitch player
+hostnames would need to be explicitly supported.
 
 ## Notes
 
